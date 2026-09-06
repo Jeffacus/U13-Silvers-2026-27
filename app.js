@@ -6,6 +6,34 @@ function playerByName(name){ return D.squad.find(p => p.name === name || p.short
 function label(name){ const p = playerByName(name); return p ? p.short : (name || '—'); }
 function safePhoto(p){ return p && p.photo ? p.photo : ''; }
 
+// Opposition crest mapping. Keep this explicit so team names and image filenames stay independent.
+const CLUB_CRESTS = {
+  'Bedlington FC U13 Malaga': 'assets/clubs/bedlington-fc.png',
+  'Ponteland United Juniors U13 Rockets': 'assets/clubs/ponteland-united.png',
+  'Killingworth F.C. U13 Blues': 'assets/clubs/killingworth-fc.png',
+  'Killingworth F.C. U13 Reds': 'assets/clubs/killingworth-fc.png',
+  'North Shields Juniors U13 Blacks': 'assets/clubs/north-shields.jpeg',
+  'Blakelaw Football Club U13 Roma': 'assets/clubs/blakelaw.jpeg',
+  'Cramlington Blue Star FC U13 Milan': 'assets/clubs/cramlington-blue-star.jpeg',
+  'Cramlington Town Juniors U13 Cramlington': 'assets/clubs/cramlington-town-juniors.jpeg',
+  'Red Row Raptors U13 Red Row Raptors u13s': 'assets/clubs/red-row-raptors.jpeg',
+  'Berwick Rangers Community Academy U13 Be': 'assets/clubs/berwick.rangers.jpeg'
+};
+
+function crestForTeam(team){
+  if(!team) return '';
+  if(team === 'Westerhope United U13 Silvers' || team === 'Westerhope United') return 'assets/club-badge.png';
+  if(CLUB_CRESTS[team]) return CLUB_CRESTS[team];
+  const key = Object.keys(CLUB_CRESTS).find(k => team === k || team.includes(k) || k.includes(team));
+  return key ? CLUB_CRESTS[key] : '';
+}
+
+function crestImg(team, cls='mini-crest'){
+  const src = crestForTeam(team);
+  if(!src) return '<div class="crest-placeholder">?</div>';
+  return `<img class="${cls}" src="${src}" alt="${team}" loading="lazy" onerror="this.outerHTML='<div class=\"crest-placeholder\">?</div>'">`;
+}
+
 function calcStats(){
   const out = Object.fromEntries(D.squad.map(p => [p.name, {...p, apps:0, starts:0, goals:0, assists:0, gA:0, potm:0, pp:0, captain:0}]));
   D.matches.forEach(m=>{
@@ -77,8 +105,8 @@ function renderHome(){
   app.innerHTML=`
     <section class="hero-kpis card"><div class="eyebrow">${D.season} SEASON</div><div class="kpis">${[['P',s.played],['W',s.won],['D',s.draw],['L',s.lost],['GF',s.gf],['GA',s.ga],['GD',s.gd>=0?'+'+s.gd:s.gd]].map(x=>`<div><b>${x[0]}</b><strong>${x[1]}</strong></div>`).join('')}</div></section>
     <section class="two-col">
-      <article class="card result-card"><div class="section-head"><span>LATEST RESULT</span><small>${prettyDate(last.date)}</small></div><div class="matchup"><div class="team"><div class="crest-badge opponent-mark">CB</div><b>${last.shortOpponent}</b></div><div class="score"><div>0 <span>-</span> ${last.gf}</div><small>HT ${last.htAgainst}-${last.htFor}</small></div><div class="team"><img src="assets/club-badge.png?v=5" class="mini-crest" alt="Westerhope badge"><b>WESTERHOPE<br>UNITED</b></div></div><div class="win-banner">✓ ${last.headline.toUpperCase()}</div><button class="text-link" onclick="openMatch('${last.id}')">VIEW MATCH →</button></article>
-      <article class="card next-card"><div class="section-head"><span>NEXT MATCH</span><small>${prettyDate(last.nextDate)}</small></div><div class="next-title"><b>${last.next.toUpperCase()}</b><span>V</span><b>WESTERHOPE<br>UNITED</b></div><div class="next-meta">📍 AWAY &nbsp; • &nbsp; ${prettyDateLong(last.nextDate)} &nbsp; • &nbsp; KICK-OFF TBC</div><button class="cta" onclick="nav('matches')">MATCHES →</button></article>
+      <article class="card result-card"><div class="section-head"><span>LATEST RESULT</span><small>${prettyDate(last.date)}</small></div><div class="matchup"><div class="team">${crestImg(last.opponent,'mini-crest')}<b>${last.shortOpponent}</b></div><div class="score"><div>0 <span>-</span> ${last.gf}</div><small>HT ${last.htAgainst}-${last.htFor}</small></div><div class="team">${crestImg('Westerhope United','mini-crest')}<b>WESTERHOPE<br>UNITED</b></div></div><div class="win-banner">✓ ${last.headline.toUpperCase()}</div><button class="text-link" onclick="openMatch('${last.id}')">VIEW MATCH →</button></article>
+      <article class="card next-card"><div class="section-head"><span>NEXT MATCH</span><small>${prettyDate(last.nextDate)}</small></div><div class="next-title"><div>${crestImg(last.next,'mini-crest small')}<b>${last.next.toUpperCase()}</b></div><span>V</span><div>${crestImg('Westerhope United','mini-crest small')}<b>WESTERHOPE<br>UNITED</b></div></div><div class="next-meta">📍 AWAY &nbsp; • &nbsp; ${prettyDateLong(last.nextDate)} &nbsp; • &nbsp; KICK-OFF ${last.nextTime||'TBC'}</div><button class="cta" onclick="nav('matches')">MATCHES →</button></article>
     </section>
     <section class="card"><div class="section-head"><span>KEY STATS</span><small>AFTER ${s.played} GAME${s.played===1?'':'S'}</small></div><div class="stat-grid">${metricCard('⚽','TOP SCORER',topScorer?.short||'—',topScorer?.goals||0)}${metricCard('🎯','ASSIST LEADER',topAssist?.short||'—',topAssist?.assists||0)}${metricCard('📈','GOAL CONTRIBUTIONS',topGA?.short||'—',topGA?.gA||0)}${metricCard('🧤','CLEAN SHEETS','Team',s.clean)}</div></section>
     <section class="two-col"><article class="card"><div class="section-head"><span>CURRENT FORM</span></div><div class="form-row">${D.matches.slice(-5).map(m=>`<span class="form ${m.gf>m.ga?'w':m.gf===m.ga?'d':'l'}">${m.gf>m.ga?'W':m.gf===m.ga?'D':'L'}</span>`).join('')}</div></article><article class="card"><div class="section-head"><span>DID YOU KNOW?</span></div><div class="didyou"><div class="bulb">💡</div><p>${charlie?.short||'Charlie'} has scored <b>${charlie?.goals||0}</b> goal${(charlie?.goals||0)===1?'':'s'} in the opening match of the 2026/27 season.</p></div></article></section>
@@ -94,7 +122,7 @@ function scoreLabel(m){ return m.venue==='Home' ? `${m.gf}–${m.ga}` : `${m.ga}
 function matchCard(m){
   const lineup = m.starters.map(n=>`<span class="chip">#${playerByName(n)?.no??''} ${label(n)}</span>`).join('');
   const subs = m.subs.map(n=>`<span class="chip sub">#${playerByName(n)?.no??''} ${label(n)}</span>`).join('');
-  return `<article class="card match-card"><div class="section-head"><span>${m.venue.toUpperCase()} • ${m.competition.toUpperCase()}</span><small>${prettyDate(m.date)}</small></div><div class="match-hero"><div class="hero-team"><div class="crest-badge opponent-mark">CB</div><b>${m.shortOpponent}</b></div><div class="match-score"><strong>${scoreLabel(m)}</strong><small>HALF TIME ${m.htAgainst}-${m.htFor}</small></div><div class="hero-team"><img src="assets/club-badge.png?v=5" class="mini-crest" alt="Westerhope badge"><b>WESTERHOPE<br>UNITED</b></div></div>
+  return `<article class="card match-card"><div class="section-head"><span>${m.venue.toUpperCase()} • ${m.competition.toUpperCase()}</span><small>${prettyDate(m.date)}</small></div><div class="match-hero"><div class="hero-team">${crestImg(m.opponent,'mini-crest')}<b>${m.shortOpponent}</b></div><div class="match-score"><strong>${scoreLabel(m)}</strong><small>HALF TIME ${m.htAgainst}-${m.htFor}</small></div><div class="hero-team">${crestImg('Westerhope United','mini-crest')}<b>WESTERHOPE<br>UNITED</b></div></div>
   <div class="match-flags"><span>🏆 PLAYER OF THE MATCH: <b>${label(m.potm)}</b></span><span>🏆 PLAYERS' PLAYER: <b>${label(m.playersPlayer)}</b></span><span>🧤 CLEAN SHEET</span><span>©️ CAPTAIN: <b>${label(m.captain)}</b></span></div>
   <div class="subheading">GOALS</div><div class="goal-timeline">${m.goals.map(g=>`<div class="goal-row"><strong>${g.minute}'</strong><span class="goal-dot">⚽</span><b>${label(g.scorer)}</b>${g.assister?`<span class="assist">(${label(g.assister)})</span>`:`<span class="assist">No assist recorded</span>`}</div>`).join('')}</div>
   <div class="subheading">STARTING XI</div><div class="chip-row">${lineup}</div>
@@ -104,7 +132,7 @@ function matchCard(m){
 }
 function openMatch(id){
   const m=D.matches.find(x=>x.id===id); if(!m) return;
-  app.innerHTML=`<section><button class="back" onclick="nav('matches')">← BACK TO MATCHES</button><article class="card detail-card"><div class="section-head"><span>${m.venue.toUpperCase()} • ${m.competition.toUpperCase()}</span><small>${prettyDate(m.date)}</small></div><div class="detail-title"><div><div class="crest-badge opponent-mark">CB</div><b>${m.shortOpponent}</b></div><div class="match-score"><strong>${scoreLabel(m)}</strong><small>HT ${m.htAgainst}-${m.htFor}</small></div><div><img src="assets/club-badge.png?v=5" class="mini-crest" alt="Westerhope badge"><b>WESTERHOPE<br>UNITED</b></div></div>
+  app.innerHTML=`<section><button class="back" onclick="nav('matches')">← BACK TO MATCHES</button><article class="card detail-card"><div class="section-head"><span>${m.venue.toUpperCase()} • ${m.competition.toUpperCase()}</span><small>${prettyDate(m.date)}</small></div><div class="detail-title"><div>${crestImg(m.opponent,'mini-crest')}<b>${m.shortOpponent}</b></div><div class="match-score"><strong>${scoreLabel(m)}</strong><small>HT ${m.htAgainst}-${m.htFor}</small></div><div>${crestImg('Westerhope United','mini-crest')}<b>WESTERHOPE<br>UNITED</b></div></div>
   <div class="detail-meta"><span>©️ Captain: <b>${label(m.captain)}</b></span><span>🏆 POTM: <b>${label(m.potm)}</b></span><span>🏆 Players' Player: <b>${label(m.playersPlayer)}</b></span><span>🧤 Clean Sheet</span></div>
   <div class="report-heading">MATCH REPORT</div>${m.report.map(p=>`<p class="report-p">${p}</p>`).join('')}
   <div class="report-heading">GOALS & ASSISTS</div><div class="goal-timeline">${m.goals.map(g=>`<div class="goal-row"><strong>${g.minute}'</strong><span class="goal-dot">⚽</span><b>${label(g.scorer)}</b>${g.assister?`<span class="assist">Assist: ${label(g.assister)}</span>`:`<span class="assist">Assist: —</span>`}</div>`).join('')}</div>
@@ -202,8 +230,16 @@ function renderStats(){
   </section>`;
 }
 function renderTable(){
-  const link=D.leagueTableUrl;
-  app.innerHTML=`<section><div class="page-title">LEAGUE TABLE <span>///</span></div><article class="card table-card"><h2>OFFICIAL LEAGUE TABLE</h2><p>We'll connect this to the official live table when you give us the league-table URL.</p>${link?`<a class="cta link" href="${link}" target="_blank" rel="noopener">OPEN OFFICIAL TABLE →</a>`:'<div class="placeholder">LEAGUE TABLE LINK TO BE ADDED</div>'}</article></section>`;
+  const rows=(D.leagueTable||[]).map(r=>`<tr class="${r.team==='Westerhope United U13 Silvers'?'our-team':''}"><td>${r.pos}</td><td><span class="table-team">${crestImg(r.team,'table-crest')}<b>${r.team}</b></span></td><td>${r.p}</td><td>${r.w}</td><td>${r.d}</td><td>${r.l}</td><td><strong>${r.pts}</strong></td></tr>`).join('');
+  const fixtures=(D.upcomingFixtures||[]).map((f,i)=>`<div class="fixture-row ${i===0?'next-fixture':''}"><div><b>${prettyDateLong(f.date)}</b><small>${f.time} • ${f.competition}</small></div><div class="fixture-teams"><span>${crestImg(f.home,'table-crest')}<b>${f.home}</b></span><em>V</em><span>${crestImg(f.away,'table-crest')}<b>${f.away}</b></span></div><small class="fixture-venue">${f.venue}</small></div>`).join('');
+  app.innerHTML=`<section><div class="page-title">TABLE <span>///</span></div>
+    <article class="card"><div class="section-head"><span>${D.leagueName||'LEAGUE TABLE'}</span><small>OFFICIAL SNAPSHOT</small></div>
+      <div class="table-scroll"><table class="league-table"><thead><tr><th>POS</th><th>TEAM</th><th>P</th><th>W</th><th>D</th><th>L</th><th>PTS</th></tr></thead><tbody>${rows}</tbody></table></div>
+      <div class="table-actions"><a class="cta link" href="${D.leagueTableUrl}" target="_blank" rel="noopener">LIVE OFFICIAL TABLE →</a><a class="secondary-cta link" href="${D.leagueResultsUrl}" target="_blank" rel="noopener">OFFICIAL RESULTS →</a><a class="secondary-cta link" href="${D.leagueFixturesUrl}" target="_blank" rel="noopener">ALL FIXTURES →</a></div>
+      <div class="mini-note">${D.leagueUpdatedNote||'Live table available from the FA Full-Time site.'}</div>
+    </article>
+    <article class="card"><div class="section-head"><span>WHAT'S NEXT</span><small>UPCOMING FIXTURES</small></div>${fixtures}</article>
+  </section>`;
 }
 function prettyDate(d){return new Date(d+'T12:00:00').toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'}).toUpperCase();}
 function prettyDateLong(d){return new Date(d+'T12:00:00').toLocaleDateString('en-GB',{weekday:'long',day:'numeric',month:'long',year:'numeric'}).toUpperCase();}
