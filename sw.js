@@ -1,1 +1,1 @@
-// Temporarily disabled while the Westerhope site is being developed.
+// Service worker disabled during development.
