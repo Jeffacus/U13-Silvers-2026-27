@@ -19,8 +19,36 @@ function calcStats(){
   Object.values(out).forEach(p=>p.gA=p.goals+p.assists);
   return Object.values(out);
 }
+function blankHistory(){ return {apps:0,starts:0,goals:0,assists:0,potm:0,pp:0,cleanSheets:0}; }
 function historicalFor(name){
-  return (D.historical && D.historical[name]) || {apps:0,starts:0,goals:0,assists:0,potm:0,pp:0,cleanSheets:0};
+  return (D.historical && D.historical[name]) || blankHistory();
+}
+function historical2024For(name){
+  return (D.historical2024_25 && D.historical2024_25[name]) || blankHistory();
+}
+function careerFor(name,p){
+  const h24=historical2024For(name), h25=historicalFor(name);
+  return {
+    apps:h24.apps+h25.apps+p.apps, starts:h24.starts+h25.starts+p.starts,
+    goals:h24.goals+h25.goals+p.goals, assists:h24.assists+h25.assists+p.assists,
+    gA:h24.goals+h24.assists+h25.goals+h25.assists+p.gA,
+    potm:h24.potm+h25.potm+p.potm, pp:h24.pp+h25.pp+p.pp,
+    cleanSheets:h24.cleanSheets+h25.cleanSheets+(p.cleanSheets||0), captain:p.captain
+  };
+}
+function nextMilestone(value, marks){ return marks.find(m=>m>value) || null; }
+function playerMilestone(name,p){
+  const c=careerFor(name,p);
+  const candidates=[];
+  const push=(label,value,marks)=>{ const next=nextMilestone(value,marks); if(next) candidates.push({type:label,value,next,diff:next-value}); };
+  push('APPEARANCES',c.apps,[10,15,20,25,30,40,50,75,100]);
+  push('GOALS',c.goals,[10,15,20,25,30,40,50,75,100]);
+  push('ASSISTS',c.assists,[10,15,20,25,30,40,50,75,100]);
+  push('GOAL CONTRIBUTIONS',c.gA,[10,25,30,40,50,75,100,125]);
+  return candidates.sort((a,b)=>a.diff-b.diff||a.next-b.next)[0] || null;
+}
+function milestoneWatch(){
+  return calcStats().map(p=>({p,m:playerMilestone(p.name,p)})).filter(x=>x.m).sort((a,b)=>a.m.diff-b.m.diff||b.p.gA-a.p.gA||a.p.short.localeCompare(b.p.short));
 }
 function teamStats(){
   const played=D.matches.length;
@@ -54,6 +82,7 @@ function renderHome(){
     </section>
     <section class="card"><div class="section-head"><span>KEY STATS</span><small>AFTER ${s.played} GAME${s.played===1?'':'S'}</small></div><div class="stat-grid">${metricCard('⚽','TOP SCORER',topScorer?.short||'—',topScorer?.goals||0)}${metricCard('🎯','ASSIST LEADER',topAssist?.short||'—',topAssist?.assists||0)}${metricCard('📈','GOAL CONTRIBUTIONS',topGA?.short||'—',topGA?.gA||0)}${metricCard('🧤','CLEAN SHEETS','Team',s.clean)}</div></section>
     <section class="two-col"><article class="card"><div class="section-head"><span>CURRENT FORM</span></div><div class="form-row">${D.matches.slice(-5).map(m=>`<span class="form ${m.gf>m.ga?'w':m.gf===m.ga?'d':'l'}">${m.gf>m.ga?'W':m.gf===m.ga?'D':'L'}</span>`).join('')}</div></article><article class="card"><div class="section-head"><span>DID YOU KNOW?</span></div><div class="didyou"><div class="bulb">💡</div><p>${charlie?.short||'Charlie'} has scored <b>${charlie?.goals||0}</b> goal${(charlie?.goals||0)===1?'':'s'} in the opening match of the 2026/27 season.</p></div></article></section>
+    <section class="card"><div class="section-head"><span>MILESTONE WATCH</span><small>CAREER</small></div>${milestoneWatch().slice(0,3).map(x=>`<div class="mile-row"><b>#${x.p.no} ${x.p.short}</b><span>${x.m.next} ${x.m.type.toLowerCase()}</span><strong>${x.m.diff} to go</strong></div>`).join('')}</section>
     <section class="card quote"><span class="slash">///</span><b>MORE THAN A TEAM. A COMMUNITY.</b><span class="slash">///</span></section>`;
 }
 function metricCard(icon,label,name,value){return `<div class="metric"><div class="metric-icon">${icon}</div><small>${label}</small><b>${name}</b><strong>${value}</strong></div>`;}
@@ -89,17 +118,19 @@ window.openMatch=openMatch;
 
 function renderPlayers(){
   const ps=calcStats();
-  app.innerHTML=`<section><div class="page-title">SQUAD <span>///</span></div><div class="match-intro">The current Silvers squad, with shirt numbers, photographs and season-to-date stats. Tap a player for their full profile and last-season comparison.</div><div class="player-grid">${ps.map(p=>`<button class="player-card" onclick="showPlayer('${escapeJs(p.name)}')"><div class="player-photo-wrap">${safePhoto(p)?`<img class="player-photo" src="${safePhoto(p)}?v=5" alt="${p.short}" loading="lazy" onerror="photoFail(this)">`:''}<div class="player-placeholder" style="display:${safePhoto(p)?'none':'flex'}"><span>#${p.no}</span></div></div><div class="shirt-num">#${p.no}</div><div class="player-name">${p.short}</div><small>${p.pos} • ${p.apps} APP • ${p.goals} G • ${p.assists} A</small></button>`).join('')}</div></section>`;
+  app.innerHTML=`<section><div class="page-title">SQUAD <span>///</span></div><div class="match-intro">The current Silvers squad, with shirt numbers, photographs and season-to-date stats. Tap a player for their full profile, three-season history and career milestones.</div><div class="player-grid">${ps.map(p=>`<button class="player-card" onclick="showPlayer('${escapeJs(p.name)}')"><div class="player-photo-wrap">${safePhoto(p)?`<img class="player-photo" src="${safePhoto(p)}?v=5" alt="${p.short}" loading="lazy" onerror="photoFail(this)">`:''}<div class="player-placeholder" style="display:${safePhoto(p)?'none':'flex'}"><span>#${p.no}</span></div></div><div class="shirt-num">#${p.no}</div><div class="player-name">${p.short}</div><small>${p.pos} • ${p.apps} APP • ${p.goals} G • ${p.assists} A</small></button>`).join('')}</div></section>`;
 }
 function photoFail(img){ img.style.display='none'; const ph=img.nextElementSibling; if(ph) ph.style.display='flex'; }
 function showPlayer(name){
   const p=calcStats().find(x=>x.name===name); if(!p) return;
-  const h=historicalFor(p.name);
-  const career={apps:h.apps+p.apps, starts:h.starts+p.starts, goals:h.goals+p.goals, assists:h.assists+p.assists, gA:h.goals+h.assists+p.gA};
-  app.innerHTML=`<section><button class="back" onclick="nav('players')">← BACK TO SQUAD</button><article class="card player-profile"><div class="profile-hero"><div class="profile-photo-wrap large">${safePhoto(p)?`<img class="profile-photo" src="${safePhoto(p)}?v=5" alt="${p.short}" onerror="photoFail(this)">`:''}<div class="player-placeholder" style="display:${safePhoto(p)?'none':'flex'}"><span>#${p.no}</span></div></div><div class="profile-top"><div class="profile-num">#${p.no}</div><div><div class="eyebrow">${p.short.toUpperCase()} • WESTERHOPE UNITED</div><h1>${p.name}</h1><p>${p.pos}</p>${p.status!=='Active'?`<span class="status-pill">${p.status.toUpperCase()}</span>`:''}</div></div></div>
+  const h25=historicalFor(p.name), h24=historical2024For(p.name), career=careerFor(p.name,p), mile=playerMilestone(p.name,p);
+  const photo = safePhoto(p) ? `${safePhoto(p)}?v=9` : '';
+  const mileHtml = mile ? `<div class="milestone-banner"><b>🏅 NEXT CAREER MILESTONE</b><span>${mile.next} ${mile.type.toLowerCase()} — <strong>${mile.diff}</strong> to go</span></div>` : '';
+  app.innerHTML=`<section><button class="back" onclick="nav('players')">← BACK TO SQUAD</button><article class="card player-profile"><div class="profile-hero"><div class="profile-photo-wrap large">${photo?`<img class="profile-photo" src="${photo}" alt="${p.short}" onerror="photoFail(this)">`:''}<div class="player-placeholder" style="display:${photo?'none':'flex'}"><span>#${p.no}</span></div></div><div class="profile-top"><div class="profile-num">#${p.no}</div><div><div class="eyebrow">${p.short.toUpperCase()} • WESTERHOPE UNITED</div><h1>${p.name}</h1><p>${p.pos}</p>${p.status!=='Active'?`<span class="status-pill">${p.status.toUpperCase()}</span>`:''}</div></div></div>
   <div class="profile-section-title">2026/27</div><div class="profile-stats">${[['APPEARANCES',p.apps],['STARTS',p.starts],['GOALS',p.goals],['ASSISTS',p.assists],['G+A',p.gA],['POTM',p.potm],['PLAYERS’ PLAYER',p.pp],['CAPTAIN',p.captain]].map(x=>`<div><small>${x[0]}</small><b>${x[1]}</b></div>`).join('')}</div>
-  <div class="profile-section-title">2025/26</div><div class="profile-stats">${[['APPEARANCES',h.apps],['STARTS',h.starts],['GOALS',h.goals],['ASSISTS',h.assists],['G+A',h.goals+h.assists],['POTM',h.potm],['PLAYERS’ PLAYER',h.pp],['CLEAN SHEETS',h.cleanSheets]].map(x=>`<div><small>${x[0]}</small><b>${x[1]}</b></div>`).join('')}</div>
-  <div class="profile-section-title">CAREER TOTAL</div><div class="profile-stats">${[['APPEARANCES',career.apps],['STARTS',career.starts],['GOALS',career.goals],['ASSISTS',career.assists],['G+A',career.gA]].map(x=>`<div><small>${x[0]}</small><b>${x[1]}</b></div>`).join('')}</div>
+  <div class="profile-section-title">2025/26</div><div class="profile-stats">${[['APPEARANCES',h25.apps],['STARTS',h25.starts],['GOALS',h25.goals],['ASSISTS',h25.assists],['G+A',h25.goals+h25.assists],['POTM',h25.potm],['PLAYERS’ PLAYER',h25.pp],['CLEAN SHEETS',h25.cleanSheets]].map(x=>`<div><small>${x[0]}</small><b>${x[1]}</b></div>`).join('')}</div>
+  <div class="profile-section-title">2024/25</div><div class="profile-stats">${[['APPEARANCES',h24.apps],['STARTS',h24.starts],['GOALS',h24.goals],['ASSISTS',h24.assists],['G+A',h24.goals+h24.assists],['POTM',h24.potm],['PLAYERS’ PLAYER',h24.pp],['CLEAN SHEETS',h24.cleanSheets]].map(x=>`<div><small>${x[0]}</small><b>${x[1]}</b></div>`).join('')}</div>
+  <div class="profile-section-title">CAREER TOTAL — 3 SEASONS</div><div class="profile-stats">${[['APPEARANCES',career.apps],['STARTS',career.starts],['GOALS',career.goals],['ASSISTS',career.assists],['G+A',career.gA],['POTM',career.potm],['PLAYERS’ PLAYER',career.pp],['CLEAN SHEETS',career.cleanSheets]].map(x=>`<div><small>${x[0]}</small><b>${x[1]}</b></div>`).join('')}</div>${mileHtml}
   </article></section>`;
 }
 window.showPlayer=showPlayer;
@@ -166,6 +197,7 @@ function renderStats(){
       <article class="card"><div class="section-head"><span>CLEAN SHEETS</span><small>PLAYER APPEARANCES</small></div>${cleanPlayers.slice(0,7).map(x=>`<div class="hot-row"><b>#${x.p.no} ${x.p.short}</b><span>${x.count} clean sheet${x.count===1?'':'s'} in ${playerMatchHistory(x.p.name).length} appearance${playerMatchHistory(x.p.name).length===1?'':'s'}</span><strong>${pct(x.count,playerMatchHistory(x.p.name).length)}%</strong></div>`).join('')}</article>
     </section>
     <article class="card"><div class="section-head"><span>GOAL COMBINATIONS</span><small>ASSISTER → SCORER</small></div>${pairRows.length?`<div class="combo-list">${pairRows.map(([k,v])=>`<div><b>${k}</b><strong>${v}</strong></div>`).join('')}</div>`:'<div class="placeholder">No recorded combinations yet.</div>'}</article>
+    <article class="card"><div class="section-head"><span>CAREER MILESTONE WATCH</span><small>2024/25 → 2026/27</small></div><div class="milestone-list">${milestoneWatch().slice(0,8).map(x=>`<div class="mile-row"><b>#${x.p.no} ${x.p.short}</b><span>${x.m.next} ${x.m.type.toLowerCase()}</span><strong>${x.m.diff} to go</strong></div>`).join('')}</div><div class="mini-note">Career totals combine the 2024/25 and 2025/26 records with the current 2026/27 season. Milestones are the next useful landmark for appearances, goals, assists or goal contributions.</div></article>
     <article class="card"><div class="section-head"><span>STATS WE CAN UNLOCK LATER</span><small>AS THE DATA GROWS</small></div><div class="unlock-grid"><div><b>SCORING STREAKS</b><span>e.g. 4 goals in last 6 appearances</span></div><div><b>HOME SCORING</b><span>e.g. scored in every home appearance</span></div><div><b>PARTNERSHIPS</b><span>e.g. Joseph + Charlie goal/assist link-ups</span></div><div><b>LINEUP RECORD</b><span>e.g. results when Freddie and Jake start together</span></div></div></article>
   </section>`;
 }

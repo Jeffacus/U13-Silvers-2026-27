@@ -355,6 +355,125 @@ window.WUFC_DATA = {
   "leagueTableUrl": "",
   "meta": {
     "lastUpdated": "2026-09-06",
-    "version": "7-player-photos"
+    "version": "9-career-milestones"
+  },
+  "historical2024_25": {
+    "Johnny Collinson": {
+      "apps": 16,
+      "starts": 16,
+      "goals": 0,
+      "assists": 0,
+      "potm": 7,
+      "pp": 0,
+      "cleanSheets": 2
+    },
+    "Blake Smith": {
+      "apps": 14,
+      "starts": 5,
+      "goals": 0,
+      "assists": 0,
+      "potm": 0,
+      "pp": 0,
+      "cleanSheets": 0
+    },
+    "Ollie Anderson": {
+      "apps": 16,
+      "starts": 16,
+      "goals": 1,
+      "assists": 1,
+      "potm": 0,
+      "pp": 0,
+      "cleanSheets": 0
+    },
+    "Kane Rogerson": {
+      "apps": 13,
+      "starts": 12,
+      "goals": 0,
+      "assists": 0,
+      "potm": 0,
+      "pp": 0,
+      "cleanSheets": 0
+    },
+    "Theo Demosthenous": {
+      "apps": 15,
+      "starts": 11,
+      "goals": 6,
+      "assists": 2,
+      "potm": 3,
+      "pp": 0,
+      "cleanSheets": 0
+    },
+    "Freddie Cowan": {
+      "apps": 14,
+      "starts": 13,
+      "goals": 11,
+      "assists": 8,
+      "potm": 3,
+      "pp": 0,
+      "cleanSheets": 0
+    },
+    "Oliver Stubbs": {
+      "apps": 16,
+      "starts": 15,
+      "goals": 5,
+      "assists": 4,
+      "potm": 2,
+      "pp": 0,
+      "cleanSheets": 0
+    },
+    "Jake Armstrong": {
+      "apps": 16,
+      "starts": 15,
+      "goals": 6,
+      "assists": 4,
+      "potm": 0,
+      "pp": 0,
+      "cleanSheets": 0
+    },
+    "Joseph Winwood": {
+      "apps": 10,
+      "starts": 7,
+      "goals": 9,
+      "assists": 2,
+      "potm": 0,
+      "pp": 0,
+      "cleanSheets": 0
+    },
+    "Charlie Mulligan": {
+      "apps": 0,
+      "starts": 0,
+      "goals": 0,
+      "assists": 0,
+      "potm": 0,
+      "pp": 0,
+      "cleanSheets": 0
+    },
+    "Yusuf Syed Ubaidur Rahman": {
+      "apps": 0,
+      "starts": 0,
+      "goals": 0,
+      "assists": 0,
+      "potm": 0,
+      "pp": 0,
+      "cleanSheets": 0
+    },
+    "Ewan Dodds": {
+      "apps": 0,
+      "starts": 0,
+      "goals": 0,
+      "assists": 0,
+      "potm": 0,
+      "pp": 0,
+      "cleanSheets": 0
+    },
+    "Kyran Archbold": {
+      "apps": 0,
+      "starts": 0,
+      "goals": 0,
+      "assists": 0,
+      "potm": 0,
+      "pp": 0,
+      "cleanSheets": 0
+    }
   }
 };
