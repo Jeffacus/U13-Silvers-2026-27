@@ -30,8 +30,9 @@ function crestForTeam(team){
 
 function crestImg(team, cls='mini-crest'){
   const src = crestForTeam(team);
-  if(!src) return '<div class="crest-placeholder">?</div>';
-  return `<img class="${cls}" src="${src}" alt="${team}" loading="lazy" onerror="this.outerHTML='<div class=\"crest-placeholder\">?</div>'">`;
+  if(!src) return '<div class=\"crest-placeholder\">?</div>';
+  const safeTeam = String(team || '').replace(/&/g,'&amp;').replace(/\"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  return `<img class=\"${cls}\" src=\"${src}\" alt=\"${safeTeam}\" loading=\"lazy\">`;
 }
 
 function calcStats(){
@@ -102,11 +103,14 @@ function renderHome(){
   const topAssist=[...ps].sort((a,b)=>b.assists-a.assists||a.short.localeCompare(b.short))[0];
   const topGA=[...ps].sort((a,b)=>b.gA-a.gA||a.short.localeCompare(b.short))[0];
   const charlie=ps.find(p=>p.short==='Charlie');
+  const next = last.next;
+  const nextCrest = crestImg(next,'mini-crest small');
+  const nextTime = last.nextTime || '18:15';
   app.innerHTML=`
     <section class="hero-kpis card"><div class="eyebrow">${D.season} SEASON</div><div class="kpis">${[['P',s.played],['W',s.won],['D',s.draw],['L',s.lost],['GF',s.gf],['GA',s.ga],['GD',s.gd>=0?'+'+s.gd:s.gd]].map(x=>`<div><b>${x[0]}</b><strong>${x[1]}</strong></div>`).join('')}</div></section>
     <section class="two-col">
-      <article class="card result-card"><div class="section-head"><span>LATEST RESULT</span><small>${prettyDate(last.date)}</small></div><div class="matchup"><div class="team">${crestImg(last.opponent,'mini-crest')}<b>${last.shortOpponent}</b></div><div class="score"><div>0 <span>-</span> ${last.gf}</div><small>HT ${last.htAgainst}-${last.htFor}</small></div><div class="team">${crestImg('Westerhope United','mini-crest')}<b>WESTERHOPE<br>UNITED</b></div></div><div class="win-banner">✓ ${last.headline.toUpperCase()}</div><button class="text-link" onclick="openMatch('${last.id}')">VIEW MATCH →</button></article>
-      <article class="card next-card"><div class="section-head"><span>NEXT MATCH</span><small>${prettyDate(last.nextDate)}</small></div><div class="next-title"><div>${crestImg(last.next,'mini-crest small')}<b>${last.next.toUpperCase()}</b></div><span>V</span><div>${crestImg('Westerhope United','mini-crest small')}<b>WESTERHOPE<br>UNITED</b></div></div><div class="next-meta">📍 AWAY &nbsp; • &nbsp; ${prettyDateLong(last.nextDate)} &nbsp; • &nbsp; KICK-OFF ${last.nextTime||'TBC'}</div><button class="cta" onclick="nav('matches')">MATCHES →</button></article>
+      <article class="card result-card"><div class="section-head"><span>LATEST RESULT</span><small>${prettyDate(last.date)}</small></div><div class="matchup"><div class="team">${crestImg(last.opponent,'mini-crest')}<b>${last.shortOpponent}</b></div><div class="score"><div>${last.ga} <span>-</span> ${last.gf}</div><small>HT ${last.htAgainst}-${last.htFor}</small></div><div class="team">${crestImg('Westerhope United','mini-crest')}<b>WESTERHOPE<br>UNITED</b></div></div><div class="win-banner">✓ ${last.headline.toUpperCase()}</div><button class="text-link" onclick="openMatch('${last.id}')">VIEW MATCH →</button></article>
+      <article class="card next-card"><div class="section-head"><span>NEXT MATCH</span><small>${prettyDate(last.nextDate)}</small></div><div class="next-title"><div>${nextCrest}<b>${last.next.toUpperCase()}</b></div><span>V</span><div>${crestImg('Westerhope United','mini-crest small')}<b>WESTERHOPE<br>UNITED</b></div></div><div class="next-meta">📍 AWAY &nbsp; • &nbsp; ${prettyDateLong(last.nextDate)} &nbsp; • &nbsp; KICK-OFF ${nextTime}</div><button class="cta" onclick="nav('matches')">MATCHES →</button></article>
     </section>
     <section class="card"><div class="section-head"><span>KEY STATS</span><small>AFTER ${s.played} GAME${s.played===1?'':'S'}</small></div><div class="stat-grid">${metricCard('⚽','TOP SCORER',topScorer?.short||'—',topScorer?.goals||0)}${metricCard('🎯','ASSIST LEADER',topAssist?.short||'—',topAssist?.assists||0)}${metricCard('📈','GOAL CONTRIBUTIONS',topGA?.short||'—',topGA?.gA||0)}${metricCard('🧤','CLEAN SHEETS','Team',s.clean)}</div></section>
     <section class="two-col"><article class="card"><div class="section-head"><span>CURRENT FORM</span></div><div class="form-row">${D.matches.slice(-5).map(m=>`<span class="form ${m.gf>m.ga?'w':m.gf===m.ga?'d':'l'}">${m.gf>m.ga?'W':m.gf===m.ga?'D':'L'}</span>`).join('')}</div></article><article class="card"><div class="section-head"><span>DID YOU KNOW?</span></div><div class="didyou"><div class="bulb">💡</div><p>${charlie?.short||'Charlie'} has scored <b>${charlie?.goals||0}</b> goal${(charlie?.goals||0)===1?'':'s'} in the opening match of the 2026/27 season.</p></div></article></section>
@@ -232,11 +236,14 @@ function renderStats(){
 function renderTable(){
   const rows=(D.leagueTable||[]).map(r=>`<tr class="${r.team==='Westerhope United U13 Silvers'?'our-team':''}"><td>${r.pos}</td><td><span class="table-team">${crestImg(r.team,'table-crest')}<b>${r.team}</b></span></td><td>${r.p}</td><td>${r.w}</td><td>${r.d}</td><td>${r.l}</td><td><strong>${r.pts}</strong></td></tr>`).join('');
   const fixtures=(D.upcomingFixtures||[]).map((f,i)=>`<div class="fixture-row ${i===0?'next-fixture':''}"><div><b>${prettyDateLong(f.date)}</b><small>${f.time} • ${f.competition}</small></div><div class="fixture-teams"><span>${crestImg(f.home,'table-crest')}<b>${f.home}</b></span><em>V</em><span>${crestImg(f.away,'table-crest')}<b>${f.away}</b></span></div><small class="fixture-venue">${f.venue}</small></div>`).join('');
+  const tableUrl = 'https://fulltime.thefa.com/table.html?selectedSeason=260632843&selectedDivision=967036950&activeTab=1';
+  const resultsUrl = 'https://fulltime.thefa.com/results.html?selectedSeason=260632843&selectedFixtureGroupAgeGroup=10&selectedFixtureGroupKey=1_253565231&selectedRelatedFixtureOption=3&selectedDateCode=all';
+  const fixturesUrl = 'https://fulltime.thefa.com/fixtures.html?selectedSeason=260632843&selectedFixtureGroupAgeGroup=10&selectedFixtureGroupKey=1_253565231&selectedDateCode=all&selectedRelatedFixtureOption=3&itemsPerPage=25';
   app.innerHTML=`<section><div class="page-title">TABLE <span>///</span></div>
-    <article class="card"><div class="section-head"><span>${D.leagueName||'LEAGUE TABLE'}</span><small>OFFICIAL SNAPSHOT</small></div>
+    <article class="card"><div class="section-head"><span>${D.leagueName||'LEAGUE TABLE'}</span><small>FA FULL-TIME</small></div>
+      <div class="mini-note live-note"><b>Official snapshot:</b> ${D.leagueUpdatedNote||'Current standings from the FA Full-Time site.'} This panel is updated from the official table data; use the live link for the latest standings.</div>
       <div class="table-scroll"><table class="league-table"><thead><tr><th>POS</th><th>TEAM</th><th>P</th><th>W</th><th>D</th><th>L</th><th>PTS</th></tr></thead><tbody>${rows}</tbody></table></div>
-      <div class="table-actions"><a class="cta link" href="${D.leagueTableUrl}" target="_blank" rel="noopener">LIVE OFFICIAL TABLE →</a><a class="secondary-cta link" href="${D.leagueResultsUrl}" target="_blank" rel="noopener">OFFICIAL RESULTS →</a><a class="secondary-cta link" href="${D.leagueFixturesUrl}" target="_blank" rel="noopener">ALL FIXTURES →</a></div>
-      <div class="mini-note">${D.leagueUpdatedNote||'Live table available from the FA Full-Time site.'}</div>
+      <div class="table-actions"><a class="cta link" href="${tableUrl}" target="_blank" rel="noopener noreferrer">LIVE OFFICIAL TABLE →</a><a class="secondary-cta link" href="${resultsUrl}" target="_blank" rel="noopener noreferrer">OFFICIAL RESULTS →</a><a class="secondary-cta link" href="${fixturesUrl}" target="_blank" rel="noopener noreferrer">ALL FIXTURES →</a></div>
     </article>
     <article class="card"><div class="section-head"><span>WHAT'S NEXT</span><small>UPCOMING FIXTURES</small></div>${fixtures}</article>
   </section>`;
