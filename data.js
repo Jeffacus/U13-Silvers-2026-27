@@ -1,19 +1,19 @@
 window.WUFC_DATA = {
   season: '2026/27',
   squad: [
-    { no: 1, name: 'Johnny Collinson', short: 'Johnny', pos: 'GK', status: 'Active' },
-    { no: 2, name: 'Blake Smith', short: 'Blake', pos: 'DEF', status: 'Active' },
-    { no: 4, name: 'Kane Rogerson', short: 'Kane', pos: 'DEF', status: 'Active' },
-    { no: 5, name: 'Ewan Dodds', short: 'Ewan', pos: 'DEF', status: 'Active' },
-    { no: 6, name: 'Theo Demosthenous', short: 'Theo', pos: 'DEF', status: 'Active' },
-    { no: 7, name: 'Freddie Cowan', short: 'Freddie', pos: 'MID', status: 'Active' },
-    { no: 8, name: 'Oliver Stubbs', short: 'Oliver', pos: 'MID', status: 'Active' },
-    { no: 10, name: 'Jake Armstrong', short: 'Jake', pos: 'MID', status: 'Active' },
-    { no: 11, name: 'Ollie Anderson', short: 'Ollie', pos: 'DEF', status: 'Injured' },
-    { no: 12, name: 'Joseph Winwood', short: 'Joseph', pos: 'MID', status: 'Active' },
-    { no: 14, name: 'Charlie Mulligan', short: 'Charlie', pos: 'FWD', status: 'Active' },
-    { no: 15, name: 'Kyran Archbold', short: 'Kyran', pos: 'MID', status: 'Active' },
-    { no: 19, name: 'Yusuf Syed Ubaidur Rahman', short: 'Yusuf', pos: 'MID', status: 'Active' }
+    { no: 1, name: 'Johnny Collinson', short: 'Johnny', pos: 'GK', status: 'Active' , photo: 'assets/players/johnny-collinson.jpg' },
+    { no: 2, name: 'Blake Smith', short: 'Blake', pos: 'DEF', status: 'Active' , photo: 'assets/players/blake-smith.jpg' },
+    { no: 4, name: 'Kane Rogerson', short: 'Kane', pos: 'DEF', status: 'Active' , photo: 'assets/players/kane-rogerson.JPG' },
+    { no: 5, name: 'Ewan Dodds', short: 'Ewan', pos: 'DEF', status: 'Active' , photo: 'assets/players/ewan-dodds.JPG' },
+    { no: 6, name: 'Theo Demosthenous', short: 'Theo', pos: 'DEF', status: 'Active' , photo: 'assets/players/theo-demosthenous.JPG' },
+    { no: 7, name: 'Freddie Cowan', short: 'Freddie', pos: 'MID', status: 'Active' , photo: 'assets/players/freddie-cowan.JPG' },
+    { no: 8, name: 'Oliver Stubbs', short: 'Oliver', pos: 'MID', status: 'Active' , photo: 'assets/players/oliver-stubbs.JPG' },
+    { no: 10, name: 'Jake Armstrong', short: 'Jake', pos: 'MID', status: 'Active' , photo: 'assets/players/jake-anderson.jpg' },
+    { no: 11, name: 'Ollie Anderson', short: 'Ollie', pos: 'DEF', status: 'Injured' , photo: 'assets/players/ollie-anderson.jpg' },
+    { no: 12, name: 'Joseph Winwood', short: 'Joseph', pos: 'MID', status: 'Active' , photo: 'assets/players/joseph-winwood.jpg' },
+    { no: 14, name: 'Charlie Mulligan', short: 'Charlie', pos: 'FWD', status: 'Active' , photo: 'assets/players/charlie-mulligan.JPG' },
+    { no: 15, name: 'Kyran Archbold', short: 'Kyran', pos: 'MID', status: 'Active' , photo: 'assets/players/kyran-archbold.JPG' },
+    { no: 19, name: 'Yusuf Syed Ubaidur Rahman', short: 'Yusuf', pos: 'MID', status: 'Active' , photo: 'assets/players/yusuf-syed.jpg' }
   ],
   matches: [
     {
