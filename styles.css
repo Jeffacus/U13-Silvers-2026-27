@@ -79,3 +79,7 @@
   .league-spotlight .secondary-cta{grid-column:1 / -1;width:100%;text-align:center}
   .mini-crest{object-fit:contain}
 }
+
+/* V14 crest fallback fix: keep placeholder hidden unless image actually fails */
+.fallback-crest[hidden] { display: none !important; }
+.fallback-crest:not([hidden]) { display: flex !important; }
