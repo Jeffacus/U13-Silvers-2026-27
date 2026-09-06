@@ -35,3 +35,14 @@
 .player-card small{font-size:7px;margin:4px 8px 0;min-height:16px}
 @media(max-width:900px){.player-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}.player-photo-wrap{height:125px}.player-card .shirt-num{font-size:20px}.player-card .player-name{font-size:11px}.player-card small{font-size:6.8px}}
 @media(max-width:560px){.content{padding:9px}.player-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}.player-photo-wrap{height:105px}.player-card{border-radius:9px}.player-card .shirt-num{font-size:17px;margin-left:7px}.player-card .player-name{font-size:10px;margin-left:7px;margin-right:5px}.player-card small{font-size:6.2px;margin-left:7px;margin-right:5px}.player-placeholder span{font-size:24px}}
+
+/* V8 enhanced stats */
+.wide-snapshot{grid-template-columns:repeat(4,1fr)}
+.leader-header{display:grid;grid-template-columns:28px 1fr 60px 40px 40px 50px;gap:8px;padding:6px 0;border-bottom:1px solid #333;color:#777;font-size:8px;text-transform:uppercase;letter-spacing:1px}
+.venue-row,.hot-row{display:grid;grid-template-columns:1fr auto auto auto;gap:10px;align-items:center;padding:10px 0;border-bottom:1px solid #242424;font-size:11px}
+.venue-row span{color:#aaa}.venue-row strong{color:var(--yellow)}
+.hot-row span{color:#aaa}.hot-row strong{color:var(--yellow);font-size:10px}
+.mini-note{margin-top:12px;color:#777;font-size:10px;line-height:1.45}
+.unlock-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:9px}
+.unlock-grid div{background:#0b0b0b;border:1px solid #333;border-radius:10px;padding:11px}.unlock-grid b{display:block;color:#fff;font-size:10px}.unlock-grid span{display:block;color:#888;font-size:9px;line-height:1.35;margin-top:5px}
+@media(max-width:700px){.wide-snapshot{grid-template-columns:repeat(2,1fr)}.leader-header{grid-template-columns:24px 1fr 42px 28px 28px 34px;gap:5px;font-size:7px}.venue-row,.hot-row{grid-template-columns:1fr auto auto auto;gap:6px;font-size:9px}.hot-row strong{font-size:8px}.unlock-grid{grid-template-columns:1fr}.mini-note{font-size:9px}}
