@@ -59,3 +59,23 @@
 .crest-placeholder{width:56px;height:56px;display:flex;align-items:center;justify-content:center;margin:0 auto 6px;border:1px solid #555;border-radius:12px;background:#181818;color:#777;font-weight:900}
 .next-title>div{display:flex;flex-direction:column;align-items:center;gap:5px}.next-title .small{width:42px;height:42px}.table-team{display:flex;align-items:center;gap:8px}.table-crest{width:28px;height:28px;object-fit:contain;display:block;flex:0 0 auto}.fixture-teams span{display:flex;align-items:center;gap:7px}.fixture-teams span:last-child{justify-content:flex-end}.fixture-teams .table-crest{width:30px;height:30px}
 @media(max-width:700px){.crest-placeholder{width:48px;height:48px}.table-crest{width:24px;height:24px}.fixture-teams .table-crest{width:26px;height:26px}.fixture-teams span{gap:5px}}
+
+
+/* V13 fixes: robust club crests, mobile season KPI row, league spotlight */
+.fallback-crest{width:56px;height:56px;display:flex;align-items:center;justify-content:center;margin:0 auto 6px}
+.league-spotlight{display:grid;grid-template-columns:1fr auto auto;gap:18px;align-items:center}
+.league-spot-left{display:flex;flex-direction:column;gap:3px}.league-spot-left .eyebrow{margin:0;font-size:9px}.league-spot-left strong{font-size:40px;color:var(--yellow);line-height:1}.league-spot-left small{color:#999;font-size:9px}.league-spot-stats{display:flex;gap:10px}.league-spot-stats span{display:flex;flex-direction:column;align-items:center;min-width:46px;padding:7px 8px;border:1px solid #333;border-radius:9px;background:#0b0b0b;font-size:14px;font-weight:950}.league-spot-stats b{color:#777;font-size:7px;letter-spacing:1px;margin-bottom:2px}
+@media(max-width:700px){
+  .kpis{grid-template-columns:repeat(7,minmax(0,1fr));column-gap:0;row-gap:0}
+  .kpis div{border-right:1px solid #333!important;min-width:0}
+  .kpis div:last-child{border-right:0!important}
+  .kpis b{font-size:7px;letter-spacing:.4px}
+  .kpis strong{font-size:21px}
+  .hero-kpis{padding:10px 7px}
+  .league-spotlight{grid-template-columns:1fr auto;gap:10px}
+  .league-spot-left strong{font-size:31px}
+  .league-spot-left small{font-size:8px}
+  .league-spot-stats{gap:4px}.league-spot-stats span{min-width:38px;padding:6px 5px;font-size:12px}
+  .league-spotlight .secondary-cta{grid-column:1 / -1;width:100%;text-align:center}
+  .mini-crest{object-fit:contain}
+}
