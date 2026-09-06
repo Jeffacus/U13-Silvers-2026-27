@@ -25,3 +25,13 @@
 .player-card small{font-size:8px;line-height:1.2;margin-top:4px;min-height:18px}
 @media(max-width:900px){.player-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:9px}.player-photo-wrap{max-height:155px}.player-card .shirt-num{font-size:23px}.player-card .player-name{font-size:12px}.player-card small{font-size:7.5px}}
 @media(max-width:560px){.content{padding:9px}.player-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:7px}.player-card{border-radius:10px}.player-photo-wrap{max-height:none}.player-card .shirt-num{font-size:20px;margin-left:8px}.player-card .player-name{font-size:11px;margin-left:8px;margin-right:6px}.player-card small{font-size:7px;margin-left:8px;margin-right:6px}.player-placeholder span{font-size:28px}}
+
+/* V7: compact player grid, phone-first, one authoritative set of rules */
+.player-grid{grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.player-card{padding:0 0 9px}
+.player-photo-wrap{height:145px;aspect-ratio:auto;margin-bottom:6px}
+.player-card .shirt-num{font-size:22px;margin:5px 8px 0}
+.player-card .player-name{font-size:12px;margin:3px 8px 0}
+.player-card small{font-size:7px;margin:4px 8px 0;min-height:16px}
+@media(max-width:900px){.player-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}.player-photo-wrap{height:125px}.player-card .shirt-num{font-size:20px}.player-card .player-name{font-size:11px}.player-card small{font-size:6.8px}}
+@media(max-width:560px){.content{padding:9px}.player-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}.player-photo-wrap{height:105px}.player-card{border-radius:9px}.player-card .shirt-num{font-size:17px;margin-left:7px}.player-card .player-name{font-size:10px;margin-left:7px;margin-right:5px}.player-card small{font-size:6.2px;margin-left:7px;margin-right:5px}.player-placeholder span{font-size:24px}}
