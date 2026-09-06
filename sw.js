@@ -1,1 +1,1 @@
-// Service worker disabled during development.
+// Service worker intentionally disabled during development.

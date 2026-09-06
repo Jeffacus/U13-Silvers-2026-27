@@ -1,9 +1,9 @@
 {
-  "name": "Westerhope United U13 Silvers",
-  "short_name": "WUFC U13 Silvers",
-  "start_url": ".",
+  "name": "Westerhope U13 Silvers",
+  "short_name": "U13 Silvers",
+  "start_url": "./",
   "display": "standalone",
-  "background_color": "#050505",
-  "theme_color": "#0a0a0a",
-  "description": "Westerhope United U13 Silvers 2026/27 season hub"
+  "background_color": "#070707",
+  "theme_color": "#ffd20a",
+  "icons": []
 }
