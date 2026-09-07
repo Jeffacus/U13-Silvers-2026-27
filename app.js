@@ -45,12 +45,20 @@ function crestForTeam(team){
   return key ? CLUB_CRESTS[key] : '';
 }
 
+function escapeHtml(value){
+  return String(value ?? '').replace(/&/g,'&amp;').replace(/\"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
 function crestImg(team, cls='mini-crest'){
   const src=crestForTeam(team);
-  if(!src) return '<div class="crest-placeholder" aria-hidden="true">?</div>';
-  const safeTeam=String(team || '').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-  return `<img class="${cls}" src="${src}" alt="${safeTeam}" loading="lazy" onerror="this.style.display='none'; this.nextElementSibling?.removeAttribute('hidden')"><div class="crest-placeholder fallback-crest" hidden>?</div>`;
+  const safeTeam=escapeHtml(team || '');
+  if(!src) return '<span class="crest-slot crest-missing" aria-hidden="true">?</span>';
+  return `<span class="crest-slot"><img class="${cls}" src="${src}?v=16" alt="${safeTeam}" loading="lazy" onerror="crestFail(this)"></span>`;
 }
+function crestFail(img){
+  const slot=img && img.closest ? img.closest('.crest-slot') : null;
+  if(slot) slot.innerHTML='<span class="crest-missing" aria-hidden="true">?</span>';
+}
+window.crestFail=crestFail;
 
 function calcStats(){
   const out = Object.fromEntries(D.squad.map(p => [p.name, {...p, apps:0, starts:0, goals:0, assists:0, gA:0, potm:0, pp:0, captain:0}]));
@@ -152,6 +160,34 @@ function matchCard(m){
   <button class="cta wide" onclick="openMatch('${m.id}')">READ FULL MATCH REPORT →</button>
   </article>`;
 }
+function galleryPaths(m){
+  // Current match gallery convention: hero.jpeg plus 01.jpeg...17.jpeg.
+  if(m && m.id==='m1') return ['hero.jpeg', ...Array.from({length:17},(_,i)=>String(i+1).padStart(2,'0')+'.jpeg')];
+  return [];
+}
+function renderGallery(m){
+  const files=galleryPaths(m);
+  if(!files.length) return '<div class="gallery-empty">📸 <b>Matchday photos coming soon.</b></div>';
+  const base=`assets/matches/${m.id}/`;
+  return `<div class="match-gallery">${files.map((f,i)=>`<button class="gallery-item ${i===0?'gallery-hero':''}" type="button" onclick="openPhoto('${base}${f}','${m.shortOpponent} • ${i===0?'Match Hero':'Matchday Photo'}')"><img src="${base}${f}?v=17" alt="${m.shortOpponent} ${i===0?'match hero':'matchday photo '+(i)}" loading="lazy" onerror="this.closest('.gallery-item').style.display='none'"></button>`).join('')}</div>`;
+}
+function openPhoto(src,caption){
+  let modal=document.getElementById('photo-modal');
+  if(!modal){
+    modal=document.createElement('div');
+    modal.id='photo-modal';
+    modal.className='photo-modal';
+    modal.innerHTML='<button class="photo-close" aria-label="Close photo">×</button><div class="photo-modal-inner"><img class="photo-modal-img" alt=""><div class="photo-modal-caption"></div></div>';
+    document.body.appendChild(modal);
+    modal.querySelector('.photo-close').addEventListener('click',()=>modal.classList.remove('open'));
+    modal.addEventListener('click',e=>{ if(e.target===modal) modal.classList.remove('open'); });
+    document.addEventListener('keydown',e=>{ if(e.key==='Escape') modal.classList.remove('open'); });
+  }
+  modal.querySelector('.photo-modal-img').src=src+'?v=17';
+  modal.querySelector('.photo-modal-caption').textContent=caption||'';
+  modal.classList.add('open');
+}
+window.openPhoto=openPhoto;
 function openMatch(id){
   const m=D.matches.find(x=>x.id===id); if(!m) return;
   app.innerHTML=`<section><button class="back" onclick="nav('matches')">← BACK TO MATCHES</button><article class="card detail-card"><div class="section-head"><span>${m.venue.toUpperCase()} • ${m.competition.toUpperCase()}</span><small>${prettyDate(m.date)}</small></div><div class="detail-title"><div>${crestImg(m.opponent,'mini-crest')}<b>${m.shortOpponent}</b></div><div class="match-score"><strong>${scoreLabel(m)}</strong><small>HT ${m.htAgainst}-${m.htFor}</small></div><div>${crestImg('Westerhope United','mini-crest')}<b>WESTERHOPE<br>UNITED</b></div></div>
@@ -159,7 +195,7 @@ function openMatch(id){
   <div class="report-heading">MATCH REPORT</div>${m.report.map(p=>`<p class="report-p">${p}</p>`).join('')}
   <div class="report-heading">GOALS & ASSISTS</div><div class="goal-timeline">${m.goals.map(g=>`<div class="goal-row"><strong>${g.minute}'</strong><span class="goal-dot">⚽</span><b>${label(g.scorer)}</b>${g.assister?`<span class="assist">Assist: ${label(g.assister)}</span>`:`<span class="assist">Assist: —</span>`}</div>`).join('')}</div>
   <div class="report-heading">DEVELOPMENT NOTES</div><div class="dev-list">${m.development.map(x=>`<div class="dev-item"><b>${label(x.player)}</b><p>${x.text}</p></div>`).join('')}</div>
-  <div class="report-heading">MATCHDAY PHOTOS</div><div class="gallery-empty">📸 <b>Photos can be added here.</b><br><span>Upload selected images to <code>assets/matches/${m.id}/</code> and we can connect them to this gallery.</span></div>
+  <div class="report-heading">MATCHDAY GALLERY ///</div>${renderGallery(m)}
   <div class="summary-strip"><div><small>FULL TIME</small><b>${scoreLabel(m)}</b></div><div><small>HALF TIME</small><b>${m.htAgainst}-${m.htFor}</b></div><div><small>GOALS</small><b>${m.goals.length}</b></div><div><small>CLEAN SHEET</small><b>YES</b></div></div>
   </article></section>`;
   window.scrollTo({top:0,behavior:'smooth'});
@@ -168,13 +204,13 @@ window.openMatch=openMatch;
 
 function renderPlayers(){
   const ps=calcStats();
-  app.innerHTML=`<section><div class="page-title">SQUAD <span>///</span></div><div class="match-intro">The current Silvers squad, with shirt numbers, photographs and season-to-date stats. Tap a player for their full profile, three-season history and career milestones.</div><div class="player-grid">${ps.map(p=>`<button class="player-card" onclick="showPlayer('${escapeJs(p.name)}')"><div class="player-photo-wrap">${safePhoto(p)?`<img class="player-photo" src="${safePhoto(p)}?v=5" alt="${p.short}" loading="lazy" onerror="photoFail(this)">`:''}<div class="player-placeholder" style="display:${safePhoto(p)?'none':'flex'}"><span>#${p.no}</span></div></div><div class="shirt-num">#${p.no}</div><div class="player-name">${p.short}</div><small>${p.pos} • ${p.apps} APP • ${p.goals} G • ${p.assists} A</small></button>`).join('')}</div></section>`;
+  app.innerHTML=`<section><div class="page-title">SQUAD <span>///</span></div><div class="match-intro">The current Silvers squad, with shirt numbers, photographs and season-to-date stats. Tap a player for their full profile, three-season history and career milestones.</div><div class="player-grid">${ps.map(p=>`<button class="player-card" onclick="showPlayer('${escapeJs(p.name)}')"><div class="player-photo-wrap">${safePhoto(p)?`<img class="player-photo" src="${safePhoto(p)}?v=16" alt="${p.short}" loading="lazy" onerror="photoFail(this)">`:''}<div class="player-placeholder" style="display:${safePhoto(p)?'none':'flex'}"><span>#${p.no}</span></div></div><div class="shirt-num">#${p.no}</div><div class="player-name">${p.short}</div><small>${p.pos} • ${p.apps} APP • ${p.goals} G • ${p.assists} A</small></button>`).join('')}</div></section>`;
 }
 function photoFail(img){ img.style.display='none'; const ph=img.nextElementSibling; if(ph) ph.style.display='flex'; }
 function showPlayer(name){
   const p=calcStats().find(x=>x.name===name); if(!p) return;
   const h25=historicalFor(p.name), h24=historical2024For(p.name), career=careerFor(p.name,p), mile=playerMilestone(p.name,p);
-  const photo = safePhoto(p) ? `${safePhoto(p)}?v=9` : '';
+  const photo = safePhoto(p) ? `${safePhoto(p)}?v=16` : '';
   const mileHtml = mile ? `<div class="milestone-banner"><b>🏅 NEXT CAREER MILESTONE</b><span>${mile.next} ${mile.type.toLowerCase()} — <strong>${mile.diff}</strong> to go</span></div>` : '';
   app.innerHTML=`<section><button class="back" onclick="nav('players')">← BACK TO SQUAD</button><article class="card player-profile"><div class="profile-hero"><div class="profile-photo-wrap large">${photo?`<img class="profile-photo" src="${photo}" alt="${p.short}" onerror="photoFail(this)">`:''}<div class="player-placeholder" style="display:${photo?'none':'flex'}"><span>#${p.no}</span></div></div><div class="profile-top"><div class="profile-num">#${p.no}</div><div><div class="eyebrow">${p.short.toUpperCase()} • WESTERHOPE UNITED</div><h1>${p.name}</h1><p>${p.pos}</p>${p.status!=='Active'?`<span class="status-pill">${p.status.toUpperCase()}</span>`:''}</div></div></div>
   <div class="profile-section-title">2026/27</div><div class="profile-stats">${[['APPEARANCES',p.apps],['STARTS',p.starts],['GOALS',p.goals],['ASSISTS',p.assists],['G+A',p.gA],['POTM',p.potm],['PLAYERS’ PLAYER',p.pp],['CAPTAIN',p.captain]].map(x=>`<div><small>${x[0]}</small><b>${x[1]}</b></div>`).join('')}</div>
