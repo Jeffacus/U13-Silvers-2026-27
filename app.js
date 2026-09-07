@@ -20,6 +20,40 @@ const CLUB_CRESTS = {
   'Berwick Rangers Community Academy U13 Be': 'assets/clubs/berwick.rangers.jpeg'
 };
 
+const BLAKELAW_PREVIEW = {
+  opponent: 'Blakelaw Football Club U13 Roma',
+  shortOpponent: 'BLAKELAW FC U13 ROMA',
+  date: '2026-09-08',
+  time: '18:00',
+  venue: 'Away',
+  competition: 'NFL U13 Division 10',
+  facebook: 'https://www.facebook.com/share/r/1HfQn7ypMg/?mibextid=wwXIfr',
+  lineupImage: 'assets/matches/blakelaw/lineup.jpeg',
+  starters: ['Johnny','Kyran','Kane','Theo','Joseph','Freddie','Jake','Oliver','Charlie'],
+  bench: ['Ewan','Yusuf','Blake'],
+  unavailable: ['Ollie'],
+  paragraphs: [
+    `There hasn't been much time to enjoy the first one. After beginning life in their new division with an excellent <b>4–0 away victory at Cramlington Blue Star Milan on Sunday</b>, tomorrow night the U13 Silvers are back on the road. <b>Game Two.</b> And another very different challenge.`,
+    `Sunday gave the boys plenty to be proud of. Four goals. A clean sheet. Three points. But more importantly, <b>every single player contributed.</b> The attitude, determination, resilience and togetherness were exactly what coaches <b>Jeff Stubbs and Stephen Anderson</b> had asked for before kick-off. Tomorrow, we need it all again. Because <b>Sunday's result counts for absolutely nothing once the whistle blows at Blakelaw.</b>`,
+    `<h3>⚔️ ANOTHER PROPER TEST</h3>We know enough about Blakelaw to know there will be <b>no easy game tomorrow night</b>. They reached the semi-final of a cup competition last season and, although they've started this campaign with defeat against Bedlington, that result certainly won't have us underestimating them.`,
+    `And Silvers supporters know Bedlington rather well… last season's champions, our nemesis, and the team who eventually finished <b>just one agonising point ahead of Westerhope</b> in the race for the title. So there isn't a huge amount we're going to read into Blakelaw's opening result. Instead, tomorrow gives us another opportunity to find out a little more about <b>ourselves</b> at this new level.`,
+    `Can we compete physically again? Can we keep the ball when we're under pressure? Can we create chances? Can we show the same positivity when things don't go our way? And can we produce Sunday's work rate all over again? <b>We'll find out.</b>`,
+    `<h3>🔄 SQUAD STRENGTH</h3>There will be changes to the starting nine tomorrow. <b>Nobody who started at Cramlington has lost their place because they did anything wrong.</b> Quite the opposite. Everybody performed so well that the coaches now have the opportunity — and responsibility — to give other members of the squad the same chance to show what they can do from the first whistle. This season is going to need <b>every player</b>.`,
+    `<h3>🧤 JOHNNY</h3><b>Johnny</b> continues in goal after an excellent and mature performance on Sunday. Two important saves. One clean sheet. Tomorrow's target? <b>Make it two.</b>`,
+    `<h3>🛡️ KYRAN • KANE • THEO</h3>There's a first Silvers start for <b>Kyran</b> at right-back. Sunday was his competitive debut and, after a few understandable early nerves, his attitude shone through. His head never dropped, he kept competing and he grew into the game. Tomorrow he gets his reward: <b>a first start for the Silvers.</b>`,
+    `Alongside him, <b>Kane</b> continues in the centre following an outstanding defensive display and his <b>Players' Player of the Match</b> award. On the left is <b>Theo</b>, fresh from an excellent opening-day performance and <b>Player of the Match</b>. Sunday's two award winners plus a player making his first start — plenty to look forward to.`,
+    `<h3>⚡ JOSEPH • FREDDIE • JAKE • OLIVER</h3>After causing plenty of problems when introduced on Sunday, <b>Joseph earns a start</b> on the right. In the middle, <b>captain Freddie and Jake go again</b>. Freddie produced a genuine captain's performance, while Jake bossed large parts of the midfield and celebrated his <b>40th Silvers appearance</b> by scoring the opening goal of the season.`,
+    `On the left, <b>Oliver</b> will be looking to continue an outstanding start: <b>1 goal, 2 assists and 3 goal contributions</b> on Sunday. His goal was Silvers goal number <b>20</b>, while those assists took him to <b>10 and then 11 career assists</b>. Twenty goals. Eleven assists. Thirty-one goal contributions. And apparently the goal was a cross. <b>We're still not having it.</b> 😂🚀`,
+    `<h3>🎯 CHARLIE</h3>Leading the line again is <b>Charlie</b>. Two goals on opening day, but perhaps even more encouraging was his attitude when the chances weren't going in. Keep running. Keep competing. Forget the last opportunity. Look for the next one. Charlie currently sits on <b>29 Silvers goals</b>. The next one? <b>NUMBER 30.</b> 👀`,
+    `<h3>💪 OPTIONS FROM THE BENCH</h3><b>Ewan, Yusuf and Blake</b> provide three strong options from the bench. Ewan adapted brilliantly at left-back on Sunday, Yusuf caused problems down the right, and Blake showed one of our favourite development moments by losing one physical challenge and attacking the next one even harder and winning it. All three will have a part to play.`,
+    `We're unfortunately still without <b>Ollie</b>, who remains sidelined for the next few weeks. Another milestone waits when he returns: <b>39 Silvers appearances</b>. The next one will be #40.`,
+    `<h3>🌙 MIDWEEK FOOTBALL</h3>A full day at school. Then straight into football. Different routines. Different energy levels. A Tuesday night away from home. That's another challenge in itself. The boys will need to switch on quickly.`,
+    `<b>Sunday was excellent. But Sunday has gone.</b> Tomorrow starts <b>0–0</b>. No goals. No clean sheet. No three points. Nothing is carried over. If we want another performance like Cramlington, <b>we have to earn it all over again.</b>`,
+    `Bring the attitude. Bring the work rate. Bring the courage. Bring the belief. <b>Play for each other.</b> Jeff and Stephen simply want to see that same commitment again — another positive performance and another opportunity to give the parents and supporters something to be proud of.`,
+    `<b>GAME TWO /// LET'S GO.</b><br><br>🟡⚫ <b>UP THE HOPE ///</b>`
+  ]
+};
+
 function normaliseTeamName(team){
   return String(team || '')
     .toLowerCase()
@@ -130,13 +164,13 @@ function renderHome(){
   const charlie=ps.find(p=>p.short==='Charlie');
   const next = last.next;
   const nextCrest = crestImg(next,'mini-crest small');
-  const nextTime = last.nextTime || '18:15';
+  const nextTime = BLAKELAW_PREVIEW.time;
   app.innerHTML=`
     <section class="hero-kpis card"><div class="eyebrow">${D.season} SEASON</div><div class="kpis">${[['P',s.played],['W',s.won],['D',s.draw],['L',s.lost],['GF',s.gf],['GA',s.ga],['GD',s.gd>=0?'+'+s.gd:s.gd]].map(x=>`<div><b>${x[0]}</b><strong>${x[1]}</strong></div>`).join('')}</div></section>
     <section class="card league-spotlight"><div class="league-spot-left"><span class="eyebrow">LEAGUE POSITION</span><strong>3RD</strong><small>Northumberland Football League • U13 Division 10</small></div><div class="league-spot-stats"><span><b>P</b>1</span><span><b>PTS</b>3</span><span><b>GD</b>+4</span></div><button class="secondary-cta" onclick="nav('table')">VIEW TABLE →</button></section>
     <section class="two-col">
       <article class="card result-card"><div class="section-head"><span>LATEST RESULT</span><small>${prettyDate(last.date)}</small></div><div class="matchup"><div class="team">${crestImg(last.opponent,'mini-crest')}<b>${last.shortOpponent}</b></div><div class="score"><div>${last.ga} <span>-</span> ${last.gf}</div><small>HT ${last.htAgainst}-${last.htFor}</small></div><div class="team">${crestImg('Westerhope United','mini-crest')}<b>WESTERHOPE<br>UNITED</b></div></div><div class="win-banner">✓ ${last.headline.toUpperCase()}</div><button class="text-link" onclick="openMatch('${last.id}')">VIEW MATCH →</button></article>
-      <article class="card next-card"><div class="section-head"><span>NEXT MATCH</span><small>${prettyDate(last.nextDate)}</small></div><div class="next-title"><div>${nextCrest}<b>${last.next.toUpperCase()}</b></div><span>V</span><div>${crestImg('Westerhope United','mini-crest small')}<b>WESTERHOPE<br>UNITED</b></div></div><div class="next-meta">📍 AWAY &nbsp; • &nbsp; ${prettyDateLong(last.nextDate)} &nbsp; • &nbsp; KICK-OFF ${nextTime}</div><button class="cta" onclick="nav('matches')">MATCHES →</button></article>
+      <article class="card next-card"><div class="section-head"><span>NEXT MATCH</span><small>${prettyDate(last.nextDate)}</small></div><div class="next-title"><div>${nextCrest}<b>${last.next.toUpperCase()}</b></div><span>V</span><div>${crestImg('Westerhope United','mini-crest small')}<b>WESTERHOPE<br>UNITED</b></div></div><div class="next-meta">📍 AWAY &nbsp; • &nbsp; ${prettyDateLong(last.nextDate)} &nbsp; • &nbsp; KICK-OFF ${nextTime}</div><div class="home-preview-actions"><button class="cta" onclick="openPreview()">READ MATCH PREVIEW →</button><a class="secondary-cta" href="${BLAKELAW_PREVIEW.facebook}" target="_blank" rel="noopener">🎬 MATCHDAY VIDEO</a></div></article>
     </section>
     <section class="card"><div class="section-head"><span>KEY STATS</span><small>AFTER ${s.played} GAME${s.played===1?'':'S'}</small></div><div class="stat-grid">${metricCard('⚽','TOP SCORER',topScorer?.short||'—',topScorer?.goals||0)}${metricCard('🎯','ASSIST LEADER',topAssist?.short||'—',topAssist?.assists||0)}${metricCard('📈','GOAL CONTRIBUTIONS',topGA?.short||'—',topGA?.gA||0)}${metricCard('🧤','CLEAN SHEETS','Team',s.clean)}</div></section>
     <section class="two-col"><article class="card"><div class="section-head"><span>CURRENT FORM</span></div><div class="form-row">${D.matches.slice(-5).map(m=>`<span class="form ${m.gf>m.ga?'w':m.gf===m.ga?'d':'l'}">${m.gf>m.ga?'W':m.gf===m.ga?'D':'L'}</span>`).join('')}</div></article><article class="card"><div class="section-head"><span>DID YOU KNOW?</span></div><div class="didyou"><div class="bulb">💡</div><p>${charlie?.short||'Charlie'} has scored <b>${charlie?.goals||0}</b> goal${(charlie?.goals||0)===1?'':'s'} in the opening match of the 2026/27 season.</p></div></article></section>
@@ -146,8 +180,20 @@ function renderHome(){
 function metricCard(icon,label,name,value){return `<div class="metric"><div class="metric-icon">${icon}</div><small>${label}</small><b>${name}</b><strong>${value}</strong></div>`;}
 
 function renderMatches(){
-  app.innerHTML=`<section><div class="page-title">MATCHES <span>///</span></div><div class="match-intro">Every match gets its own record — result, starting nine, substitutes, goals, assists, awards and the full report.</div>${D.matches.slice().reverse().map(matchCard).join('')}</section>`;
+  app.innerHTML=`<section><div class="page-title">MATCHES <span>///</span></div><div class="match-intro">Pre-match previews, starting line-ups, results, reports, statistics and matchday photography — all in one season archive.</div>${upcomingMatchCard()}<div class="archive-heading">PREVIOUS MATCHES ///</div>${D.matches.slice().reverse().map(matchCard).join('')}</section>`;
 }
+function upcomingMatchCard(){
+  const p=BLAKELAW_PREVIEW;
+  return `<article class="card match-card upcoming-card"><div class="section-head"><span>UPCOMING • ${p.competition.toUpperCase()}</span><small>${prettyDate(p.date)}</small></div><div class="match-hero"><div class="hero-team">${crestImg(p.opponent,'mini-crest')}<b>${p.shortOpponent}</b></div><div class="match-score preview-v"><strong>V</strong><small>${p.time} KO</small></div><div class="hero-team">${crestImg('Westerhope United','mini-crest')}<b>WESTERHOPE<br>UNITED</b></div></div><div class="upcoming-meta">📍 AWAY &nbsp; • &nbsp; TUESDAY 8 SEPTEMBER &nbsp; • &nbsp; 18:00</div><div class="preview-buttons"><button class="cta" onclick="openPreview()">READ MATCH PREVIEW →</button><a class="secondary-cta" href="${p.facebook}" target="_blank" rel="noopener">🎬 WATCH MATCHDAY VIDEO</a></div></article>`;
+}
+function openPreview(){
+  const p=BLAKELAW_PREVIEW;
+  const starters=p.starters.map(n=>`<span class="chip">#${playerByName(n)?.no??''} ${label(n)}</span>`).join('');
+  const bench=p.bench.map(n=>`<span class="chip sub">#${playerByName(n)?.no??''} ${label(n)}</span>`).join('');
+  app.innerHTML=`<section><button class="back" onclick="nav('matches')">← BACK TO MATCHES</button><article class="card detail-card preview-detail"><div class="section-head"><span>MATCH PREVIEW • ${p.competition.toUpperCase()}</span><small>${prettyDate(p.date)}</small></div><div class="detail-title"><div>${crestImg(p.opponent,'mini-crest')}<b>${p.shortOpponent}</b></div><div class="match-score preview-v"><strong>V</strong><small>${p.time} KO</small></div><div>${crestImg('Westerhope United','mini-crest')}<b>WESTERHOPE<br>UNITED</b></div></div><div class="detail-meta"><span>📍 <b>AWAY</b></span><span>📅 <b>TUESDAY 8 SEPTEMBER</b></span><span>⏰ <b>18:00</b></span></div><div class="preview-media"><img src="${p.lineupImage}?v=22" alt="Blakelaw v Westerhope starting lineup" class="lineup-image" onerror="this.style.display='none'"><a class="cta wide" href="${p.facebook}" target="_blank" rel="noopener">🎬 WATCH MATCHDAY VIDEO ON FACEBOOK →</a></div><div class="report-heading">MATCH PREVIEW ///</div>${p.paragraphs.map(x=>`<p class="report-p preview-p">${x}</p>`).join('')}<div class="report-heading">STARTING IX ///</div><div class="chip-row">${starters}</div><div class="report-heading">BENCH ///</div><div class="chip-row">${bench}</div><div class="unavailable-note">UNAVAILABLE • OLLIE</div><div class="preview-footer"><b>MATCHDAY 02 ///</b><span>BLAKELAW • TUE 8 SEP • 18:00</span><strong>UP THE HOPE ///</strong></div></article></section>`;
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+window.openPreview=openPreview;
 function scoreLabel(m){ return m.venue==='Home' ? `${m.gf}–${m.ga}` : `${m.ga}–${m.gf}`; }
 function matchCard(m){
   const lineup = m.starters.map(n=>`<span class="chip">#${playerByName(n)?.no??''} ${label(n)}</span>`).join('');

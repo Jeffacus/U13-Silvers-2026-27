@@ -86,3 +86,19 @@
 .photo-modal-caption{color:#ddd;font-size:10px;letter-spacing:1px;text-transform:uppercase;text-align:center}
 .photo-close{position:fixed;top:14px;right:16px;width:44px;height:44px;border:1px solid #555;border-radius:50%;background:#111;color:#fff;font-size:30px;line-height:1;cursor:pointer;z-index:10000}
 @media(max-width:700px){.match-gallery{grid-template-columns:repeat(2,minmax(0,1fr));gap:6px}.gallery-hero{min-height:210px}.gallery-item{min-height:120px}.photo-modal{padding:12px}.photo-modal-img{max-height:82vh}.photo-close{top:10px;right:10px}}
+
+
+/* V22 Blakelaw pre-match hub */
+.home-preview-actions,.preview-buttons{display:flex;gap:9px;flex-wrap:wrap;margin-top:12px}
+.home-preview-actions .cta,.home-preview-actions .secondary-cta,.preview-buttons .cta,.preview-buttons .secondary-cta{flex:1;min-width:170px;text-align:center;text-decoration:none}
+.archive-heading{margin:20px 2px 10px;font-size:11px;font-weight:900;letter-spacing:2px;color:#f4d400}
+.upcoming-card{border-color:rgba(244,212,0,.38);box-shadow:0 0 0 1px rgba(244,212,0,.08) inset}
+.upcoming-meta{text-align:center;color:#bbb;font-size:10px;letter-spacing:.8px;margin:10px 0 2px}
+.preview-v strong{color:#f4d400}
+.preview-media{margin:18px 0 24px}
+.lineup-image{display:block;width:100%;max-width:760px;margin:0 auto 12px;border-radius:14px;border:1px solid #343434;box-shadow:0 18px 50px rgba(0,0,0,.35)}
+.preview-p h3{margin:18px 0 8px;color:#f4d400;font-size:14px;letter-spacing:.5px}
+.unavailable-note{margin-top:12px;padding:10px 12px;border:1px solid #3a3a3a;border-radius:9px;color:#aaa;font-size:10px;font-weight:800;letter-spacing:1px}
+.preview-footer{margin-top:24px;padding:18px;border-radius:12px;background:linear-gradient(135deg,#111,#1b1b1b);border-left:4px solid #f4d400;display:grid;gap:5px}
+.preview-footer b{color:#f4d400;letter-spacing:1.5px}.preview-footer span{color:#bbb;font-size:10px}.preview-footer strong{font-size:16px}
+@media(max-width:700px){.home-preview-actions,.preview-buttons{display:grid;grid-template-columns:1fr}.home-preview-actions .cta,.home-preview-actions .secondary-cta,.preview-buttons .cta,.preview-buttons .secondary-cta{min-width:0}.lineup-image{border-radius:10px}}
