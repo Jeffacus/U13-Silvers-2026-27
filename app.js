@@ -162,7 +162,7 @@ function matchCard(m){
 }
 function galleryPaths(m){
   // Current match gallery convention: hero.jpeg plus 01.jpeg...17.jpeg.
-  if(m && m.id==='m1') return ['hero.jpeg', ...Array.from({length:17},(_,i)=>String(i+1).padStart(2,'0')+'.jpeg')];
+  if(m && m.id==='m1') return ['hero.jpeg','01.jpeg', ...Array.from({length:16},(_,i)=>String(i+2).padStart(2,'0')+'.JPG')];
   return [];
 }
 function renderGallery(m){
@@ -170,7 +170,7 @@ function renderGallery(m){
   if(!files.length) return '<div class="gallery-empty">📸 <b>Matchday photos coming soon.</b></div>';
   const folder=(m && m.id==='m1')?'cramlington':m.id;
   const base=`assets/matches/${folder}/`;
-  return `<div class="match-gallery">${files.map((f,i)=>`<button class="gallery-item ${i===0?'gallery-hero':''}" type="button" onclick="openPhoto('${base}${f}','${m.shortOpponent} • ${i===0?'Match Hero':'Matchday Photo'}')"><img src="${base}${f}?v=18" alt="${m.shortOpponent} ${i===0?'match hero':'matchday photo '+(i)}" loading="lazy" onerror="this.closest('.gallery-item').style.display='none'"></button>`).join('')}</div>`;
+  return `<div class="match-gallery">${files.map((f,i)=>`<button class="gallery-item ${i===0?'gallery-hero':''}" type="button" onclick="openPhoto('${base}${f}','${m.shortOpponent} • ${i===0?'Match Hero':'Matchday Photo'}')"><img src="${base}${f}?v=19" alt="${m.shortOpponent} ${i===0?'match hero':'matchday photo '+(i)}" loading="lazy" onerror="this.closest('.gallery-item').style.display='none'"></button>`).join('')}</div>`;
 }
 function openPhoto(src,caption){
   let modal=document.getElementById('photo-modal');
@@ -184,7 +184,7 @@ function openPhoto(src,caption){
     modal.addEventListener('click',e=>{ if(e.target===modal) modal.classList.remove('open'); });
     document.addEventListener('keydown',e=>{ if(e.key==='Escape') modal.classList.remove('open'); });
   }
-  modal.querySelector('.photo-modal-img').src=src+'?v=18';
+  modal.querySelector('.photo-modal-img').src=src+'?v=19';
   modal.querySelector('.photo-modal-caption').textContent=caption||'';
   modal.classList.add('open');
 }
