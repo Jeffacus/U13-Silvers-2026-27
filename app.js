@@ -54,6 +54,71 @@ const BLAKELAW_PREVIEW = {
   ]
 };
 
+
+// Matchday 02 result — added after the final whistle at Blakelaw.
+// Kept in app.js so we preserve the established data.js/history/table baseline.
+if (D.matches && !D.matches.some(m => m.id === 'm2')) {
+  if (D.matches[0] && D.matches[0].id === 'm1') D.matches[0].date = '2026-09-06';
+  D.matches.push({
+    id: 'm2',
+    date: '2026-09-08',
+    competition: 'NFL U13 Division 10',
+    venue: 'Away',
+    opponent: 'Blakelaw Football Club U13 Roma',
+    shortOpponent: 'Blakelaw FC U13 Roma',
+    gf: 1, ga: 1, htFor: 1, htAgainst: 1,
+    captain: 'Freddie Cowan',
+    potm: 'Johnny Collinson',
+    playersPlayer: 'Kane Rogerson',
+    cleanSheet: false,
+    starters: ['Johnny Collinson','Kyran Archbold','Kane Rogerson','Theo Demosthenous','Joseph Winwood','Freddie Cowan','Jake Armstrong','Oliver Stubbs','Charlie Mulligan'],
+    subs: ['Ewan Dodds','Yusuf Syed Ubaidur Rahman','Blake Smith'],
+    goals: [{minute:4, scorer:'Oliver Stubbs', assister:'Joseph Winwood'}],
+    headline: 'A hard-fought point.',
+    next: 'North Shields Juniors U13 Blacks',
+    nextDate: '2026-09-13',
+    report: [
+      `Sometimes you arrive at a football pitch and know immediately that you are going to have to adapt. Tonight was definitely one of those nights. The Silvers arrived at Blakelaw for their first midweek fixture of the season on a high following Sunday's excellent <b>4–0 victory at Cramlington</b>.`,
+      `During the warm-up it quickly became apparent that this would be a very different test. The wind was absolutely howling, while the pitch was one of the most undulating surfaces this group has played on, with a huge drop from one side to the other and long grass helping the ball hold up. Pretty football was never going to be easy. <b>Adaptability, physicality and graft were going to matter.</b>`,
+      `<h3>🏅 A FIRST START FOR KYRAN</h3>After making his competitive debut on Sunday and growing brilliantly into the game, <b>Kyran Archbold made his first start for the Silvers</b> at right-back. Joseph was also rewarded with a start on the right after impressing from the bench against Cramlington. Nobody had lost a place because they had performed badly; the coaches wanted to use the strength of the squad and give players who had earned their opportunity a chance from the first whistle.`,
+      `The starting nine was Johnny in goal; Kyran, Kane and Theo in defence; Joseph, captain Freddie, Jake and Oliver across midfield; and Charlie leading the line. Ewan, Yusuf and Blake provided the options from the bench, while Ollie remained unavailable through injury and stays on 39 Silvers appearances.`,
+      `<h3>⚽ 4' | BLAKELAW 0–1 WESTERHOPE | OLIVER</h3>Westerhope kicked off with the gale behind them. Four minutes in, <b>Jake won possession in midfield</b> and played an excellent ball between Blakelaw's centre-back and left-back into Joseph. Joseph drove a powerful effort across goal; the keeper produced a fantastic save but could not hold it. Arriving from the left, <b>Oliver took one touch and lashed the rebound underneath the goalkeeper.</b>`,
+      `After reaching his 20th Silvers goal on Sunday, Oliver did not wait long for <b>goal number 21</b>. Joseph's effort created the chance and is recorded as the assist. Two games, two goals for Oliver and a flying start to the new season.`,
+      `<h3>⚔️ A PROPER BATTLE</h3>From there it became exactly the competitive game expected. Freddie and Jake battled for everything in midfield, while attacks down both sides were repeatedly snuffed out. At times Westerhope were a little too eager to use the wind, with long passes becoming hit-and-hope balls that travelled through to the Blakelaw goalkeeper rather than allowing the Silvers to build possession.`,
+      `On 15 minutes the ball broke to Joseph, whose effort flew just over the bar. Westerhope were creating chances, but an earlier incident had already forced a change: Charlie, chasing down the Blakelaw defence, blocked a clearance and the ball ricocheted painfully into his thumb. He tried to continue but eventually had to come off. Joseph moved centrally and <b>Yusuf</b> entered on the right, and the enforced reshuffle unsettled the Silvers for a spell.`,
+      `A long goal kick was then not dealt with cleanly and Blakelaw capitalised to make it <b>1–1</b>. Importantly, no heads dropped.`,
+      `<h3>😱 HOW DID THAT STAY OUT?</h3>On 24 minutes Oliver's throw found Theo, who returned the ball before making a superb run into the box. Oliver found him again and Theo produced an acrobatic effort that looked destined for goal, only for Blakelaw to somehow clear it off the line. Ewan was also introduced as both sides continued to change personnel and search for an advantage.`,
+      `<b>HALF-TIME: BLAKELAW 1–1 WESTERHOPE.</b> The Silvers had opportunities to go in ahead, but now faced the bigger challenge: the entire second half directly into the gale.`,
+      `<h3>🌬️ SECOND HALF | DIG IN</h3>Blakelaw immediately tried to exploit the conditions with long, booming balls over the top. Kane, Kyran, Theo and Ewan had to stay switched on, attacking headers, making clearances and getting bodies in the way. Sometimes it was pretty; sometimes absolutely not. But it was effective.`,
+      `<h3>🧤 JOHNNY WAS OUTSTANDING</h3>The opening ten minutes of the second half brought Blakelaw's strongest spell, and Johnny kept answering every question. Save after save, some leaving everyone wondering quite how he had kept the ball out. His alertness, bravery, positioning and maturity were exceptional. At the other end Theo produced another fantastic strike, only to be denied by an equally impressive save from the Blakelaw goalkeeper.`,
+      `<h3>🧱 SILVERS DIG DEEP</h3>As the half progressed, this became a game about competing. Kane was immense again, attacking a barrage of corners and putting his body on the line. Freddie made important interceptions at the front post. Theo kept battling, Ewan worked hard after being introduced and Kyran gave everything on his first start until understandably beginning to tire late on.`,
+      `When Kyran's work was done, <b>Blake stepped in</b> and made another encouraging contribution, immediately trying to stop the danger high up the pitch and cutting out long balls before they could become attacks.`,
+      `<h3>💪 GETTING PHYSICAL</h3>There were signs throughout the team that the Silvers are beginning to understand the physical demands of their new division. Oliver was putting himself about more than we might have seen last season, conceding a few free kicks but showing a greater willingness to compete. Kane continued to set the standard and others are beginning to follow.`,
+      `The contest also left a few walking wounded. Joseph took a painful knock around the face and nose, Kane was caught and stamped on during another challenge, Freddie finished with a knock, and Charlie's thumb had already caused his first-half withdrawal. Definitely a night where the first question afterwards was: <b>“Everybody still in one piece?”</b> 😂`,
+      `<h3>⚽ CHARLIE RETURNS</h3>Charlie was not finished. Despite the problem with his hand, he wanted another go and returned to the action. A long ball came towards Oliver and his first touch was absolutely beautiful, killing the ball before playing inside to Charlie. Charlie drove at Blakelaw's defence, where their number 14 — an outstanding centre-back who would have been our pick as Blakelaw's standout player — read the situation superbly and halted his progress.`,
+      `The ball broke to Jake, who played down the channel towards Joseph. Joseph moved it inside to Yusuf, who took a touch and struck, but the effort went over. Another opportunity gone, and perhaps a moment that summed up the evening: the chances were there, but Westerhope could not quite take enough of them.`,
+      `<h3>⏱️ FULL TIME | BLAKELAW 1–1 WESTERHOPE</h3>A point, and probably on balance the right result. But the reaction afterwards was interesting. <b>Last season, we probably lose that game.</b> The conditions, the physical battle, losing Charlie during the first half, playing into a gale, long balls and corners raining down — there were plenty of opportunities for the Silvers to lose control. They did not.`,
+      `And perhaps the biggest sign of progress was that the boys seemed <b>disappointed they had not won it</b>. Last season perhaps we are delighted simply to survive that second half and come away with something. Tonight there was a feeling that, had we taken our first-half chances, all three points were there. That is not arrogance. <b>That is growing belief.</b>`,
+      `<h3>🏆 PLAYER OF THE MATCH — JOHNNY</h3>Absolutely outstanding. When Westerhope needed him, Johnny was there. Save after save in difficult conditions, excellent concentration and some genuinely superb goalkeeping. After keeping a clean sheet on his 40th Silvers appearance on Sunday, appearance <b>#41</b> produced another huge performance. Thoroughly deserved.`,
+      `<h3>🏆 PLAYERS' PLAYER — KANE</h3>Two games. <b>Two Players' Player awards.</b> Another beast of a defensive performance: headers, interceptions, starting attacks, putting his body on the line, getting hurt, getting back up and going again. That is exactly the mentality we want as part of the <b>Silvers DNA</b>.`,
+      `<h3>👏 EVERYBODY CONTRIBUTED</h3>Johnny was outstanding. Kyran competed brilliantly on his first start. Kane produced another enormous defensive performance. Theo defended strongly and came incredibly close to scoring. Freddie put in another huge captain's shift. Jake battled throughout and kept looking for the pass to unlock Blakelaw. Joseph earned his start, created the opening goal and kept causing problems despite a nasty knock. Oliver scored career goal #21 and showed another step forward physically. Charlie was forced off but showed his determination by returning. Yusuf worked the right-hand side and came close to finding a winner. Ewan once again adapted when introduced and helped deal with the second-half pressure. Blake came in late and aggressively stopped danger before it developed. Ollie remained unavailable but very much part of the squad.`,
+      `<h3>📊 TWO GAMES IN</h3><b>Played 2 • Won 1 • Drawn 1 • Lost 0 • Goals For 5 • Goals Against 1 • Four points from six.</b> Not a bad start to life in the new division, but plenty to learn, plenty to improve and plenty more to come.`,
+      `Next up: <b>North Shields on Sunday.</b> Another test, another opportunity and another chance to see what these boys can do.`,
+      `Thank you to all the parents and supporters who came along in ridiculous conditions, and a special thank you to <b>Dave for running the line</b>. The boys grafted, competed and refused to buckle. Perhaps most importantly, they came away disappointed with a point. That tells us something.`,
+      `<b>UP THE HOPE ///</b>`
+    ],
+    development: [
+      {player:'Kyran Archbold', text:'First Silvers start and competed brilliantly at right-back until tiring late in a demanding game.'},
+      {player:'Johnny Collinson', text:'Outstanding concentration and a series of crucial saves in the second half earned Player of the Match.'},
+      {player:'Kane Rogerson', text:'Set the physical standard again with headers, interceptions and blocks; Players’ Player for the second game running.'},
+      {player:'Blake Smith', text:'Entered late and defended proactively, stopping long balls and danger higher up the pitch.'},
+      {player:'Oliver Stubbs', text:'Scored career goal #21 and showed growing confidence in the physical side of the game.'},
+      {player:'Charlie Mulligan', text:'Returned after a painful thumb injury and immediately wanted to attack the defence again.'}
+    ],
+    gallery: []
+  });
+}
+
 function normaliseTeamName(team){
   return String(team || '')
     .toLowerCase()
@@ -164,23 +229,24 @@ function renderHome(){
   const charlie=ps.find(p=>p.short==='Charlie');
   const next = last.next;
   const nextCrest = crestImg(next,'mini-crest small');
-  const nextTime = BLAKELAW_PREVIEW.time;
+  const nextTime = last.id==='m1' ? BLAKELAW_PREVIEW.time : 'TBC';
+  const nextActions = last.id==='m1' ? `<div class="home-preview-actions"><button class="cta" onclick="openPreview()">READ MATCH PREVIEW →</button><a class="secondary-cta" href="${BLAKELAW_PREVIEW.facebook}" target="_blank" rel="noopener">🎬 MATCHDAY VIDEO</a></div>` : `<div class="home-preview-actions"><span class="secondary-cta disabled-link">PREVIEW COMING SOON</span></div>`;
   app.innerHTML=`
     <section class="hero-kpis card"><div class="eyebrow">${D.season} SEASON</div><div class="kpis">${[['P',s.played],['W',s.won],['D',s.draw],['L',s.lost],['GF',s.gf],['GA',s.ga],['GD',s.gd>=0?'+'+s.gd:s.gd]].map(x=>`<div><b>${x[0]}</b><strong>${x[1]}</strong></div>`).join('')}</div></section>
     <section class="card league-spotlight"><div class="league-spot-left"><span class="eyebrow">LEAGUE POSITION</span><strong>3RD</strong><small>Northumberland Football League • U13 Division 10</small></div><div class="league-spot-stats"><span><b>P</b>1</span><span><b>PTS</b>3</span><span><b>GD</b>+4</span></div><button class="secondary-cta" onclick="nav('table')">VIEW TABLE →</button></section>
     <section class="two-col">
       <article class="card result-card"><div class="section-head"><span>LATEST RESULT</span><small>${prettyDate(last.date)}</small></div><div class="matchup"><div class="team">${crestImg(last.opponent,'mini-crest')}<b>${last.shortOpponent}</b></div><div class="score"><div>${last.ga} <span>-</span> ${last.gf}</div><small>HT ${last.htAgainst}-${last.htFor}</small></div><div class="team">${crestImg('Westerhope United','mini-crest')}<b>WESTERHOPE<br>UNITED</b></div></div><div class="win-banner">✓ ${last.headline.toUpperCase()}</div><button class="text-link" onclick="openMatch('${last.id}')">VIEW MATCH →</button></article>
-      <article class="card next-card"><div class="section-head"><span>NEXT MATCH</span><small>${prettyDate(last.nextDate)}</small></div><div class="next-title"><div>${nextCrest}<b>${last.next.toUpperCase()}</b></div><span>V</span><div>${crestImg('Westerhope United','mini-crest small')}<b>WESTERHOPE<br>UNITED</b></div></div><div class="next-meta">📍 AWAY &nbsp; • &nbsp; ${prettyDateLong(last.nextDate)} &nbsp; • &nbsp; KICK-OFF ${nextTime}</div><div class="home-preview-actions"><button class="cta" onclick="openPreview()">READ MATCH PREVIEW →</button><a class="secondary-cta" href="${BLAKELAW_PREVIEW.facebook}" target="_blank" rel="noopener">🎬 MATCHDAY VIDEO</a></div></article>
+      <article class="card next-card"><div class="section-head"><span>NEXT MATCH</span><small>${prettyDate(last.nextDate)}</small></div><div class="next-title"><div>${nextCrest}<b>${last.next.toUpperCase()}</b></div><span>V</span><div>${crestImg('Westerhope United','mini-crest small')}<b>WESTERHOPE<br>UNITED</b></div></div><div class="next-meta">📍 AWAY &nbsp; • &nbsp; ${prettyDateLong(last.nextDate)} &nbsp; • &nbsp; KICK-OFF ${nextTime}</div>${nextActions}</article>
     </section>
     <section class="card"><div class="section-head"><span>KEY STATS</span><small>AFTER ${s.played} GAME${s.played===1?'':'S'}</small></div><div class="stat-grid">${metricCard('⚽','TOP SCORER',topScorer?.short||'—',topScorer?.goals||0)}${metricCard('🎯','ASSIST LEADER',topAssist?.short||'—',topAssist?.assists||0)}${metricCard('📈','GOAL CONTRIBUTIONS',topGA?.short||'—',topGA?.gA||0)}${metricCard('🧤','CLEAN SHEETS','Team',s.clean)}</div></section>
-    <section class="two-col"><article class="card"><div class="section-head"><span>CURRENT FORM</span></div><div class="form-row">${D.matches.slice(-5).map(m=>`<span class="form ${m.gf>m.ga?'w':m.gf===m.ga?'d':'l'}">${m.gf>m.ga?'W':m.gf===m.ga?'D':'L'}</span>`).join('')}</div></article><article class="card"><div class="section-head"><span>DID YOU KNOW?</span></div><div class="didyou"><div class="bulb">💡</div><p>${charlie?.short||'Charlie'} has scored <b>${charlie?.goals||0}</b> goal${(charlie?.goals||0)===1?'':'s'} in the opening match of the 2026/27 season.</p></div></article></section>
+    <section class="two-col"><article class="card"><div class="section-head"><span>CURRENT FORM</span></div><div class="form-row">${D.matches.slice(-5).map(m=>`<span class="form ${m.gf>m.ga?'w':m.gf===m.ga?'d':'l'}">${m.gf>m.ga?'W':m.gf===m.ga?'D':'L'}</span>`).join('')}</div></article><article class="card"><div class="section-head"><span>DID YOU KNOW?</span></div><div class="didyou"><div class="bulb">💡</div><p><b>Four points from six:</b> the Silvers are unbeaten after two games, with ${s.gf} goals scored and ${s.ga} conceded.</p></div></article></section>
     <section class="card"><div class="section-head"><span>MILESTONE WATCH</span><small>CAREER</small></div>${milestoneWatch().slice(0,3).map(x=>`<div class="mile-row"><b>#${x.p.no} ${x.p.short}</b><span>${x.m.next} ${x.m.type.toLowerCase()}</span><strong>${x.m.diff} to go</strong></div>`).join('')}</section>
     <section class="card quote"><span class="slash">///</span><b>MORE THAN A TEAM. A COMMUNITY.</b><span class="slash">///</span></section>`;
 }
 function metricCard(icon,label,name,value){return `<div class="metric"><div class="metric-icon">${icon}</div><small>${label}</small><b>${name}</b><strong>${value}</strong></div>`;}
 
 function renderMatches(){
-  app.innerHTML=`<section><div class="page-title">MATCHES <span>///</span></div><div class="match-intro">Pre-match previews, starting line-ups, results, reports, statistics and matchday photography — all in one season archive.</div>${upcomingMatchCard()}<div class="archive-heading">PREVIOUS MATCHES ///</div>${D.matches.slice().reverse().map(matchCard).join('')}</section>`;
+  app.innerHTML=`<section><div class="page-title">MATCHES <span>///</span></div><div class="match-intro">Pre-match previews, starting line-ups, results, reports, statistics and matchday photography — all in one season archive.</div><div class="archive-heading">MATCH ARCHIVE ///</div>${D.matches.slice().reverse().map(matchCard).join('')}</section>`;
 }
 function upcomingMatchCard(){
   const p=BLAKELAW_PREVIEW;
@@ -199,7 +265,7 @@ function matchCard(m){
   const lineup = m.starters.map(n=>`<span class="chip">#${playerByName(n)?.no??''} ${label(n)}</span>`).join('');
   const subs = m.subs.map(n=>`<span class="chip sub">#${playerByName(n)?.no??''} ${label(n)}</span>`).join('');
   return `<article class="card match-card"><div class="section-head"><span>${m.venue.toUpperCase()} • ${m.competition.toUpperCase()}</span><small>${prettyDate(m.date)}</small></div><div class="match-hero"><div class="hero-team">${crestImg(m.opponent,'mini-crest')}<b>${m.shortOpponent}</b></div><div class="match-score"><strong>${scoreLabel(m)}</strong><small>HALF TIME ${m.htAgainst}-${m.htFor}</small></div><div class="hero-team">${crestImg('Westerhope United','mini-crest')}<b>WESTERHOPE<br>UNITED</b></div></div>
-  <div class="match-flags"><span>🏆 PLAYER OF THE MATCH: <b>${label(m.potm)}</b></span><span>🏆 PLAYERS' PLAYER: <b>${label(m.playersPlayer)}</b></span><span>🧤 CLEAN SHEET</span><span>©️ CAPTAIN: <b>${label(m.captain)}</b></span></div>
+  <div class="match-flags"><span>🏆 PLAYER OF THE MATCH: <b>${label(m.potm)}</b></span><span>🏆 PLAYERS' PLAYER: <b>${label(m.playersPlayer)}</b></span>${m.cleanSheet?`<span>🧤 CLEAN SHEET</span>`:''}<span>©️ CAPTAIN: <b>${label(m.captain)}</b></span></div>
   <div class="subheading">GOALS</div><div class="goal-timeline">${m.goals.map(g=>`<div class="goal-row"><strong>${g.minute}'</strong><span class="goal-dot">⚽</span><b>${label(g.scorer)}</b>${g.assister?`<span class="assist">(${label(g.assister)})</span>`:`<span class="assist">No assist recorded</span>`}</div>`).join('')}</div>
   <div class="subheading">STARTING XI</div><div class="chip-row">${lineup}</div>
   <div class="subheading">SUBSTITUTES USED</div><div class="chip-row">${subs}</div>
@@ -238,12 +304,12 @@ window.openPhoto=openPhoto;
 function openMatch(id){
   const m=D.matches.find(x=>x.id===id); if(!m) return;
   app.innerHTML=`<section><button class="back" onclick="nav('matches')">← BACK TO MATCHES</button><article class="card detail-card"><div class="section-head"><span>${m.venue.toUpperCase()} • ${m.competition.toUpperCase()}</span><small>${prettyDate(m.date)}</small></div><div class="detail-title"><div>${crestImg(m.opponent,'mini-crest')}<b>${m.shortOpponent}</b></div><div class="match-score"><strong>${scoreLabel(m)}</strong><small>HT ${m.htAgainst}-${m.htFor}</small></div><div>${crestImg('Westerhope United','mini-crest')}<b>WESTERHOPE<br>UNITED</b></div></div>
-  <div class="detail-meta"><span>©️ Captain: <b>${label(m.captain)}</b></span><span>🏆 POTM: <b>${label(m.potm)}</b></span><span>🏆 Players' Player: <b>${label(m.playersPlayer)}</b></span><span>🧤 Clean Sheet</span></div>
-  <div class="report-heading">MATCH REPORT</div>${m.report.map(p=>`<p class="report-p">${p}</p>`).join('')}
+  <div class="detail-meta"><span>©️ Captain: <b>${label(m.captain)}</b></span><span>🏆 POTM: <b>${label(m.potm)}</b></span><span>🏆 Players' Player: <b>${label(m.playersPlayer)}</b></span>${m.cleanSheet?`<span>🧤 Clean Sheet</span>`:''}</div>
+  ${m.id==='m2'?`<div class="report-heading">PRE-MATCH ARCHIVE ///</div><div class="preview-media"><img src="${BLAKELAW_PREVIEW.lineupImage}?v=24" alt="Blakelaw starting lineup" class="lineup-image" onerror="this.style.display='none'"><a class="cta wide" href="${BLAKELAW_PREVIEW.facebook}" target="_blank" rel="noopener">🎬 VIEW PRE-MATCH FACEBOOK POST →</a><button class="secondary-cta wide" onclick="openPreview()">READ ORIGINAL MATCH PREVIEW →</button></div>`:''}<div class="report-heading">MATCH REPORT</div>${m.report.map(p=>`<p class="report-p">${p}</p>`).join('')}
   <div class="report-heading">GOALS & ASSISTS</div><div class="goal-timeline">${m.goals.map(g=>`<div class="goal-row"><strong>${g.minute}'</strong><span class="goal-dot">⚽</span><b>${label(g.scorer)}</b>${g.assister?`<span class="assist">Assist: ${label(g.assister)}</span>`:`<span class="assist">Assist: —</span>`}</div>`).join('')}</div>
   <div class="report-heading">DEVELOPMENT NOTES</div><div class="dev-list">${m.development.map(x=>`<div class="dev-item"><b>${label(x.player)}</b><p>${x.text}</p></div>`).join('')}</div>
   <div class="report-heading">MATCHDAY GALLERY ///</div>${renderGallery(m)}
-  <div class="summary-strip"><div><small>FULL TIME</small><b>${scoreLabel(m)}</b></div><div><small>HALF TIME</small><b>${m.htAgainst}-${m.htFor}</b></div><div><small>GOALS</small><b>${m.goals.length}</b></div><div><small>CLEAN SHEET</small><b>YES</b></div></div>
+  <div class="summary-strip"><div><small>FULL TIME</small><b>${scoreLabel(m)}</b></div><div><small>HALF TIME</small><b>${m.htAgainst}-${m.htFor}</b></div><div><small>GOALS</small><b>${m.goals.length}</b></div><div><small>CLEAN SHEET</small><b>${m.cleanSheet?'YES':'NO'}</b></div></div>
   </article></section>`;
   window.scrollTo({top:0,behavior:'smooth'});
 }
