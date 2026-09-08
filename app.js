@@ -77,6 +77,9 @@ if (D.matches && !D.matches.some(m => m.id === 'm2')) {
     headline: 'A hard-fought point.',
     next: 'North Shields Juniors U13 Blacks',
     nextDate: '2026-09-13',
+    nextTime: '09:30',
+    nextVenue: 'Valley View',
+    nextHome: true,
     report: [
       `Sometimes you arrive at a football pitch and know immediately that you are going to have to adapt. Tonight was definitely one of those nights. The Silvers arrived at Blakelaw for their first midweek fixture of the season on a high following Sunday's excellent <b>4–0 victory at Cramlington</b>.`,
       `During the warm-up it quickly became apparent that this would be a very different test. The wind was absolutely howling, while the pitch was one of the most undulating surfaces this group has played on, with a huge drop from one side to the other and long grass helping the ball hold up. Pretty football was never going to be easy. <b>Adaptability, physicality and graft were going to matter.</b>`,
@@ -229,14 +232,19 @@ function renderHome(){
   const charlie=ps.find(p=>p.short==='Charlie');
   const next = last.next;
   const nextCrest = crestImg(next,'mini-crest small');
-  const nextTime = last.id==='m1' ? BLAKELAW_PREVIEW.time : 'TBC';
+  const nextTime = last.nextTime || (last.id==='m1' ? BLAKELAW_PREVIEW.time : 'TBC');
+  const nextVenue = last.nextVenue || (last.nextHome ? 'Valley View' : 'Away');
+  const nextHome = !!last.nextHome;
   const nextActions = last.id==='m1' ? `<div class="home-preview-actions"><button class="cta" onclick="openPreview()">READ MATCH PREVIEW →</button><a class="secondary-cta" href="${BLAKELAW_PREVIEW.facebook}" target="_blank" rel="noopener">🎬 MATCHDAY VIDEO</a></div>` : `<div class="home-preview-actions"><span class="secondary-cta disabled-link">PREVIEW COMING SOON</span></div>`;
+  const nextTeams = nextHome
+    ? `<div>${crestImg('Westerhope United','mini-crest small')}<b>WESTERHOPE<br>UNITED</b></div><span>V</span><div>${nextCrest}<b>${last.next.toUpperCase()}</b></div>`
+    : `<div>${nextCrest}<b>${last.next.toUpperCase()}</b></div><span>V</span><div>${crestImg('Westerhope United','mini-crest small')}<b>WESTERHOPE<br>UNITED</b></div>`;
   app.innerHTML=`
     <section class="hero-kpis card"><div class="eyebrow">${D.season} SEASON</div><div class="kpis">${[['P',s.played],['W',s.won],['D',s.draw],['L',s.lost],['GF',s.gf],['GA',s.ga],['GD',s.gd>=0?'+'+s.gd:s.gd]].map(x=>`<div><b>${x[0]}</b><strong>${x[1]}</strong></div>`).join('')}</div></section>
-    <section class="card league-spotlight"><div class="league-spot-left"><span class="eyebrow">LEAGUE POSITION</span><strong>3RD</strong><small>Northumberland Football League • U13 Division 10</small></div><div class="league-spot-stats"><span><b>P</b>1</span><span><b>PTS</b>3</span><span><b>GD</b>+4</span></div><button class="secondary-cta" onclick="nav('table')">VIEW TABLE →</button></section>
+    <section class="card league-spotlight"><div class="league-spot-left"><span class="eyebrow">LEAGUE SNAPSHOT</span><strong>4 PTS</strong><small>Northumberland Football League • U13 Division 10</small></div><div class="league-spot-stats"><span><b>P</b>2</span><span><b>PTS</b>4</span><span><b>GD</b>+4</span></div><button class="secondary-cta" onclick="nav('table')">VIEW TABLE →</button></section>
     <section class="two-col">
       <article class="card result-card"><div class="section-head"><span>LATEST RESULT</span><small>${prettyDate(last.date)}</small></div><div class="matchup"><div class="team">${crestImg(last.opponent,'mini-crest')}<b>${last.shortOpponent}</b></div><div class="score"><div>${last.ga} <span>-</span> ${last.gf}</div><small>HT ${last.htAgainst}-${last.htFor}</small></div><div class="team">${crestImg('Westerhope United','mini-crest')}<b>WESTERHOPE<br>UNITED</b></div></div><div class="win-banner">✓ ${last.headline.toUpperCase()}</div><button class="text-link" onclick="openMatch('${last.id}')">VIEW MATCH →</button></article>
-      <article class="card next-card"><div class="section-head"><span>NEXT MATCH</span><small>${prettyDate(last.nextDate)}</small></div><div class="next-title"><div>${nextCrest}<b>${last.next.toUpperCase()}</b></div><span>V</span><div>${crestImg('Westerhope United','mini-crest small')}<b>WESTERHOPE<br>UNITED</b></div></div><div class="next-meta">📍 AWAY &nbsp; • &nbsp; ${prettyDateLong(last.nextDate)} &nbsp; • &nbsp; KICK-OFF ${nextTime}</div>${nextActions}</article>
+      <article class="card next-card"><div class="section-head"><span>NEXT MATCH</span><small>${prettyDate(last.nextDate)}</small></div><div class="next-title">${nextTeams}</div><div class="next-meta">📍 ${nextHome ? 'HOME • '+nextVenue : 'AWAY'} &nbsp; • &nbsp; ${prettyDateLong(last.nextDate)} &nbsp; • &nbsp; KICK-OFF ${nextTime}</div>${nextActions}</article>
     </section>
     <section class="card"><div class="section-head"><span>KEY STATS</span><small>AFTER ${s.played} GAME${s.played===1?'':'S'}</small></div><div class="stat-grid">${metricCard('⚽','TOP SCORER',topScorer?.short||'—',topScorer?.goals||0)}${metricCard('🎯','ASSIST LEADER',topAssist?.short||'—',topAssist?.assists||0)}${metricCard('📈','GOAL CONTRIBUTIONS',topGA?.short||'—',topGA?.gA||0)}${metricCard('🧤','CLEAN SHEETS','Team',s.clean)}</div></section>
     <section class="two-col"><article class="card"><div class="section-head"><span>CURRENT FORM</span></div><div class="form-row">${D.matches.slice(-5).map(m=>`<span class="form ${m.gf>m.ga?'w':m.gf===m.ga?'d':'l'}">${m.gf>m.ga?'W':m.gf===m.ga?'D':'L'}</span>`).join('')}</div></article><article class="card"><div class="section-head"><span>DID YOU KNOW?</span></div><div class="didyou"><div class="bulb">💡</div><p><b>Four points from six:</b> the Silvers are unbeaten after two games, with ${s.gf} goals scored and ${s.ga} conceded.</p></div></article></section>
@@ -403,14 +411,14 @@ function renderStats(){
 function renderTable(){
   const rows=(D.leagueTable||[]).map(r=>`<tr class="${r.team==='Westerhope United U13 Silvers'?'our-team':''}"><td>${r.pos}</td><td><span class="table-team">${crestImg(r.team,'table-crest')}<b>${r.team}</b></span></td><td>${r.p}</td><td>${r.w}</td><td>${r.d}</td><td>${r.l}</td><td><strong>${r.pts}</strong></td></tr>`).join('');
   const fixtures=(D.upcomingFixtures||[]).map((f,i)=>`<div class="fixture-row ${i===0?'next-fixture':''}"><div><b>${prettyDateLong(f.date)}</b><small>${f.time} • ${f.competition}</small></div><div class="fixture-teams"><span>${crestImg(f.home,'table-crest')}<b>${f.home}</b></span><em>V</em><span>${crestImg(f.away,'table-crest')}<b>${f.away}</b></span></div><small class="fixture-venue">${f.venue}</small></div>`).join('');
-  const tableUrl = 'https://fulltime.thefa.com/table.html?selectedSeason=260632843&selectedDivision=967036950&ftsTablePageContent.fixtureAnalysisForm.standingsTableDay=6&ftsTablePageContent.fixtureAnalysisForm.standingsTableMonth=8&ftsTablePageContent.fixtureAnalysisForm.standingsTableYear=2026&activeTab=1';
+  const tableUrl = 'https://fulltime.thefa.com/index.html?league=136980506';
   const resultsUrl = 'https://fulltime.thefa.com/results.html?selectedSeason=260632843&selectedFixtureGroupAgeGroup=10&selectedFixtureGroupKey=1_253565231&selectedRelatedFixtureOption=3&selectedDateCode=all&previousSelectedFixtureGroupAgeGroup=10&previousSelectedFixtureGroupKey=&previousSelectedClub=';
   const fixturesUrl = 'https://fulltime.thefa.com/fixtures.html?selectedSeason=260632843&selectedFixtureGroupAgeGroup=10&selectedFixtureGroupKey=1_253565231&selectedDateCode=all&selectedClub=&selectedTeam=&selectedRelatedFixtureOption=3&selectedFixtureDateStatus=&selectedFixtureStatus=&previousSelectedFixtureGroupAgeGroup=10&previousSelectedFixtureGroupKey=2_117640819&previousSelectedClub=&itemsPerPage=25';
   app.innerHTML=`<section><div class="page-title">TABLE <span>///</span></div>
     <article class="card"><div class="section-head"><span>LEAGUE TABLE</span><small>FA FULL-TIME • U13 DIVISION 10</small></div>
-      <div class="mini-note live-note"><b>Current official snapshot:</b> ${D.leagueUpdatedNote||'Current standings from the FA Full-Time site.'} Use <b>LIVE OFFICIAL TABLE</b> for the latest FA Full-Time standings.</div>
+      <div class="mini-note live-note"><b>Current official snapshot:</b> ${D.leagueUpdatedNote||'Current standings from the FA Full-Time site.'} Snapshot updated after the Blakelaw match. Use <b>FA FULL-TIME</b> to navigate to the latest official standings; direct division links can change on the FA site.</div>
       <div class="table-scroll"><table class="league-table"><thead><tr><th>POS</th><th>TEAM</th><th>P</th><th>W</th><th>D</th><th>L</th><th>PTS</th></tr></thead><tbody>${rows}</tbody></table></div>
-      <div class="table-actions"><a class="cta link" href="${tableUrl}" target="_blank" rel="noopener noreferrer">OPEN LIVE OFFICIAL TABLE →</a><a class="secondary-cta link" href="${resultsUrl}" target="_blank" rel="noopener noreferrer">OFFICIAL RESULTS →</a><a class="secondary-cta link" href="${fixturesUrl}" target="_blank" rel="noopener noreferrer">ALL FIXTURES →</a></div>
+      <div class="table-actions"><a class="cta link" href="${tableUrl}" target="_blank" rel="noopener noreferrer">OPEN FA FULL-TIME →</a><a class="secondary-cta link" href="${resultsUrl}" target="_blank" rel="noopener noreferrer">OFFICIAL RESULTS →</a><a class="secondary-cta link" href="${fixturesUrl}" target="_blank" rel="noopener noreferrer">ALL FIXTURES →</a></div>
     </article>
     <article class="card"><div class="section-head"><span>WHAT'S NEXT</span><small>UPCOMING FIXTURES</small></div>${fixtures}</article>
   </section>`;
