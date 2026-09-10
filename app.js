@@ -154,7 +154,7 @@ function crestImg(team, cls='mini-crest'){
   const src=crestForTeam(team);
   const safeTeam=escapeHtml(team || '');
   if(!src) return '<span class="crest-slot crest-missing" aria-hidden="true">?</span>';
-  return `<span class="crest-slot"><img class="${cls}" src="${src}?v=20" alt="${safeTeam}" loading="lazy" onerror="crestFail(this)"></span>`;
+  return `<span class="crest-slot"><img class="${cls}" src="${src}?v=27" alt="${safeTeam}" loading="lazy" onerror="crestFail(this)"></span>`;
 }
 function crestFail(img){
   const slot=img && img.closest ? img.closest('.crest-slot') : null;
@@ -281,16 +281,17 @@ function matchCard(m){
   </article>`;
 }
 function galleryPaths(m){
-  // Current match gallery convention: hero.jpeg plus 01.jpeg...17.jpeg.
+  // Match gallery files are explicit so real file extensions always match GitHub.
   if(m && m.id==='m1') return ['hero.jpeg','01.jpeg', ...Array.from({length:16},(_,i)=>String(i+2).padStart(2,'0')+'.JPG')];
+  if(m && m.id==='m2') return ['hero.jpeg', ...Array.from({length:6},(_,i)=>String(i+1).padStart(2,'0')+'.jpeg')];
   return [];
 }
 function renderGallery(m){
   const files=galleryPaths(m);
   if(!files.length) return '<div class="gallery-empty">📸 <b>Matchday photos coming soon.</b></div>';
-  const folder=(m && m.id==='m1')?'cramlington':m.id;
+  const folder=(m && m.id==='m1')?'cramlington':(m && m.id==='m2')?'blakelaw':m.id;
   const base=`assets/matches/${folder}/`;
-  return `<div class="match-gallery">${files.map((f,i)=>`<button class="gallery-item ${i===0?'gallery-hero':''}" type="button" onclick="openPhoto('${base}${f}','${m.shortOpponent} • ${i===0?'Match Hero':'Matchday Photo'}')"><img src="${base}${f}?v=20" alt="${m.shortOpponent} ${i===0?'match hero':'matchday photo '+(i)}" loading="lazy" onerror="this.closest('.gallery-item').style.display='none'"></button>`).join('')}</div>`;
+  return `<div class="match-gallery">${files.map((f,i)=>`<button class="gallery-item ${i===0?'gallery-hero':''}" type="button" onclick="openPhoto('${base}${f}','${m.shortOpponent} • ${i===0?'Match Hero':'Matchday Photo'}')"><img src="${base}${f}?v=27" alt="${m.shortOpponent} ${i===0?'match hero':'matchday photo '+(i)}" loading="lazy" onerror="this.closest('.gallery-item').style.display='none'"></button>`).join('')}</div>`;
 }
 function openPhoto(src,caption){
   let modal=document.getElementById('photo-modal');
@@ -304,7 +305,7 @@ function openPhoto(src,caption){
     modal.addEventListener('click',e=>{ if(e.target===modal) modal.classList.remove('open'); });
     document.addEventListener('keydown',e=>{ if(e.key==='Escape') modal.classList.remove('open'); });
   }
-  modal.querySelector('.photo-modal-img').src=src+'?v=20';
+  modal.querySelector('.photo-modal-img').src=src+'?v=27';
   modal.querySelector('.photo-modal-caption').textContent=caption||'';
   modal.classList.add('open');
 }
@@ -326,13 +327,13 @@ window.openMatch=openMatch;
 
 function renderPlayers(){
   const ps=calcStats();
-  app.innerHTML=`<section><div class="page-title">SQUAD <span>///</span></div><div class="match-intro">The current Silvers squad, with shirt numbers, photographs and season-to-date stats. Tap a player for their full profile, three-season history and career milestones.</div><div class="player-grid">${ps.map(p=>`<button class="player-card" onclick="showPlayer('${escapeJs(p.name)}')"><div class="player-photo-wrap">${safePhoto(p)?`<img class="player-photo" src="${safePhoto(p)}?v=20" alt="${p.short}" loading="lazy" onerror="photoFail(this)">`:''}<div class="player-placeholder" style="display:${safePhoto(p)?'none':'flex'}"><span>#${p.no}</span></div></div><div class="shirt-num">#${p.no}</div><div class="player-name">${p.short}</div><small>${p.pos} • ${p.apps} APP • ${p.goals} G • ${p.assists} A</small></button>`).join('')}</div></section>`;
+  app.innerHTML=`<section><div class="page-title">SQUAD <span>///</span></div><div class="match-intro">The current Silvers squad, with shirt numbers, photographs and season-to-date stats. Tap a player for their full profile, three-season history and career milestones.</div><div class="player-grid">${ps.map(p=>`<button class="player-card" onclick="showPlayer('${escapeJs(p.name)}')"><div class="player-photo-wrap">${safePhoto(p)?`<img class="player-photo" src="${safePhoto(p)}?v=27" alt="${p.short}" loading="lazy" onerror="photoFail(this)">`:''}<div class="player-placeholder" style="display:${safePhoto(p)?'none':'flex'}"><span>#${p.no}</span></div></div><div class="shirt-num">#${p.no}</div><div class="player-name">${p.short}</div><small>${p.pos} • ${p.apps} APP • ${p.goals} G • ${p.assists} A</small></button>`).join('')}</div></section>`;
 }
 function photoFail(img){ img.style.display='none'; const ph=img.nextElementSibling; if(ph) ph.style.display='flex'; }
 function showPlayer(name){
   const p=calcStats().find(x=>x.name===name); if(!p) return;
   const h25=historicalFor(p.name), h24=historical2024For(p.name), career=careerFor(p.name,p), mile=playerMilestone(p.name,p);
-  const photo = safePhoto(p) ? `${safePhoto(p)}?v=20` : '';
+  const photo = safePhoto(p) ? `${safePhoto(p)}?v=27` : '';
   const mileHtml = mile ? `<div class="milestone-banner"><b>🏅 NEXT CAREER MILESTONE</b><span>${mile.next} ${mile.type.toLowerCase()} — <strong>${mile.diff}</strong> to go</span></div>` : '';
   app.innerHTML=`<section><button class="back" onclick="nav('players')">← BACK TO SQUAD</button><article class="card player-profile"><div class="profile-hero"><div class="profile-photo-wrap large">${photo?`<img class="profile-photo" src="${photo}" alt="${p.short}" onerror="photoFail(this)">`:''}<div class="player-placeholder" style="display:${photo?'none':'flex'}"><span>#${p.no}</span></div></div><div class="profile-top"><div class="profile-num">#${p.no}</div><div><div class="eyebrow">${p.short.toUpperCase()} • WESTERHOPE UNITED</div><h1>${p.name}</h1><p>${p.pos}</p>${p.status!=='Active'?`<span class="status-pill">${p.status.toUpperCase()}</span>`:''}</div></div></div>
   <div class="profile-section-title">2026/27</div><div class="profile-stats">${[['APPEARANCES',p.apps],['STARTS',p.starts],['GOALS',p.goals],['ASSISTS',p.assists],['G+A',p.gA],['POTM',p.potm],['PLAYERS’ PLAYER',p.pp],['CAPTAIN',p.captain]].map(x=>`<div><small>${x[0]}</small><b>${x[1]}</b></div>`).join('')}</div>
