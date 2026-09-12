@@ -40,56 +40,42 @@
   <script src="data.js?v=29"></script>
   <script src="app.js?v=28"></script>
 
-  <div id="update-banner" style="display:none;position:fixed;left:12px;right:12px;bottom:76px;z-index:9999;background:#111;border:1px solid #ffd400;border-radius:14px;padding:12px 14px;color:#fff;box-shadow:0 10px 30px rgba(0,0,0,.45);align-items:center;gap:12px;justify-content:space-between;font-family:inherit">
-    <div><b style="color:#ffd400">NEW UPDATE AVAILABLE</b><br><small>Tap refresh to load the latest Silvers information.</small></div>
-    <button id="update-now" style="border:0;border-radius:10px;background:#ffd400;color:#050505;font-weight:900;padding:10px 12px">REFRESH</button>
-  </div>
-  <button id="manual-refresh" aria-label="Refresh latest data" style="display:none;position:fixed;right:14px;bottom:18px;z-index:9998;border:1px solid #555;border-radius:999px;background:#111;color:#fff;padding:9px 12px;font-weight:800;box-shadow:0 6px 20px rgba(0,0,0,.35)">↻ REFRESH</button>
   <script>
   (() => {
-    const CURRENT_BUILD = '28';
-    const banner = document.getElementById('update-banner');
-    const updateNow = document.getElementById('update-now');
-    const manual = document.getElementById('manual-refresh');
-    let latestBuild = CURRENT_BUILD;
+    const CURRENT_BUILD = '30';
+    const RELOAD_KEY = 'silvers-update-reload';
 
-    function hardRefresh(build) {
-      banner.style.display = 'none';
-      const u = new URL(window.location.href);
-      u.searchParams.set('refresh', build || Date.now().toString());
-      window.location.replace(u.toString());
-    }
-
-    async function checkForUpdate(showIfCurrent = false) {
+    async function checkForUpdate() {
       try {
-        const r = await fetch('version.json?t=' + Date.now(), {cache:'no-store'});
-        if (!r.ok) throw new Error('version check failed');
+        const r = await fetch('version.json?t=' + Date.now(), { cache: 'no-store' });
+        if (!r.ok) return;
         const v = await r.json();
-        latestBuild = String(v.build || '');
-        if (latestBuild && latestBuild !== CURRENT_BUILD) {
-          banner.style.display = 'flex';
-        } else {
-          banner.style.display = 'none';
-          if (showIfCurrent) {
-          manual.textContent = '✓ UP TO DATE';
-          setTimeout(() => manual.textContent = '↻ REFRESH', 1800);
-          }
-        }
+        const latestBuild = String(v.build || '');
+        if (!latestBuild || latestBuild === CURRENT_BUILD) return;
+
+        // Silently reload once so the installed Home Screen app picks up the
+        // newest HTML/JS without showing a permanent notification banner.
+        const attempted = sessionStorage.getItem(RELOAD_KEY);
+        if (attempted === latestBuild) return;
+        sessionStorage.setItem(RELOAD_KEY, latestBuild);
+
+        const u = new URL(window.location.href);
+        u.searchParams.set('refresh', latestBuild + '-' + Date.now());
+        window.location.replace(u.toString());
       } catch (e) {
-        if (showIfCurrent) hardRefresh(Date.now().toString());
+        // Best effort only: never interrupt normal app use because an update check failed.
       }
     }
 
-    updateNow.addEventListener('click', () => hardRefresh(latestBuild));
-    manual.addEventListener('click', async () => {
-      manual.textContent = 'CHECKING…';
-      await checkForUpdate(true);
-      if (banner.style.display === 'flex') hardRefresh(latestBuild);
-    });
+    // Clear the one-shot guard once we are on the current build.
+    try {
+      sessionStorage.removeItem(RELOAD_KEY);
+    } catch (e) {}
+
+    setTimeout(checkForUpdate, 700);
     document.addEventListener('visibilitychange', () => { if (!document.hidden) checkForUpdate(); });
-    window.addEventListener('focus', () => checkForUpdate());
-    setTimeout(() => checkForUpdate(), 1200);
-    setInterval(() => checkForUpdate(), 60000);
+    window.addEventListener('focus', checkForUpdate);
+    setInterval(checkForUpdate, 60000);
   })();
   </script>
 </body>
