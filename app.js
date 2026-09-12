@@ -20,6 +20,32 @@ const CLUB_CRESTS = {
   'Berwick Rangers Community Academy U13 Be': 'assets/clubs/berwick.rangers.jpeg'
 };
 
+const NORTH_SHIELDS_PREVIEW = {
+  opponent: 'North Shields Juniors U13 Blacks',
+  shortOpponent: 'NORTH SHIELDS JUNIORS U13 BLACKS',
+  date: '2026-09-13',
+  time: '09:30',
+  venue: 'Home',
+  competition: 'NFL U13 Division 10',
+  facebook: 'https://www.facebook.com/share/r/1DbJdNLtgK/?mibextid=wwXIfr',
+  lineupImage: 'assets/matches/north-shields/lineup.jpeg',
+  starters: ['Johnny','Kyran','Kane','Ewan','Joseph','Freddie','Jake','Oliver','Charlie'],
+  bench: ['Blake','Theo','Ollie','Yusuf'],
+  unavailable: [],
+  paragraphs: [
+    `Two away games, four points, five goals scored and just one conceded. Now, finally, the Silvers are coming home for the first time in 2026/27. Sunday brings the first home game of the new season, the first chance to pull on the famous black and white, and another opportunity to extend a strong unbeaten run that stretches back into the promotion-winning end to last season.`,
+    `North Shields will provide another proper test. The sides met twice last season, sharing a win apiece, and both games were fiercely competitive. There is no expectation of an easy morning at Valley View, but the opening week has shown that this group is ready to compete in the new division.`,
+    `<h3>👕 OLLIE IS BACK</h3>One of the biggest stories of the morning is the return of <b>Ollie Anderson</b>. After missing the opening two games with a wrist injury, the injury is now fully healed and Ollie is ready to make his first appearance of the season. He is currently sitting on <b>39 Silvers appearances</b>, so a cameo on Sunday could bring the 40 Club into view.`,
+    `<h3>🧤 JOHNNY</h3>Johnny remains in goal after two excellent performances to open the season. He kept a clean sheet at Cramlington and produced a string of outstanding saves at Blakelaw to earn <b>Player of the Match</b>. Another assured performance could make it a very good opening week for the goalkeeper.`,
+    `<h3>🛡️ KYRAN • KANE • EWAN</h3>Kyran keeps his place at right-back after an encouraging first start. <b>Kane</b> remains at centre-back after taking <b>Players' Player in both opening games</b>. Ewan comes in at left-back, his most familiar position, giving the back three a slightly different balance while rewarding the progress he showed in midweek.`,
+    `<h3>⚡ JOSEPH • FREDDIE • JAKE • OLIVER</h3>Joseph continues on the right after helping create Oliver's opener at Blakelaw. Captain Freddie and Jake continue in the middle after two hardworking performances. On the left, <b>Oliver</b> arrives with <b>two goals and two assists</b> from the opening week, including goal number 21 at Blakelaw.`,
+    `<h3>🎯 CHARLIE</h3>Charlie leads the line again after two goals at Cramlington and a battling appearance at Blakelaw despite taking a painful knock. He starts Sunday on <b>29 Silvers goals</b>, with number 30 now just one away.`,
+    `<h3>💪 A STRONG BENCH</h3>The bench is now as strong as it has been all season: <b>Blake, Theo, Ollie and Yusuf</b>. That depth is exactly what the coaches hoped the larger squad would provide — not because previous starters have done anything wrong, but because everyone deserves a chance to contribute.`,
+    `<h3>🏠 HOME AT LAST</h3>Sunday is about more than simply another fixture. It is the first time this season the players get to walk out at Valley View and wear the black and white in front of their home support. Coach Jeff's message is simple: keep doing the things you know are right, keep listening, keep working for each other, and the performance will take care of itself.`,
+    `<b>GAME THREE /// HOME AT LAST.</b><br><br>There is a long season ahead, but this is another chance to take a step forward. <b>UP THE HOPE ///</b>`
+  ]
+};
+
 const BLAKELAW_PREVIEW = {
   opponent: 'Blakelaw Football Club U13 Roma',
   shortOpponent: 'BLAKELAW FC U13 ROMA',
@@ -235,7 +261,8 @@ function renderHome(){
   const nextTime = last.nextTime || (last.id==='m1' ? BLAKELAW_PREVIEW.time : 'TBC');
   const nextVenue = last.nextVenue || (last.nextHome ? 'Valley View' : 'Away');
   const nextHome = !!last.nextHome;
-  const nextActions = last.id==='m1' ? `<div class="home-preview-actions"><button class="cta" onclick="openPreview()">READ MATCH PREVIEW →</button><a class="secondary-cta" href="${BLAKELAW_PREVIEW.facebook}" target="_blank" rel="noopener">🎬 MATCHDAY VIDEO</a></div>` : `<div class="home-preview-actions"><span class="secondary-cta disabled-link">PREVIEW COMING SOON</span></div>`;
+  const nextPreview = last.next === NORTH_SHIELDS_PREVIEW.opponent ? NORTH_SHIELDS_PREVIEW : (last.next === BLAKELAW_PREVIEW.opponent ? BLAKELAW_PREVIEW : null);
+  const nextActions = nextPreview ? `<div class="home-preview-actions"><button class="cta" onclick="openNextPreview()">READ MATCH PREVIEW →</button>${nextPreview.facebook ? `<a class="secondary-cta" href="${nextPreview.facebook}" target="_blank" rel="noopener">🎬 MATCHDAY VIDEO</a>` : ''}</div>` : `<div class="home-preview-actions"><span class="secondary-cta disabled-link">PREVIEW COMING SOON</span></div>`;
   const nextTeams = nextHome
     ? `<div>${crestImg('Westerhope United','mini-crest small')}<b>WESTERHOPE<br>UNITED</b></div><span>V</span><div>${nextCrest}<b>${last.next.toUpperCase()}</b></div>`
     : `<div>${nextCrest}<b>${last.next.toUpperCase()}</b></div><span>V</span><div>${crestImg('Westerhope United','mini-crest small')}<b>WESTERHOPE<br>UNITED</b></div>`;
@@ -254,20 +281,30 @@ function renderHome(){
 function metricCard(icon,label,name,value){return `<div class="metric"><div class="metric-icon">${icon}</div><small>${label}</small><b>${name}</b><strong>${value}</strong></div>`;}
 
 function renderMatches(){
-  app.innerHTML=`<section><div class="page-title">MATCHES <span>///</span></div><div class="match-intro">Pre-match previews, starting line-ups, results, reports, statistics and matchday photography — all in one season archive.</div><div class="archive-heading">MATCH ARCHIVE ///</div>${D.matches.slice().reverse().map(matchCard).join('')}</section>`;
+  app.innerHTML=`<section><div class="page-title">MATCHES <span>///</span></div><div class="match-intro">Pre-match previews, starting line-ups, results, reports, statistics and matchday photography — all in one season archive.</div>${upcomingMatchCard()}<div class="archive-heading">MATCH ARCHIVE ///</div>${D.matches.slice().reverse().map(matchCard).join('')}</section>`;
 }
 function upcomingMatchCard(){
-  const p=BLAKELAW_PREVIEW;
-  return `<article class="card match-card upcoming-card"><div class="section-head"><span>UPCOMING • ${p.competition.toUpperCase()}</span><small>${prettyDate(p.date)}</small></div><div class="match-hero"><div class="hero-team">${crestImg(p.opponent,'mini-crest')}<b>${p.shortOpponent}</b></div><div class="match-score preview-v"><strong>V</strong><small>${p.time} KO</small></div><div class="hero-team">${crestImg('Westerhope United','mini-crest')}<b>WESTERHOPE<br>UNITED</b></div></div><div class="upcoming-meta">📍 AWAY &nbsp; • &nbsp; TUESDAY 8 SEPTEMBER &nbsp; • &nbsp; 18:00</div><div class="preview-buttons"><button class="cta" onclick="openPreview()">READ MATCH PREVIEW →</button><a class="secondary-cta" href="${p.facebook}" target="_blank" rel="noopener">🎬 WATCH MATCHDAY VIDEO</a></div></article>`;
+  const p=NORTH_SHIELDS_PREVIEW;
+  return `<article class="card match-card upcoming-card"><div class="section-head"><span>UPCOMING • ${p.competition.toUpperCase()}</span><small>${prettyDate(p.date)}</small></div><div class="match-hero"><div class="hero-team">${crestImg('Westerhope United','mini-crest')}<b>WESTERHOPE<br>UNITED</b></div><div class="match-score preview-v"><strong>V</strong><small>${p.time} KO</small></div><div class="hero-team">${crestImg(p.opponent,'mini-crest')}<b>${p.shortOpponent}</b></div></div><div class="upcoming-meta">🏠 HOME &nbsp; • &nbsp; SUNDAY 13 SEPTEMBER &nbsp; • &nbsp; 09:30 &nbsp; • &nbsp; VALLEY VIEW</div><div class="preview-buttons"><button class="cta" onclick="openNextPreview()">READ MATCH PREVIEW →</button><span class="secondary-cta disabled-link">MATCHDAY VIDEO COMING SOON</span></div></article>`;
+}
+function openNextPreview(){
+  const p = NORTH_SHIELDS_PREVIEW;
+  renderPreview(p,'MATCHDAY 03 ///');
 }
 function openPreview(){
-  const p=BLAKELAW_PREVIEW;
+  const p = BLAKELAW_PREVIEW;
+  renderPreview(p,'MATCHDAY 02 ///');
+}
+function renderPreview(p,matchLabel){
   const starters=p.starters.map(n=>`<span class="chip">#${playerByName(n)?.no??''} ${label(n)}</span>`).join('');
   const bench=p.bench.map(n=>`<span class="chip sub">#${playerByName(n)?.no??''} ${label(n)}</span>`).join('');
-  app.innerHTML=`<section><button class="back" onclick="nav('matches')">← BACK TO MATCHES</button><article class="card detail-card preview-detail"><div class="section-head"><span>MATCH PREVIEW • ${p.competition.toUpperCase()}</span><small>${prettyDate(p.date)}</small></div><div class="detail-title"><div>${crestImg(p.opponent,'mini-crest')}<b>${p.shortOpponent}</b></div><div class="match-score preview-v"><strong>V</strong><small>${p.time} KO</small></div><div>${crestImg('Westerhope United','mini-crest')}<b>WESTERHOPE<br>UNITED</b></div></div><div class="detail-meta"><span>📍 <b>AWAY</b></span><span>📅 <b>TUESDAY 8 SEPTEMBER</b></span><span>⏰ <b>18:00</b></span></div><div class="preview-media"><img src="${p.lineupImage}?v=22" alt="Blakelaw v Westerhope starting lineup" class="lineup-image" onerror="this.style.display='none'"><a class="cta wide" href="${p.facebook}" target="_blank" rel="noopener">🎬 WATCH MATCHDAY VIDEO ON FACEBOOK →</a></div><div class="report-heading">MATCH PREVIEW ///</div>${p.paragraphs.map(x=>`<p class="report-p preview-p">${x}</p>`).join('')}<div class="report-heading">STARTING IX ///</div><div class="chip-row">${starters}</div><div class="report-heading">BENCH ///</div><div class="chip-row">${bench}</div><div class="unavailable-note">UNAVAILABLE • OLLIE</div><div class="preview-footer"><b>MATCHDAY 02 ///</b><span>BLAKELAW • TUE 8 SEP • 18:00</span><strong>UP THE HOPE ///</strong></div></article></section>`;
+  const unavailable=p.unavailable?.length ? `<div class="unavailable-note">UNAVAILABLE • ${p.unavailable.map(n=>label(n)).join(' • ')}</div>` : '';
+  app.innerHTML=`<section><button class="back" onclick="nav('matches')">← BACK TO MATCHES</button><article class="card detail-card preview-detail"><div class="section-head"><span>MATCH PREVIEW • ${p.competition.toUpperCase()}</span><small>${prettyDate(p.date)}</small></div><div class="detail-title"><div>${crestImg('Westerhope United','mini-crest')}<b>WESTERHOPE<br>UNITED</b></div><div class="match-score preview-v"><strong>V</strong><small>${p.time} KO</small></div><div>${crestImg(p.opponent,'mini-crest')}<b>${p.shortOpponent}</b></div></div><div class="detail-meta"><span>🏠 <b>HOME</b></span><span>📅 <b>SUNDAY 13 SEPTEMBER</b></span><span>⏰ <b>09:30</b></span><span>📍 <b>VALLEY VIEW</b></span></div><div class="preview-media"><img src="${p.lineupImage}?v=29" alt="North Shields v Westerhope starting lineup" class="lineup-image" onerror="this.style.display='none'"><div class="mini-note">Starting XI graphic • home shirt lineup</div>${p.facebook ? `<a class="secondary-cta wide" href="${p.facebook}" target="_blank" rel="noopener">🎬 WATCH MATCHDAY POST →</a>` : ""}</div><div class="report-heading">MATCH PREVIEW ///</div>${p.paragraphs.map(x=>`<p class="report-p preview-p">${x}</p>`).join('')}<div class="report-heading">STARTING IX ///</div><div class="chip-row">${starters}</div><div class="report-heading">BENCH ///</div><div class="chip-row">${bench}</div>${unavailable}<div class="preview-footer"><b>${matchLabel}</b><span>${p.shortOpponent} • SUN 13 SEP • 09:30</span><strong>UP THE HOPE ///</strong></div></article></section>`;
   window.scrollTo({top:0,behavior:'smooth'});
 }
 window.openPreview=openPreview;
+window.openNextPreview=openNextPreview;
+window.renderPreview=renderPreview;
 function scoreLabel(m){ return m.venue==='Home' ? `${m.gf}–${m.ga}` : `${m.ga}–${m.gf}`; }
 function matchCard(m){
   const lineup = m.starters.map(n=>`<span class="chip">#${playerByName(n)?.no??''} ${label(n)}</span>`).join('');
