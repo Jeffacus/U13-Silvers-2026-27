@@ -8,10 +8,10 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="U13 Silvers">
   <meta name="description" content="Westerhope United U13 Silvers 2026/27 season hub">
-  <link rel="manifest" href="manifest.json?v=36">
-  <link rel="apple-touch-icon" sizes="180x180" href="assets/icons/apple-touch-icon.png?v=36">
-  <link rel="icon" type="image/png" sizes="192x192" href="assets/icons/icon-192.png?v=36">
-  <link rel="stylesheet" href="styles.css?v=36">
+  <link rel="manifest" href="manifest.json?v=38">
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/icons/apple-touch-icon.png?v=38">
+  <link rel="icon" type="image/png" sizes="192x192" href="assets/icons/icon-192.png?v=38">
+  <link rel="stylesheet" href="styles.css?v=38">
   <title>Westerhope U13 Silvers</title>
 
   <style>
@@ -26,6 +26,12 @@
     .latest-hero-placeholder .latest-hero-overlay{position:static;background:none}
     @media (max-width:700px){.latest-hero-button img{height:190px}.latest-hero-overlay{padding:22px 18px 16px}.latest-hero-overlay strong{font-size:1.05rem}.latest-hero-placeholder{min-height:145px}}
   </style>
+
+<style>
+.league-form-card .section-head{margin-bottom:12px}.league-chart-wrap{width:100%;overflow-x:auto;background:linear-gradient(180deg,rgba(255,255,255,.02),rgba(255,255,255,.00));border-radius:16px;padding:6px 0}.league-chart-wrap svg{display:block;width:100%;min-width:740px;height:auto}.league-legend{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;margin-top:14px}.league-legend-item{display:flex;align-items:center;gap:7px;font-size:.75rem;color:rgba(255,255,255,.82)}.legend-line{width:18px;height:3px;border-radius:3px;display:inline-block;flex:none}.league-legend-item .table-crest{width:22px;height:22px;object-fit:contain}.form-watch-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:16px}.form-watch{border:1px solid rgba(255,255,255,.10);border-radius:14px;padding:12px;background:rgba(255,255,255,.025)}.form-watch.our-team{border-color:rgba(255,213,0,.45);box-shadow:0 0 0 1px rgba(255,213,0,.08) inset}.form-watch-head{display:flex;align-items:center;gap:8px}.form-watch-head .table-crest{width:28px;height:28px;object-fit:contain}.form-watch-head b{flex:1;font-size:.82rem}.form-watch-head strong{color:#ffd500;font-size:.9rem}.form-watch-meta{display:flex;justify-content:space-between;gap:6px;margin-top:9px;font-size:.68rem;color:rgba(255,255,255,.56);text-transform:uppercase;letter-spacing:.06em}.form-watch-meta b{color:#fff;font-size:.8rem}.form-watch-streak{margin-top:10px;font-size:.76rem;color:rgba(255,255,255,.80)}
+@media (max-width:900px){.form-watch-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.league-legend{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:600px){.form-watch-grid{grid-template-columns:1fr}.league-legend{grid-template-columns:1fr}.league-chart-wrap{margin-left:-4px;margin-right:-4px}}
+</style>
 </head>
 <body>
   <div class="app-shell">
@@ -50,12 +56,12 @@
       <div class="footer-sub">MORE THAN A TEAM &nbsp; • &nbsp; A COMMUNITY</div>
     </footer>
   </div>
-  <script src="data.js?v=36"></script>
-  <script src="app.js?v=36"></script>
+  <script src="data.js?v=38"></script>
+  <script src="app.js?v=38"></script>
 
   <script>
   (() => {
-    const CURRENT_BUILD = '37';
+    const CURRENT_BUILD = '38';
     const RELOAD_KEY = 'silvers-update-reload';
 
     async function checkForUpdate() {

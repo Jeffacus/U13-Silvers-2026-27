@@ -282,7 +282,7 @@ function crestImg(team, cls='mini-crest'){
   const src=crestForTeam(team);
   const safeTeam=escapeHtml(team || '');
   if(!src) return '<span class="crest-slot crest-missing" aria-hidden="true">?</span>';
-  return `<span class="crest-slot"><img class="${cls}" src="${src}?v=37" alt="${safeTeam}" loading="lazy" onerror="crestFail(this)"></span>`;
+  return `<span class="crest-slot"><img class="${cls}" src="${src}?v=38" alt="${safeTeam}" loading="lazy" onerror="crestFail(this)"></span>`;
 }
 function crestFail(img){
   const slot=img && img.closest ? img.closest('.crest-slot') : null;
@@ -290,6 +290,122 @@ function crestFail(img){
 }
 window.crestFail=crestFail;
 
+
+// League results baseline (official Division 10 results supplied by the user).
+// This is intentionally result-driven so the app does not depend on the FA table URL.
+const LEAGUE_RESULTS = [
+  {date:'2026-09-06', home:'Blakelaw Football Club U13 Roma', away:'Bedlington FC U13 Malaga', hg:1, ag:3},
+  {date:'2026-09-06', home:'Cramlington Blue Star FC U13 Milan', away:'Westerhope United U13 Silvers', hg:0, ag:4},
+  {date:'2026-09-06', home:'Cramlington Town Juniors U13 Cramlington', away:'Ponteland United Juniors U13 Rockets', hg:1, ag:3},
+  {date:'2026-09-06', home:'Killingworth F.C. U13 Blues', away:'North Shields Juniors U13 Blacks', hg:4, ag:4},
+  {date:'2026-09-08', home:'Blakelaw Football Club U13 Roma', away:'Westerhope United U13 Silvers', hg:1, ag:1},
+  {date:'2026-09-08', home:'Cramlington Blue Star FC U13 Milan', away:'Ponteland United Juniors U13 Rockets', hg:7, ag:0},
+  {date:'2026-09-08', home:'Cramlington Town Juniors U13 Cramlington', away:'North Shields Juniors U13 Blacks', hg:4, ag:1},
+  {date:'2026-09-08', home:'Killingworth F.C. U13 Blues', away:'Killingworth F.C. U13 Reds', hg:0, ag:1},
+  {date:'2026-09-13', home:'Bedlington FC U13 Malaga', away:'Cramlington Blue Star FC U13 Milan', hg:4, ag:1},
+  {date:'2026-09-13', home:'Ponteland United Juniors U13 Rockets', away:'Killingworth F.C. U13 Blues', hg:3, ag:2},
+  {date:'2026-09-13', home:'Westerhope United U13 Silvers', away:'North Shields Juniors U13 Blacks', hg:3, ag:1}
+].sort((a,b)=>a.date.localeCompare(b.date));
+
+const LEAGUE_TEAMS = [
+  'Westerhope United U13 Silvers',
+  'Bedlington FC U13 Malaga',
+  'Ponteland United Juniors U13 Rockets',
+  'Cramlington Town Juniors U13 Cramlington',
+  'Killingworth F.C. U13 Reds',
+  'Cramlington Blue Star FC U13 Milan',
+  'Killingworth F.C. U13 Blues',
+  'Blakelaw Football Club U13 Roma',
+  'North Shields Juniors U13 Blacks'
+];
+const LEAGUE_TEAM_STYLES = {
+  'Westerhope United U13 Silvers':'#ffd500',
+  'Bedlington FC U13 Malaga':'#f2c300',
+  'Ponteland United Juniors U13 Rockets':'#e53935',
+  'Cramlington Town Juniors U13 Cramlington':'#d32f2f',
+  'Killingworth F.C. U13 Reds':'#e53935',
+  'Cramlington Blue Star FC U13 Milan':'#1e66f5',
+  'Killingworth F.C. U13 Blues':'#2563eb',
+  'Blakelaw Football Club U13 Roma':'#9ca3af',
+  'North Shields Juniors U13 Blacks':'#60a5fa'
+};
+const LEAGUE_SHORT_NAMES = {
+  'Westerhope United U13 Silvers':'Westerhope',
+  'Bedlington FC U13 Malaga':'Bedlington',
+  'Ponteland United Juniors U13 Rockets':'Ponteland',
+  'Cramlington Town Juniors U13 Cramlington':'Cramlington Town',
+  'Killingworth F.C. U13 Reds':'Killingworth Reds',
+  'Cramlington Blue Star FC U13 Milan':'Cramlington Blue Star',
+  'Killingworth F.C. U13 Blues':'Killingworth Blues',
+  'Blakelaw Football Club U13 Roma':'Blakelaw',
+  'North Shields Juniors U13 Blacks':'North Shields'
+};
+function leagueTableFromResults(results=LEAGUE_RESULTS){
+  const rows=Object.fromEntries(LEAGUE_TEAMS.map(t=>[t,{team:t,p:0,w:0,d:0,l:0,gf:0,ga:0,pts:0,results:[]} ]));
+  const ordered=[...results].sort((a,b)=>a.date.localeCompare(b.date));
+  ordered.forEach(r=>{
+    if(!rows[r.home] || !rows[r.away]) return;
+    rows[r.home].p++; rows[r.away].p++;
+    rows[r.home].gf+=r.hg; rows[r.home].ga+=r.ag;
+    rows[r.away].gf+=r.ag; rows[r.away].ga+=r.hg;
+    const hw=r.hg>r.ag;
+    if(hw){ rows[r.home].w++; rows[r.home].pts+=3; rows[r.away].l++; }
+    else if(r.hg<r.ag){ rows[r.away].w++; rows[r.away].pts+=3; rows[r.home].l++; }
+    else { rows[r.home].d++; rows[r.away].d++; rows[r.home].pts++; rows[r.away].pts++; }
+    rows[r.home].results.push({date:r.date,opponent:r.away,venue:'Home',gf:r.hg,ga:r.ag});
+    rows[r.away].results.push({date:r.date,opponent:r.home,venue:'Away',gf:r.ag,ga:r.hg});
+  });
+  Object.values(rows).forEach(r=>r.gd=r.gf-r.ga);
+  return Object.values(rows).sort((a,b)=>b.pts-a.pts||b.gd-a.gd||b.gf-a.gf||a.team.localeCompare(b.team)).map((r,i)=>({...r,pos:i+1}));
+}
+function leagueFormSeries(team){
+  const own=LEAGUE_RESULTS.filter(r=>r.home===team||r.away===team).sort((a,b)=>a.date.localeCompare(b.date));
+  let pts=0; const series=[{game:0,pts:0}];
+  const form=[];
+  own.forEach(r=>{
+    const home=r.home===team; const gf=home?r.hg:r.ag; const ga=home?r.ag:r.hg;
+    const result=gf>ga?'W':gf<ga?'L':'D';
+    pts += result==='W'?3:result==='D'?1:0;
+    series.push({game:series.length,pts});
+    form.push(result);
+  });
+  return {series,form,games:own.length};
+}
+function leagueFormSummary(team){
+  const f=leagueFormSeries(team), last=f.form.slice(-5), last3=last.slice(-3);
+  let currentUnbeaten=0, currentWins=0;
+  for(let i=f.form.length-1;i>=0;i--){ if(f.form[i]==='L') break; currentUnbeaten++; }
+  for(let i=f.form.length-1;i>=0;i--){ if(f.form[i]!=='W') break; currentWins++; }
+  const lastPts=last3.reduce((n,x)=>n+(x==='W'?3:x==='D'?1:0),0);
+  return {form:last.join(''),last3:last3.join(''),pointsLast3:lastPts,currentUnbeaten,currentWins,games:f.games};
+}
+function leagueTrackerSvg(){
+  const width=980,height=430,pad={l:56,r:24,t:28,b:72};
+  const maxGame=Math.max(3,...LEAGUE_TEAMS.map(t=>leagueFormSeries(t).games));
+  const maxPts=Math.max(9,...LEAGUE_TEAMS.map(t=>leagueFormSeries(t).series.at(-1).pts));
+  const x=g=>pad.l+(g/maxGame)*(width-pad.l-pad.r);
+  const y=p=>height-pad.b-(p/maxPts)*(height-pad.t-pad.b);
+  const yTicks=[]; for(let p=0;p<=maxPts;p+=Math.max(1,Math.ceil(maxPts/6))) yTicks.push(p); if(yTicks.at(-1)!==maxPts)yTicks.push(maxPts);
+  const grid=yTicks.map(v=>`<line x1="${pad.l}" y1="${y(v)}" x2="${width-pad.r}" y2="${y(v)}" stroke="rgba(255,255,255,.10)"/><text x="${pad.l-10}" y="${y(v)+4}" fill="rgba(255,255,255,.60)" text-anchor="end" font-size="12">${v}</text>`).join('');
+  const xTicks=Array.from({length:maxGame+1},(_,g)=>`<line x1="${x(g)}" y1="${pad.t}" x2="${x(g)}" y2="${height-pad.b}" stroke="rgba(255,255,255,.05)"/><text x="${x(g)}" y="${height-pad.b+24}" fill="rgba(255,255,255,.65)" text-anchor="middle" font-size="12">${g===0?'START':'G'+g}</text>`).join('');
+  const lines=LEAGUE_TEAMS.map(team=>{
+    const ser=leagueFormSeries(team).series;
+    const pts=ser.map(d=>`${x(d.game)},${y(d.pts)}`).join(' ');
+    const color=LEAGUE_TEAM_STYLES[team]||'#aaa';
+    const sw=team==='Westerhope United U13 Silvers'?4:2.2;
+    const opacity=team==='Westerhope United U13 Silvers'?1:.72;
+    return `<polyline points="${pts}" fill="none" stroke="${color}" stroke-width="${sw}" stroke-linejoin="round" stroke-linecap="round" opacity="${opacity}"/>`+
+      ser.slice(1).map(d=>`<circle cx="${x(d.game)}" cy="${y(d.pts)}" r="${team==='Westerhope United U13 Silvers'?5:3.5}" fill="${color}" opacity="${opacity}"/>`).join('');
+  }).join('');
+  return `<div class="league-chart-wrap"><svg viewBox="0 0 ${width} ${height}" role="img" aria-label="Cumulative league points by games played">${grid}${xTicks}${lines}<text x="${pad.l}" y="15" fill="rgba(255,255,255,.70)" font-size="12" letter-spacing="2">CUMULATIVE POINTS</text><text x="${width/2}" y="${height-16}" fill="rgba(255,255,255,.55)" font-size="11" text-anchor="middle">GAMES PLAYED BY EACH TEAM — LINES STOP WHEN THAT TEAM STOPS PLAYING</text></svg></div>`;
+}
+function leagueTrackerLegend(){
+  return `<div class="league-legend">${LEAGUE_TEAMS.map(team=>`<div class="league-legend-item"><span class="legend-line" style="background:${LEAGUE_TEAM_STYLES[team]||'#aaa'}"></span>${crestImg(team,'table-crest')}<b>${LEAGUE_SHORT_NAMES[team]}</b></div>`).join('')}</div>`;
+}
+function leagueFormCards(){
+  const table=leagueTableFromResults();
+  return `<div class="form-watch-grid">${table.map(r=>{const f=leagueFormSummary(r.team); return `<article class="form-watch ${r.team==='Westerhope United U13 Silvers'?'our-team':''}"><div class="form-watch-head">${crestImg(r.team,'table-crest')}<b>${LEAGUE_SHORT_NAMES[r.team]}</b><strong>${r.pts} PTS</strong></div><div class="form-watch-meta"><span><b>${r.p}</b> P</span><span><b>${f.form||'—'}</b> FORM</span><span><b>${r.pts/r.p? (r.pts/r.p).toFixed(2):'0.00'}</b> PPG</span></div><div class="form-watch-streak">${f.currentWins>1?`🔥 ${f.currentWins} wins in a row`:f.currentUnbeaten>1?`🟢 ${f.currentUnbeaten} unbeaten`:f.last3?`${f.last3} • ${f.pointsLast3} pts last 3`: 'No form yet'}</div></article>`;}).join('')}</div>`;
+}
 function calcStats(){
   const out = Object.fromEntries(D.squad.map(p => [p.name, {...p, apps:0, starts:0, goals:0, assists:0, gA:0, potm:0, pp:0, captain:0}]));
   D.matches.forEach(m=>{
@@ -363,7 +479,7 @@ function heroMarkup(m, placement){
   const src=matchHeroPath(m);
   if(!src) return `<section class="card latest-hero-placeholder"><div class="latest-hero-overlay"><div class="eyebrow">MATCHDAY ${m?.id==='m3'?'03':'LATEST'} ///</div><strong>${m?.headline||'LATEST MATCH'}</strong><small>Hero photo coming soon</small></div></section>`;
   const labelText = placement==='home' ? 'LATEST MATCH' : 'MATCH HERO';
-  return `<section class="card latest-hero-card"><button class="latest-hero-button" type="button" onclick="openMatch('${m.id}')"><img src="${src}?v=37" alt="${m.shortOpponent} match hero"><div class="latest-hero-overlay"><div class="eyebrow">${labelText} ///</div><strong>${m.venue==='Home'?'WESTERHOPE UNITED':' '+m.shortOpponent} ${m.venue==='Home'?'3–1':m.venue==='Away'?scoreLabel(m):scoreLabel(m)}</strong><small>${m.venue==='Home'?'WESTERHOPE UNITED v '+m.shortOpponent:m.shortOpponent+' v WESTERHOPE UNITED'} • ${prettyDate(m.date)}</small></div></button></section>`;
+  return `<section class="card latest-hero-card"><button class="latest-hero-button" type="button" onclick="openMatch('${m.id}')"><img src="${src}?v=38" alt="${m.shortOpponent} match hero"><div class="latest-hero-overlay"><div class="eyebrow">${labelText} ///</div><strong>${m.venue==='Home'?'WESTERHOPE UNITED':' '+m.shortOpponent} ${m.venue==='Home'?'3–1':m.venue==='Away'?scoreLabel(m):scoreLabel(m)}</strong><small>${m.venue==='Home'?'WESTERHOPE UNITED v '+m.shortOpponent:m.shortOpponent+' v WESTERHOPE UNITED'} • ${prettyDate(m.date)}</small></div></button></section>`;
 }
 function renderHome(){
   const s=teamStats(), ps=calcStats(), last=D.matches[D.matches.length-1];
@@ -417,7 +533,7 @@ function renderPreview(p,matchLabel){
   const starters=p.starters.map(n=>`<span class="chip">#${playerByName(n)?.no??''} ${label(n)}</span>`).join('');
   const bench=p.bench.map(n=>`<span class="chip sub">#${playerByName(n)?.no??''} ${label(n)}</span>`).join('');
   const unavailable=p.unavailable?.length ? `<div class="unavailable-note">UNAVAILABLE • ${p.unavailable.map(n=>label(n)).join(' • ')}</div>` : '';
-  app.innerHTML=`<section><button class="back" onclick="nav('matches')">← BACK TO MATCHES</button><article class="card detail-card preview-detail"><div class="section-head"><span>MATCH PREVIEW • ${p.competition.toUpperCase()}</span><small>${prettyDate(p.date)}</small></div><div class="detail-title"><div>${crestImg('Westerhope United','mini-crest')}<b>WESTERHOPE<br>UNITED</b></div><div class="match-score preview-v"><strong>V</strong><small>${p.time} KO</small></div><div>${crestImg(p.opponent,'mini-crest')}<b>${p.shortOpponent}</b></div></div><div class="detail-meta"><span>🏠 <b>HOME</b></span><span>📅 <b>SUNDAY 13 SEPTEMBER</b></span><span>⏰ <b>09:30</b></span><span>📍 <b>VALLEY VIEW</b></span></div><div class="preview-media"><img src="${p.lineupImage}?v=37" alt="North Shields v Westerhope starting lineup" class="lineup-image" onerror="this.style.display='none'"><div class="mini-note">Starting XI graphic • home shirt lineup</div>${p.facebook ? `<a class="secondary-cta wide" href="${p.facebook}" target="_blank" rel="noopener">🎬 WATCH MATCHDAY POST →</a>` : ""}</div><div class="report-heading">MATCH PREVIEW ///</div>${p.paragraphs.map(x=>`<p class="report-p preview-p">${x}</p>`).join('')}<div class="report-heading">STARTING IX ///</div><div class="chip-row">${starters}</div><div class="report-heading">BENCH ///</div><div class="chip-row">${bench}</div>${unavailable}<div class="preview-footer"><b>${matchLabel}</b><span>${p.shortOpponent} • SUN 13 SEP • 09:30</span><strong>UP THE HOPE ///</strong></div></article></section>`;
+  app.innerHTML=`<section><button class="back" onclick="nav('matches')">← BACK TO MATCHES</button><article class="card detail-card preview-detail"><div class="section-head"><span>MATCH PREVIEW • ${p.competition.toUpperCase()}</span><small>${prettyDate(p.date)}</small></div><div class="detail-title"><div>${crestImg('Westerhope United','mini-crest')}<b>WESTERHOPE<br>UNITED</b></div><div class="match-score preview-v"><strong>V</strong><small>${p.time} KO</small></div><div>${crestImg(p.opponent,'mini-crest')}<b>${p.shortOpponent}</b></div></div><div class="detail-meta"><span>🏠 <b>HOME</b></span><span>📅 <b>SUNDAY 13 SEPTEMBER</b></span><span>⏰ <b>09:30</b></span><span>📍 <b>VALLEY VIEW</b></span></div><div class="preview-media"><img src="${p.lineupImage}?v=38" alt="North Shields v Westerhope starting lineup" class="lineup-image" onerror="this.style.display='none'"><div class="mini-note">Starting XI graphic • home shirt lineup</div>${p.facebook ? `<a class="secondary-cta wide" href="${p.facebook}" target="_blank" rel="noopener">🎬 WATCH MATCHDAY POST →</a>` : ""}</div><div class="report-heading">MATCH PREVIEW ///</div>${p.paragraphs.map(x=>`<p class="report-p preview-p">${x}</p>`).join('')}<div class="report-heading">STARTING IX ///</div><div class="chip-row">${starters}</div><div class="report-heading">BENCH ///</div><div class="chip-row">${bench}</div>${unavailable}<div class="preview-footer"><b>${matchLabel}</b><span>${p.shortOpponent} • SUN 13 SEP • 09:30</span><strong>UP THE HOPE ///</strong></div></article></section>`;
   window.scrollTo({top:0,behavior:'smooth'});
 }
 window.openPreview=openPreview;
@@ -447,7 +563,7 @@ function renderGallery(m){
   if(!files.length) return '<div class="gallery-empty">📸 <b>Matchday photos coming soon.</b></div>';
   const folder=(m && m.id==='m1')?'cramlington':(m && m.id==='m2')?'blakelaw':(m && m.id==='m3')?'north-shields':m.id;
   const base=`assets/matches/${folder}/`;
-  return `<div class="match-gallery">${files.map((f,i)=>`<button class="gallery-item ${i===0?'gallery-hero':''}" type="button" onclick="openPhoto('${base}${f}','${m.shortOpponent} • ${i===0?'Match Hero':'Matchday Photo'}')"><img src="${base}${f}?v=37" alt="${m.shortOpponent} ${i===0?'match hero':'matchday photo '+(i)}" loading="lazy" onerror="this.closest('.gallery-item').style.display='none'"></button>`).join('')}</div>`;
+  return `<div class="match-gallery">${files.map((f,i)=>`<button class="gallery-item ${i===0?'gallery-hero':''}" type="button" onclick="openPhoto('${base}${f}','${m.shortOpponent} • ${i===0?'Match Hero':'Matchday Photo'}')"><img src="${base}${f}?v=38" alt="${m.shortOpponent} ${i===0?'match hero':'matchday photo '+(i)}" loading="lazy" onerror="this.closest('.gallery-item').style.display='none'"></button>`).join('')}</div>`;
 }
 function openPhoto(src,caption){
   let modal=document.getElementById('photo-modal');
@@ -461,7 +577,7 @@ function openPhoto(src,caption){
     modal.addEventListener('click',e=>{ if(e.target===modal) modal.classList.remove('open'); });
     document.addEventListener('keydown',e=>{ if(e.key==='Escape') modal.classList.remove('open'); });
   }
-  modal.querySelector('.photo-modal-img').src=src+'?v=37';
+  modal.querySelector('.photo-modal-img').src=src+'?v=38';
   modal.querySelector('.photo-modal-caption').textContent=caption||'';
   modal.classList.add('open');
 }
@@ -482,13 +598,13 @@ window.openMatch=openMatch;
 
 function renderPlayers(){
   const ps=calcStats();
-  app.innerHTML=`<section><div class="page-title">SQUAD <span>///</span></div><div class="match-intro">The current Silvers squad, with shirt numbers, photographs and season-to-date stats. Tap a player for their full profile, three-season history and career milestones.</div><div class="player-grid">${ps.map(p=>`<button class="player-card" onclick="showPlayer('${escapeJs(p.name)}')"><div class="player-photo-wrap">${safePhoto(p)?`<img class="player-photo" src="${safePhoto(p)}?v=37" alt="${p.short}" loading="lazy" onerror="photoFail(this)">`:''}<div class="player-placeholder" style="display:${safePhoto(p)?'none':'flex'}"><span>#${p.no}</span></div></div><div class="shirt-num">#${p.no}</div><div class="player-name">${p.short}</div><small>${p.pos} • ${p.apps} APP • ${p.goals} G • ${p.assists} A</small></button>`).join('')}</div></section>`;
+  app.innerHTML=`<section><div class="page-title">SQUAD <span>///</span></div><div class="match-intro">The current Silvers squad, with shirt numbers, photographs and season-to-date stats. Tap a player for their full profile, three-season history and career milestones.</div><div class="player-grid">${ps.map(p=>`<button class="player-card" onclick="showPlayer('${escapeJs(p.name)}')"><div class="player-photo-wrap">${safePhoto(p)?`<img class="player-photo" src="${safePhoto(p)}?v=38" alt="${p.short}" loading="lazy" onerror="photoFail(this)">`:''}<div class="player-placeholder" style="display:${safePhoto(p)?'none':'flex'}"><span>#${p.no}</span></div></div><div class="shirt-num">#${p.no}</div><div class="player-name">${p.short}</div><small>${p.pos} • ${p.apps} APP • ${p.goals} G • ${p.assists} A</small></button>`).join('')}</div></section>`;
 }
 function photoFail(img){ img.style.display='none'; const ph=img.nextElementSibling; if(ph) ph.style.display='flex'; }
 function showPlayer(name){
   const p=calcStats().find(x=>x.name===name); if(!p) return;
   const h25=historicalFor(p.name), h24=historical2024For(p.name), career=careerFor(p.name,p), mile=playerMilestone(p.name,p);
-  const photo = safePhoto(p) ? `${safePhoto(p)}?v=37` : '';
+  const photo = safePhoto(p) ? `${safePhoto(p)}?v=38` : '';
   const mileHtml = mile ? `<div class="milestone-banner"><b>🏅 NEXT CAREER MILESTONE</b><span>${mile.next} ${mile.type.toLowerCase()} — <strong>${mile.diff}</strong> to go</span></div>` : '';
   app.innerHTML=`<section><button class="back" onclick="nav('players')">← BACK TO SQUAD</button><article class="card player-profile"><div class="profile-hero"><div class="profile-photo-wrap large">${photo?`<img class="profile-photo" src="${photo}" alt="${p.short}" onerror="photoFail(this)">`:''}<div class="player-placeholder" style="display:${photo?'none':'flex'}"><span>#${p.no}</span></div></div><div class="profile-top"><div class="profile-num">#${p.no}</div><div><div class="eyebrow">${p.short.toUpperCase()} • WESTERHOPE UNITED</div><h1>${p.name}</h1><p>${p.pos}</p>${p.status!=='Active'?`<span class="status-pill">${p.status.toUpperCase()}</span>`:''}</div></div></div>
   <div class="profile-section-title">2026/27</div><div class="profile-stats">${[['APPEARANCES',p.apps],['STARTS',p.starts],['GOALS',p.goals],['ASSISTS',p.assists],['G+A',p.gA],['POTM',p.potm],['PLAYERS’ PLAYER',p.pp],['CAPTAIN',p.captain]].map(x=>`<div><small>${x[0]}</small><b>${x[1]}</b></div>`).join('')}</div>
@@ -549,6 +665,7 @@ function renderStats(){
   app.innerHTML=`<section>
     <div class="page-title">STATS <span>///</span></div>
     <div class="match-intro">Season-to-date numbers plus the trends that will become more interesting as the matches build up. Form is based on appearances, not minutes.</div>
+    <article class="card league-form-card"><div class="section-head"><span>LEAGUE FORM ///</span><small>DIVISION 10 • RESULT-DRIVEN</small></div><div class="mini-note"><b>Built from the individual league results we have captured.</b> Teams stop at the number of games they have actually played, so games in hand are not treated as defeats.</div>${leagueTrackerSvg()}${leagueTrackerLegend()}${leagueFormCards()}</article>
     <article class="card stat-hero"><div class="section-head"><span>SEASON SNAPSHOT</span><small>${D.season}</small></div><div class="snapshot wide-snapshot">${[['PLAYED',s.played],['WIN %',s.winPct+'%'],['GOALS',s.gf],['CONCEDED',s.ga],['GD',s.gd>=0?'+'+s.gd:s.gd],['CLEAN SHEETS',s.clean],['CLEAN SHEET %',s.cleanPct+'%'],['GOALS / GAME',s.played?(s.gf/s.played).toFixed(2):'0.00']].map(x=>`<div><small>${x[0]}</small><b>${x[1]}</b></div>`).join('')}</div></article>
     <article class="card"><div class="section-head"><span>PLAYER LEADERBOARD</span><small>2026/27</small></div><div class="leader-list"><div class="leader-header"><span>#</span><span>PLAYER</span><span>APP</span><span>G</span><span>A</span><span>G+A</span></div>${rank.map((p,i)=>`<div><span class="rank">${i+1}</span><b>#${p.no} ${p.short}</b><span>${p.apps}</span><strong>${p.goals}</strong><strong>${p.assists}</strong><strong>${p.gA}</strong></div>`).join('')}</div></article>
     <section class="two-col">
@@ -566,14 +683,15 @@ function renderStats(){
   </section>`;
 }
 function renderTable(){
-  const rows=(D.leagueTable||[]).map(r=>`<tr class="${r.team==='Westerhope United U13 Silvers'?'our-team':''}"><td>${r.pos}</td><td><span class="table-team">${crestImg(r.team,'table-crest')}<b>${r.team}</b></span></td><td>${r.p}</td><td>${r.w}</td><td>${r.d}</td><td>${r.l}</td><td><strong>${r.pts}</strong></td></tr>`).join('');
+  const rows=leagueTableFromResults().map(r=>`<tr class="${r.team==='Westerhope United U13 Silvers'?'our-team':''}"><td>${r.pos}</td><td><span class="table-team">${crestImg(r.team,'table-crest')}<b>${r.team}</b></span></td><td>${r.p}</td><td>${r.w}</td><td>${r.d}</td><td>${r.l}</td><td><strong>${r.pts}</strong></td></tr>`).join('');
   const fixtures=(D.upcomingFixtures||[]).map((f,i)=>`<div class="fixture-row ${i===0?'next-fixture':''}"><div><b>${prettyDateLong(f.date)}</b><small>${f.time} • ${f.competition}</small></div><div class="fixture-teams"><span>${crestImg(f.home,'table-crest')}<b>${f.home}</b></span><em>V</em><span>${crestImg(f.away,'table-crest')}<b>${f.away}</b></span></div><small class="fixture-venue">${f.venue}</small></div>`).join('');
   const tableUrl = 'https://fulltime.thefa.com/index.html?league=136980506';
   const resultsUrl = 'https://fulltime.thefa.com/results.html?selectedSeason=260632843&selectedFixtureGroupAgeGroup=10&selectedFixtureGroupKey=1_253565231&selectedRelatedFixtureOption=3&selectedDateCode=all&previousSelectedFixtureGroupAgeGroup=10&previousSelectedFixtureGroupKey=&previousSelectedClub=';
   const fixturesUrl = 'https://fulltime.thefa.com/fixtures.html?selectedSeason=260632843&selectedFixtureGroupAgeGroup=10&selectedFixtureGroupKey=1_253565231&selectedDateCode=all&selectedClub=&selectedTeam=&selectedRelatedFixtureOption=3&selectedFixtureDateStatus=&selectedFixtureStatus=&previousSelectedFixtureGroupAgeGroup=10&previousSelectedFixtureGroupKey=2_117640819&previousSelectedClub=&itemsPerPage=25';
   app.innerHTML=`<section><div class="page-title">TABLE <span>///</span></div>
-    <article class="card"><div class="section-head"><span>LEAGUE TABLE</span><small>FA FULL-TIME • U13 DIVISION 10</small></div>
-      <div class="mini-note live-note"><b>Current official snapshot:</b> ${D.leagueUpdatedNote||'Current standings from the FA Full-Time site.'} Snapshot updated after the Blakelaw match. Use <b>FA FULL-TIME</b> to navigate to the latest official standings; direct division links can change on the FA site.</div>
+    <article class="card league-form-card"><div class="section-head"><span>LEAGUE FORM ///</span><small>RESULT-DRIVEN • ${LEAGUE_RESULTS.length} RESULTS</small></div><div class="mini-note">Our league tracker is calculated from the individual Division 10 results captured so far — not the unstable FA table page. ${leagueTrackerSvg()}${leagueTrackerLegend()}</div></article>
+    <article class="card"><div class="section-head"><span>LEAGUE TABLE</span><small>RESULT-DRIVEN • U13 DIVISION 10</small></div>
+      <div class="mini-note live-note"><b>Calculated league snapshot:</b> Built from the ${LEAGUE_RESULTS.length} individual Division 10 results captured to date. Use <b>FA FULL-TIME</b> to navigate to the latest official standings; direct division links can change on the FA site.</div>
       <div class="table-scroll"><table class="league-table"><thead><tr><th>POS</th><th>TEAM</th><th>P</th><th>W</th><th>D</th><th>L</th><th>PTS</th></tr></thead><tbody>${rows}</tbody></table></div>
       <div class="table-actions"><a class="cta link" href="${tableUrl}" target="_blank" rel="noopener noreferrer">OPEN FA FULL-TIME →</a><a class="secondary-cta link" href="${resultsUrl}" target="_blank" rel="noopener noreferrer">OFFICIAL RESULTS →</a><a class="secondary-cta link" href="${fixturesUrl}" target="_blank" rel="noopener noreferrer">ALL FIXTURES →</a></div>
     </article>
