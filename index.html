@@ -8,11 +8,24 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="U13 Silvers">
   <meta name="description" content="Westerhope United U13 Silvers 2026/27 season hub">
-  <link rel="manifest" href="manifest.json?v=33">
-  <link rel="apple-touch-icon" sizes="180x180" href="assets/icons/apple-touch-icon.png?v=33">
-  <link rel="icon" type="image/png" sizes="192x192" href="assets/icons/icon-192.png?v=33">
-  <link rel="stylesheet" href="styles.css?v=33">
+  <link rel="manifest" href="manifest.json?v=35">
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/icons/apple-touch-icon.png?v=35">
+  <link rel="icon" type="image/png" sizes="192x192" href="assets/icons/icon-192.png?v=35">
+  <link rel="stylesheet" href="styles.css?v=35">
   <title>Westerhope U13 Silvers</title>
+
+  <style>
+    .latest-hero-card,.latest-hero-placeholder{overflow:hidden;padding:0;position:relative}
+    .latest-hero-button{display:block;width:100%;padding:0;border:0;background:none;color:inherit;text-align:left;cursor:pointer;position:relative}
+    .latest-hero-button img{display:block;width:100%;height:260px;object-fit:cover;object-position:center}
+    .latest-hero-overlay{position:absolute;inset:auto 0 0;padding:28px 24px 20px;background:linear-gradient(180deg,rgba(0,0,0,0),rgba(0,0,0,.9));color:#fff;display:flex;flex-direction:column;gap:4px}
+    .latest-hero-overlay .eyebrow{color:#ffd500;letter-spacing:.14em}
+    .latest-hero-overlay strong{font-size:1.25rem;letter-spacing:.02em}
+    .latest-hero-overlay small{opacity:.85}
+    .latest-hero-placeholder{min-height:170px;background:linear-gradient(135deg,#0b0b0b,#1c1c1c);display:flex;align-items:flex-end}
+    .latest-hero-placeholder .latest-hero-overlay{position:static;background:none}
+    @media (max-width:700px){.latest-hero-button img{height:190px}.latest-hero-overlay{padding:22px 18px 16px}.latest-hero-overlay strong{font-size:1.05rem}.latest-hero-placeholder{min-height:145px}}
+  </style>
 </head>
 <body>
   <div class="app-shell">
@@ -37,12 +50,12 @@
       <div class="footer-sub">MORE THAN A TEAM &nbsp; • &nbsp; A COMMUNITY</div>
     </footer>
   </div>
-  <script src="data.js?v=33"></script>
-  <script src="app.js?v=33"></script>
+  <script src="data.js?v=35"></script>
+  <script src="app.js?v=35"></script>
 
   <script>
   (() => {
-    const CURRENT_BUILD = '33';
+    const CURRENT_BUILD = '35';
     const RELOAD_KEY = 'silvers-update-reload';
 
     async function checkForUpdate() {
