@@ -385,26 +385,66 @@ function leagueTrackerSvg(){
   const maxPts=Math.max(9,...LEAGUE_TEAMS.map(t=>leagueFormSeries(t).series.at(-1).pts));
   const x=g=>pad.l+(g/maxGame)*(width-pad.l-pad.r);
   const y=p=>height-pad.b-(p/maxPts)*(height-pad.t-pad.b);
-  const yTicks=[]; for(let p=0;p<=maxPts;p+=Math.max(1,Math.ceil(maxPts/6))) yTicks.push(p); if(yTicks.at(-1)!==maxPts)yTicks.push(maxPts);
+  const yStep=Math.max(1,Math.ceil(maxPts/6));
+  const yTicks=[]; for(let p=0;p<=maxPts;p+=yStep) yTicks.push(p); if(yTicks.at(-1)!==maxPts)yTicks.push(maxPts);
   const grid=yTicks.map(v=>`<line x1="${pad.l}" y1="${y(v)}" x2="${width-pad.r}" y2="${y(v)}" stroke="rgba(255,255,255,.10)"/><text x="${pad.l-10}" y="${y(v)+4}" fill="rgba(255,255,255,.60)" text-anchor="end" font-size="12">${v}</text>`).join('');
   const xTicks=Array.from({length:maxGame+1},(_,g)=>`<line x1="${x(g)}" y1="${pad.t}" x2="${x(g)}" y2="${height-pad.b}" stroke="rgba(255,255,255,.05)"/><text x="${x(g)}" y="${height-pad.b+24}" fill="rgba(255,255,255,.65)" text-anchor="middle" font-size="12">${g===0?'START':'G'+g}</text>`).join('');
-  const lines=LEAGUE_TEAMS.map(team=>{
+  const lines=LEAGUE_TEAMS.map((team,idx)=>{
     const ser=leagueFormSeries(team).series;
     const pts=ser.map(d=>`${x(d.game)},${y(d.pts)}`).join(' ');
     const color=LEAGUE_TEAM_STYLES[team]||'#aaa';
     const sw=team==='Westerhope United U13 Silvers'?4:2.2;
     const opacity=team==='Westerhope United U13 Silvers'?1:.72;
-    return `<polyline points="${pts}" fill="none" stroke="${color}" stroke-width="${sw}" stroke-linejoin="round" stroke-linecap="round" opacity="${opacity}"/>`+
-      ser.slice(1).map(d=>`<circle cx="${x(d.game)}" cy="${y(d.pts)}" r="${team==='Westerhope United U13 Silvers'?5:3.5}" fill="${color}" opacity="${opacity}"/>`).join('');
+    const crest=crestForTeam(team);
+    const final=ser.at(-1);
+    const imgSize=team==='Westerhope United U13 Silvers'?34:30;
+    const imgX=x(final.game)-imgSize/2;
+    const imgY=y(final.pts)-imgSize/2;
+    return `<polyline class="league-team-line team-line-${idx}" data-team-index="${idx}" points="${pts}" fill="none" stroke="${color}" stroke-width="${sw}" stroke-linejoin="round" stroke-linecap="round" opacity="${opacity}"/>`+
+      ser.slice(1).map(d=>`<circle class="league-team-point team-point-${idx}" data-team-index="${idx}" cx="${x(d.game)}" cy="${y(d.pts)}" r="${team==='Westerhope United U13 Silvers'?5:3.5}" fill="${color}" opacity="${opacity}"/>`).join('')+
+      (crest ? `<image class="league-team-crest-end" data-team-index="${idx}" href="${crest}?v=39" x="${imgX}" y="${imgY}" width="${imgSize}" height="${imgSize}" preserveAspectRatio="xMidYMid meet" aria-label="${escapeHtml(LEAGUE_SHORT_NAMES[team]||team)} latest points" style="cursor:pointer"/>` : '');
   }).join('');
   return `<div class="league-chart-wrap"><svg viewBox="0 0 ${width} ${height}" role="img" aria-label="Cumulative league points by games played">${grid}${xTicks}${lines}<text x="${pad.l}" y="15" fill="rgba(255,255,255,.70)" font-size="12" letter-spacing="2">CUMULATIVE POINTS</text><text x="${width/2}" y="${height-16}" fill="rgba(255,255,255,.55)" font-size="11" text-anchor="middle">GAMES PLAYED BY EACH TEAM — LINES STOP WHEN THAT TEAM STOPS PLAYING</text></svg></div>`;
 }
-function leagueTrackerLegend(){
-  return `<div class="league-legend">${LEAGUE_TEAMS.map(team=>`<div class="league-legend-item"><span class="legend-line" style="background:${LEAGUE_TEAM_STYLES[team]||'#aaa'}"></span>${crestImg(team,'table-crest')}<b>${LEAGUE_SHORT_NAMES[team]}</b></div>`).join('')}</div>`;
-}
-function leagueFormCards(){
+function leagueFormGroups(){
   const table=leagueTableFromResults();
-  return `<div class="form-watch-grid">${table.map(r=>{const f=leagueFormSummary(r.team); return `<article class="form-watch ${r.team==='Westerhope United U13 Silvers'?'our-team':''}"><div class="form-watch-head">${crestImg(r.team,'table-crest')}<b>${LEAGUE_SHORT_NAMES[r.team]}</b><strong>${r.pts} PTS</strong></div><div class="form-watch-meta"><span><b>${r.p}</b> P</span><span><b>${f.form||'—'}</b> FORM</span><span><b>${r.pts/r.p? (r.pts/r.p).toFixed(2):'0.00'}</b> PPG</span></div><div class="form-watch-streak">${f.currentWins>1?`🔥 ${f.currentWins} wins in a row`:f.currentUnbeaten>1?`🟢 ${f.currentUnbeaten} unbeaten`:f.last3?`${f.last3} • ${f.pointsLast3} pts last 3`: 'No form yet'}</div></article>`;}).join('')}</div>`;
+  const groups=[];
+  table.forEach(r=>{
+    let g=groups.find(x=>x.pts===r.pts);
+    if(!g){g={pts:r.pts,teams:[]};groups.push(g)}
+    g.teams.push(r);
+  });
+  return `<div class="form-groups">${groups.map((g,gi)=>{
+    const teams=g.teams.map(r=>{
+      const f=leagueFormSummary(r.team);
+      const idx=LEAGUE_TEAMS.indexOf(r.team);
+      return `<button class="form-team-pill ${r.team==='Westerhope United U13 Silvers'?'our-team':''}" type="button" data-team-index="${idx}" title="Highlight ${escapeHtml(r.team)} on the graph"><span class="form-pill-crest">${crestImg(r.team,'table-crest')}</span><span class="form-pill-name">${escapeHtml(LEAGUE_SHORT_NAMES[r.team])}</span><span class="form-pill-meta">${r.p} P • ${r.pts/r.p?(r.pts/r.p).toFixed(2):'0.00'} PPG • ${escapeHtml(f.form||'—')}</span></button>`;
+    }).join('');
+    return `<div class="form-group"><div class="form-group-head"><b>${g.pts} ${g.pts===1?'PT':'PTS'}</b><span>${g.teams.length===1?'':g.teams.length+' teams level'}</span></div><div class="form-group-teams">${teams}</div></div>`;
+  }).join('')}</div>`;
+}
+function wireLeagueTracker(){
+  const root=document.querySelector('.league-form-card');
+  if(!root) return;
+  const svg=root.querySelector('.league-chart-wrap svg');
+  const setActive=(idx)=>{
+    root.querySelectorAll('[data-team-index]').forEach(el=>{
+      const same=String(el.dataset.teamIndex)===String(idx);
+      if(el.classList.contains('league-team-line')) el.style.opacity=same?'1':'.12';
+      else if(el.classList.contains('league-team-point')) el.style.opacity=same?'1':'.10';
+      else if(el.classList.contains('league-team-crest-end')) el.style.opacity=same?'1':'.25';
+      else if(el.classList.contains('form-team-pill')) el.classList.toggle('active',same);
+    });
+  };
+  root.querySelectorAll('.form-team-pill').forEach(btn=>btn.addEventListener('click',()=>{
+    const idx=Number(btn.dataset.teamIndex);
+    const already=btn.classList.contains('active');
+    if(already){
+      root.querySelectorAll('.league-team-line,.league-team-point,.league-team-crest-end').forEach(el=>el.style.opacity='');
+      root.querySelectorAll('.form-team-pill').forEach(el=>el.classList.remove('active'));
+    } else setActive(idx);
+  }));
+  root.querySelectorAll('.league-team-crest-end').forEach(img=>img.addEventListener('click',()=>setActive(Number(img.dataset.teamIndex))));
 }
 function calcStats(){
   const out = Object.fromEntries(D.squad.map(p => [p.name, {...p, apps:0, starts:0, goals:0, assists:0, gA:0, potm:0, pp:0, captain:0}]));
@@ -665,7 +705,7 @@ function renderStats(){
   app.innerHTML=`<section>
     <div class="page-title">STATS <span>///</span></div>
     <div class="match-intro">Season-to-date numbers plus the trends that will become more interesting as the matches build up. Form is based on appearances, not minutes.</div>
-    <article class="card league-form-card"><div class="section-head"><span>LEAGUE FORM ///</span><small>DIVISION 10 • RESULT-DRIVEN</small></div><div class="mini-note"><b>Built from the individual league results we have captured.</b> Teams stop at the number of games they have actually played, so games in hand are not treated as defeats.</div>${leagueTrackerSvg()}${leagueTrackerLegend()}${leagueFormCards()}</article>
+    <article class="card league-form-card"><div class="section-head"><span>LEAGUE FORM ///</span><small>DIVISION 10 • RESULT-DRIVEN</small></div><div class="mini-note"><b>Built from the individual league results we have captured.</b> Teams stop at the number of games they have actually played, so games in hand are not treated as defeats.</div>${leagueTrackerSvg()}${leagueFormGroups()}</article>
     <article class="card stat-hero"><div class="section-head"><span>SEASON SNAPSHOT</span><small>${D.season}</small></div><div class="snapshot wide-snapshot">${[['PLAYED',s.played],['WIN %',s.winPct+'%'],['GOALS',s.gf],['CONCEDED',s.ga],['GD',s.gd>=0?'+'+s.gd:s.gd],['CLEAN SHEETS',s.clean],['CLEAN SHEET %',s.cleanPct+'%'],['GOALS / GAME',s.played?(s.gf/s.played).toFixed(2):'0.00']].map(x=>`<div><small>${x[0]}</small><b>${x[1]}</b></div>`).join('')}</div></article>
     <article class="card"><div class="section-head"><span>PLAYER LEADERBOARD</span><small>2026/27</small></div><div class="leader-list"><div class="leader-header"><span>#</span><span>PLAYER</span><span>APP</span><span>G</span><span>A</span><span>G+A</span></div>${rank.map((p,i)=>`<div><span class="rank">${i+1}</span><b>#${p.no} ${p.short}</b><span>${p.apps}</span><strong>${p.goals}</strong><strong>${p.assists}</strong><strong>${p.gA}</strong></div>`).join('')}</div></article>
     <section class="two-col">
@@ -681,6 +721,7 @@ function renderStats(){
     <article class="card"><div class="section-head"><span>CAREER MILESTONE WATCH</span><small>2024/25 → 2026/27</small></div><div class="milestone-list">${milestoneWatch().slice(0,8).map(x=>`<div class="mile-row"><b>#${x.p.no} ${x.p.short}</b><span>${x.m.next} ${x.m.type.toLowerCase()}</span><strong>${x.m.diff} to go</strong></div>`).join('')}</div><div class="mini-note">Career totals combine the 2024/25 and 2025/26 records with the current 2026/27 season. Milestones are the next useful landmark for appearances, goals, assists or goal contributions.</div></article>
     <article class="card"><div class="section-head"><span>STATS WE CAN UNLOCK LATER</span><small>AS THE DATA GROWS</small></div><div class="unlock-grid"><div><b>SCORING STREAKS</b><span>e.g. 4 goals in last 6 appearances</span></div><div><b>HOME SCORING</b><span>e.g. scored in every home appearance</span></div><div><b>PARTNERSHIPS</b><span>e.g. Joseph + Charlie goal/assist link-ups</span></div><div><b>LINEUP RECORD</b><span>e.g. results when Freddie and Jake start together</span></div></div></article>
   </section>`;
+  wireLeagueTracker();
 }
 function renderTable(){
   const rows=leagueTableFromResults().map(r=>`<tr class="${r.team==='Westerhope United U13 Silvers'?'our-team':''}"><td>${r.pos}</td><td><span class="table-team">${crestImg(r.team,'table-crest')}<b>${r.team}</b></span></td><td>${r.p}</td><td>${r.w}</td><td>${r.d}</td><td>${r.l}</td><td><strong>${r.pts}</strong></td></tr>`).join('');
@@ -689,7 +730,7 @@ function renderTable(){
   const resultsUrl = 'https://fulltime.thefa.com/results.html?selectedSeason=260632843&selectedFixtureGroupAgeGroup=10&selectedFixtureGroupKey=1_253565231&selectedRelatedFixtureOption=3&selectedDateCode=all&previousSelectedFixtureGroupAgeGroup=10&previousSelectedFixtureGroupKey=&previousSelectedClub=';
   const fixturesUrl = 'https://fulltime.thefa.com/fixtures.html?selectedSeason=260632843&selectedFixtureGroupAgeGroup=10&selectedFixtureGroupKey=1_253565231&selectedDateCode=all&selectedClub=&selectedTeam=&selectedRelatedFixtureOption=3&selectedFixtureDateStatus=&selectedFixtureStatus=&previousSelectedFixtureGroupAgeGroup=10&previousSelectedFixtureGroupKey=2_117640819&previousSelectedClub=&itemsPerPage=25';
   app.innerHTML=`<section><div class="page-title">TABLE <span>///</span></div>
-    <article class="card league-form-card"><div class="section-head"><span>LEAGUE FORM ///</span><small>RESULT-DRIVEN • ${LEAGUE_RESULTS.length} RESULTS</small></div><div class="mini-note">Our league tracker is calculated from the individual Division 10 results captured so far — not the unstable FA table page. ${leagueTrackerSvg()}${leagueTrackerLegend()}</div></article>
+    <article class="card league-form-card"><div class="section-head"><span>LEAGUE FORM ///</span><small>RESULT-DRIVEN • ${LEAGUE_RESULTS.length} RESULTS</small></div><div class="mini-note">Our league tracker is calculated from the individual Division 10 results captured so far — not the unstable FA table page. ${leagueTrackerSvg()}</div></article>
     <article class="card"><div class="section-head"><span>LEAGUE TABLE</span><small>RESULT-DRIVEN • U13 DIVISION 10</small></div>
       <div class="mini-note live-note"><b>Calculated league snapshot:</b> Built from the ${LEAGUE_RESULTS.length} individual Division 10 results captured to date. Use <b>FA FULL-TIME</b> to navigate to the latest official standings; direct division links can change on the FA site.</div>
       <div class="table-scroll"><table class="league-table"><thead><tr><th>POS</th><th>TEAM</th><th>P</th><th>W</th><th>D</th><th>L</th><th>PTS</th></tr></thead><tbody>${rows}</tbody></table></div>
@@ -697,6 +738,7 @@ function renderTable(){
     </article>
     <article class="card"><div class="section-head"><span>WHAT'S NEXT</span><small>UPCOMING FIXTURES</small></div>${fixtures}</article>
   </section>`;
+  wireLeagueTracker();
 }
 function prettyDate(d){return new Date(d+'T12:00:00').toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'}).toUpperCase();}
 function prettyDateLong(d){return new Date(d+'T12:00:00').toLocaleDateString('en-GB',{weekday:'long',day:'numeric',month:'long',year:'numeric'}).toUpperCase();}
