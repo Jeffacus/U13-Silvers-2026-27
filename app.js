@@ -51,15 +51,26 @@ const RED_ROW_NEXT = {
   opponent: 'Red Row Raptors',
   shortOpponent: 'RED ROW RAPTORS',
   date: '2026-09-20',
-  time: 'TBC',
+  time: '09:30',
   venue: 'Home',
   competition: 'Sunday U13 Presidents Cup — Second Round',
-  facebook: '',
-  lineupImage: '',
-  starters: [],
-  bench: [],
-  unavailable: [],
-  paragraphs: []
+  facebook: 'https://www.facebook.com/share/r/14p5mPWS7ok/?mibextid=wwXIfr',
+  lineupImage: 'assets/matches/red-row/lineup.jpeg',
+  starters: ['Johnny','Kyran','Kane','Theo','Yusuf','Jake','Ollie','Oliver','Charlie'],
+  bench: ['Blake','Ewan','Joseph'],
+  unavailable: ['Freddie'],
+  paragraphs: [
+    `Three league games unbeaten. Seven points from nine. An eight-game unbeaten run stretching back into the final stages of last season. But now the league takes a back seat for a week — it is time for cup football. And for the first time this season, the Silvers have a <b>home cup tie at Valley View</b>.`,
+    `<h3>👀 A FAMILIAR OPPONENT</h3>Red Row Raptors are certainly no strangers to Westerhope. Last season, Red Row edged a competitive game <b>3–2</b> when the Silvers travelled to them. When they came to Valley View later in the campaign, however, Westerhope produced a memorable <b>6–1 victory</b> during the promotion run. Different season, different competition, different circumstances — but the same two teams, with a place in the next round at stake.`,
+    `<h3>🧤 JOHNNY</h3>Johnny starts again after an excellent opening three games. Now on <b>42 Silvers appearances</b>, he has already produced several important saves this season and will need to stay alert in a cup tie where one moment can change everything.`,
+    `<h3>🛡️ KYRAN • KANE • THEO</h3>Kyran continues at right-back. Kane anchors the defence after being voted <b>Players’ Player in all three league games</b>. Theo starts on the left after an excellent Player of the Match performance against North Shields.`,
+    `<h3>⚡ YUSUF • JAKE • OLLIE • OLIVER</h3>With <b>Freddie unavailable</b> this week, Ollie Anderson returns to the starting XI after making his <b>40th Silvers appearance</b> last weekend — and marking it with an assist. Jake continues alongside him, Yusuf starts on the right and Oliver keeps his place on the left after an excellent opening to the campaign.`,
+    `<h3>⚽ CHARLIE</h3>Charlie leads the line after reaching <b>31 career Silvers goals</b> against North Shields, including his milestone 30th. He gets another chance to lead the attack in a cup tie where the next goal could be crucial.`,
+    `<h3>💪 STRONG OPTIONS</h3>The bench gives the coaches plenty to work with: <b>Blake, Ewan and Joseph</b>. All three have already shown they can make a positive impact, giving the Silvers valuable options as the game develops.`,
+    `<h3>🧠 THE MESSAGE</h3>Both coaches have worked the boys hard this week. The message is simple: <b>work rate, discipline, communication, bravery and togetherness.</b> If a challenge is lost, win the next one. If a chance is missed, look for the next one. And when the opportunity arrives, take it.`,
+    `<h3>🏠 VALLEY VIEW • BLACK & WHITE • CUP DAY</h3>This is the Silvers’ <b>first home cup outing of 2026/27</b>. The memories of last season are there, but so is the opportunity to write a new chapter. Sunday starts 0–0, and both teams will be looking for the same thing: a place in the next round.`,
+    `<b>MATCHDAY 04 ///</b><br><br>Sunday morning. 09:30. Valley View. First home cup tie of the season. <b>UP THE HOPE ///</b>`
+  ]
 };
 
 const NORTH_SHIELDS_FULLTIME_VIDEO = 'https://www.facebook.com/share/r/1D57M5jrQt/?mibextid=wwXIfr';
@@ -282,7 +293,7 @@ function crestImg(team, cls='mini-crest'){
   const src=crestForTeam(team);
   const safeTeam=escapeHtml(team || '');
   if(!src) return '<span class="crest-slot crest-missing" aria-hidden="true">?</span>';
-  return `<span class="crest-slot"><img class="${cls}" src="${src}?v=38" alt="${safeTeam}" loading="lazy" onerror="crestFail(this)"></span>`;
+  return `<span class="crest-slot"><img class="${cls}" src="${src}?v=40" alt="${safeTeam}" loading="lazy" onerror="crestFail(this)"></span>`;
 }
 function crestFail(img){
   const slot=img && img.closest ? img.closest('.crest-slot') : null;
@@ -402,7 +413,7 @@ function leagueTrackerSvg(){
     const imgY=y(final.pts)-imgSize/2;
     return `<polyline class="league-team-line team-line-${idx}" data-team-index="${idx}" points="${pts}" fill="none" stroke="${color}" stroke-width="${sw}" stroke-linejoin="round" stroke-linecap="round" opacity="${opacity}"/>`+
       ser.slice(1).map(d=>`<circle class="league-team-point team-point-${idx}" data-team-index="${idx}" cx="${x(d.game)}" cy="${y(d.pts)}" r="${team==='Westerhope United U13 Silvers'?5:3.5}" fill="${color}" opacity="${opacity}"/>`).join('')+
-      (crest ? `<image class="league-team-crest-end" data-team-index="${idx}" href="${crest}?v=39" x="${imgX}" y="${imgY}" width="${imgSize}" height="${imgSize}" preserveAspectRatio="xMidYMid meet" aria-label="${escapeHtml(LEAGUE_SHORT_NAMES[team]||team)} latest points" style="cursor:pointer"/>` : '');
+      (crest ? `<image class="league-team-crest-end" data-team-index="${idx}" href="${crest}?v=40" x="${imgX}" y="${imgY}" width="${imgSize}" height="${imgSize}" preserveAspectRatio="xMidYMid meet" aria-label="${escapeHtml(LEAGUE_SHORT_NAMES[team]||team)} latest points" style="cursor:pointer"/>` : '');
   }).join('');
   return `<div class="league-chart-wrap"><svg viewBox="0 0 ${width} ${height}" role="img" aria-label="Cumulative league points by games played">${grid}${xTicks}${lines}<text x="${pad.l}" y="15" fill="rgba(255,255,255,.70)" font-size="12" letter-spacing="2">CUMULATIVE POINTS</text><text x="${width/2}" y="${height-16}" fill="rgba(255,255,255,.55)" font-size="11" text-anchor="middle">GAMES PLAYED BY EACH TEAM — LINES STOP WHEN THAT TEAM STOPS PLAYING</text></svg></div>`;
 }
@@ -519,7 +530,7 @@ function heroMarkup(m, placement){
   const src=matchHeroPath(m);
   if(!src) return `<section class="card latest-hero-placeholder"><div class="latest-hero-overlay"><div class="eyebrow">MATCHDAY ${m?.id==='m3'?'03':'LATEST'} ///</div><strong>${m?.headline||'LATEST MATCH'}</strong><small>Hero photo coming soon</small></div></section>`;
   const labelText = placement==='home' ? 'LATEST MATCH' : 'MATCH HERO';
-  return `<section class="card latest-hero-card"><button class="latest-hero-button" type="button" onclick="openMatch('${m.id}')"><img src="${src}?v=38" alt="${m.shortOpponent} match hero"><div class="latest-hero-overlay"><div class="eyebrow">${labelText} ///</div><strong>${m.venue==='Home'?'WESTERHOPE UNITED':' '+m.shortOpponent} ${m.venue==='Home'?'3–1':m.venue==='Away'?scoreLabel(m):scoreLabel(m)}</strong><small>${m.venue==='Home'?'WESTERHOPE UNITED v '+m.shortOpponent:m.shortOpponent+' v WESTERHOPE UNITED'} • ${prettyDate(m.date)}</small></div></button></section>`;
+  return `<section class="card latest-hero-card"><button class="latest-hero-button" type="button" onclick="openMatch('${m.id}')"><img src="${src}?v=40" alt="${m.shortOpponent} match hero"><div class="latest-hero-overlay"><div class="eyebrow">${labelText} ///</div><strong>${m.venue==='Home'?'WESTERHOPE UNITED':' '+m.shortOpponent} ${m.venue==='Home'?'3–1':m.venue==='Away'?scoreLabel(m):scoreLabel(m)}</strong><small>${m.venue==='Home'?'WESTERHOPE UNITED v '+m.shortOpponent:m.shortOpponent+' v WESTERHOPE UNITED'} • ${prettyDate(m.date)}</small></div></button></section>`;
 }
 function renderHome(){
   const s=teamStats(), ps=calcStats(), last=D.matches[D.matches.length-1];
@@ -532,7 +543,7 @@ function renderHome(){
   const nextTime = last.nextTime || (last.id==='m1' ? BLAKELAW_PREVIEW.time : 'TBC');
   const nextVenue = last.nextVenue || (last.nextHome ? 'Valley View' : 'Away');
   const nextHome = !!last.nextHome;
-  const nextPreview = last.next === NORTH_SHIELDS_PREVIEW.opponent ? NORTH_SHIELDS_PREVIEW : (last.next === BLAKELAW_PREVIEW.opponent ? BLAKELAW_PREVIEW : null);
+  const nextPreview = last.next === RED_ROW_NEXT.opponent ? RED_ROW_NEXT : (last.next === NORTH_SHIELDS_PREVIEW.opponent ? NORTH_SHIELDS_PREVIEW : (last.next === BLAKELAW_PREVIEW.opponent ? BLAKELAW_PREVIEW : null));
   const nextActions = nextPreview ? `<div class="home-preview-actions"><button class="cta" onclick="openNextPreview()">READ MATCH PREVIEW →</button>${nextPreview.facebook ? `<a class="secondary-cta" href="${nextPreview.facebook}" target="_blank" rel="noopener">🎬 MATCHDAY VIDEO</a>` : ''}</div>` : `<div class="home-preview-actions"><span class="secondary-cta disabled-link">PREVIEW COMING SOON</span></div>`;
   const nextTeams = nextHome
     ? `<div>${crestImg('Westerhope United','mini-crest small')}<b>WESTERHOPE<br>UNITED</b></div><span>V</span><div>${nextCrest}<b>${last.next.toUpperCase()}</b></div>`
@@ -557,11 +568,11 @@ function renderMatches(){
 }
 function upcomingMatchCard(){
   const p=RED_ROW_NEXT;
-  return `<article class="card match-card upcoming-card"><div class="section-head"><span>UPCOMING • ${p.competition.toUpperCase()}</span><small>${prettyDate(p.date)}</small></div><div class="match-hero"><div class="hero-team">${crestImg('Westerhope United','mini-crest')}<b>WESTERHOPE<br>UNITED</b></div><div class="match-score preview-v"><strong>V</strong><small>KO TBC</small></div><div class="hero-team">${crestImg(p.opponent,'mini-crest')}<b>${p.shortOpponent}</b></div></div><div class="upcoming-meta">🏠 HOME &nbsp; • &nbsp; SUNDAY 20 SEPTEMBER &nbsp; • &nbsp; KICK-OFF TBC &nbsp; • &nbsp; VALLEY VIEW</div><div class="preview-buttons"><span class="secondary-cta disabled-link">MATCH PREVIEW COMING SOON</span></div></article>`;
+  return `<article class="card match-card upcoming-card"><div class="section-head"><span>UPCOMING • ${p.competition.toUpperCase()}</span><small>${prettyDate(p.date)}</small></div><div class="match-hero"><div class="hero-team">${crestImg('Westerhope United','mini-crest')}<b>WESTERHOPE<br>UNITED</b></div><div class="match-score preview-v"><strong>V</strong><small>${p.time} KO</small></div><div class="hero-team">${crestImg(p.opponent,'mini-crest')}<b>${p.shortOpponent}</b></div></div><div class="upcoming-meta">🏠 HOME &nbsp; • &nbsp; SUNDAY 20 SEPTEMBER &nbsp; • &nbsp; KICK-OFF ${p.time} &nbsp; • &nbsp; VALLEY VIEW</div><div class="preview-buttons"><button class="cta" onclick="openNextPreview()">READ MATCH PREVIEW →</button>${p.facebook?`<a class="secondary-cta" href="${p.facebook}" target="_blank" rel="noopener">🎬 MATCHDAY VIDEO</a>`:''}</div></article>`;
 }
 
 function openNextPreview(){
-  if (D.matches.some(m=>m.id==='m3')) { nav('matches'); return; }
+  if (D.matches.some(m=>m.id==='m3')) { renderPreview(RED_ROW_NEXT,'MATCHDAY 04 ///'); return; }
   const p = NORTH_SHIELDS_PREVIEW;
   renderPreview(p,'MATCHDAY 03 ///');
 }
@@ -570,10 +581,11 @@ function openPreview(){
   renderPreview(p,'MATCHDAY 02 ///');
 }
 function renderPreview(p,matchLabel){
+  const dateLong = prettyDateLong(p.date);
   const starters=p.starters.map(n=>`<span class="chip">#${playerByName(n)?.no??''} ${label(n)}</span>`).join('');
   const bench=p.bench.map(n=>`<span class="chip sub">#${playerByName(n)?.no??''} ${label(n)}</span>`).join('');
   const unavailable=p.unavailable?.length ? `<div class="unavailable-note">UNAVAILABLE • ${p.unavailable.map(n=>label(n)).join(' • ')}</div>` : '';
-  app.innerHTML=`<section><button class="back" onclick="nav('matches')">← BACK TO MATCHES</button><article class="card detail-card preview-detail"><div class="section-head"><span>MATCH PREVIEW • ${p.competition.toUpperCase()}</span><small>${prettyDate(p.date)}</small></div><div class="detail-title"><div>${crestImg('Westerhope United','mini-crest')}<b>WESTERHOPE<br>UNITED</b></div><div class="match-score preview-v"><strong>V</strong><small>${p.time} KO</small></div><div>${crestImg(p.opponent,'mini-crest')}<b>${p.shortOpponent}</b></div></div><div class="detail-meta"><span>🏠 <b>HOME</b></span><span>📅 <b>SUNDAY 13 SEPTEMBER</b></span><span>⏰ <b>09:30</b></span><span>📍 <b>VALLEY VIEW</b></span></div><div class="preview-media"><img src="${p.lineupImage}?v=38" alt="North Shields v Westerhope starting lineup" class="lineup-image" onerror="this.style.display='none'"><div class="mini-note">Starting XI graphic • home shirt lineup</div>${p.facebook ? `<a class="secondary-cta wide" href="${p.facebook}" target="_blank" rel="noopener">🎬 WATCH MATCHDAY POST →</a>` : ""}</div><div class="report-heading">MATCH PREVIEW ///</div>${p.paragraphs.map(x=>`<p class="report-p preview-p">${x}</p>`).join('')}<div class="report-heading">STARTING IX ///</div><div class="chip-row">${starters}</div><div class="report-heading">BENCH ///</div><div class="chip-row">${bench}</div>${unavailable}<div class="preview-footer"><b>${matchLabel}</b><span>${p.shortOpponent} • SUN 13 SEP • 09:30</span><strong>UP THE HOPE ///</strong></div></article></section>`;
+  app.innerHTML=`<section><button class="back" onclick="nav('matches')">← BACK TO MATCHES</button><article class="card detail-card preview-detail"><div class="section-head"><span>MATCH PREVIEW • ${p.competition.toUpperCase()}</span><small>${prettyDate(p.date)}</small></div><div class="detail-title"><div>${crestImg('Westerhope United','mini-crest')}<b>WESTERHOPE<br>UNITED</b></div><div class="match-score preview-v"><strong>V</strong><small>${p.time} KO</small></div><div>${crestImg(p.opponent,'mini-crest')}<b>${p.shortOpponent}</b></div></div><div class="detail-meta"><span>🏠 <b>HOME</b></span><span>📅 <b>${dateLong.toUpperCase()}</b></span><span>⏰ <b>${p.time}</b></span><span>📍 <b>VALLEY VIEW</b></span></div><div class="preview-media"><img src="${p.lineupImage}?v=40" alt="${p.shortOpponent} starting lineup" class="lineup-image" onerror="this.style.display='none'"><div class="mini-note">Starting XI graphic • home shirt lineup</div>${p.facebook ? `<a class="secondary-cta wide" href="${p.facebook}" target="_blank" rel="noopener">🎬 WATCH MATCHDAY POST →</a>` : ""}</div><div class="report-heading">MATCH PREVIEW ///</div>${p.paragraphs.map(x=>`<p class="report-p preview-p">${x}</p>`).join('')}<div class="report-heading">STARTING IX ///</div><div class="chip-row">${starters}</div><div class="report-heading">BENCH ///</div><div class="chip-row">${bench}</div>${unavailable}<div class="preview-footer"><b>${matchLabel}</b><span>${p.shortOpponent} • ${dateLong.toUpperCase()} • ${p.time}</span><strong>UP THE HOPE ///</strong></div></article></section>`;
   window.scrollTo({top:0,behavior:'smooth'});
 }
 window.openPreview=openPreview;
@@ -603,7 +615,7 @@ function renderGallery(m){
   if(!files.length) return '<div class="gallery-empty">📸 <b>Matchday photos coming soon.</b></div>';
   const folder=(m && m.id==='m1')?'cramlington':(m && m.id==='m2')?'blakelaw':(m && m.id==='m3')?'north-shields':m.id;
   const base=`assets/matches/${folder}/`;
-  return `<div class="match-gallery">${files.map((f,i)=>`<button class="gallery-item ${i===0?'gallery-hero':''}" type="button" onclick="openPhoto('${base}${f}','${m.shortOpponent} • ${i===0?'Match Hero':'Matchday Photo'}')"><img src="${base}${f}?v=38" alt="${m.shortOpponent} ${i===0?'match hero':'matchday photo '+(i)}" loading="lazy" onerror="this.closest('.gallery-item').style.display='none'"></button>`).join('')}</div>`;
+  return `<div class="match-gallery">${files.map((f,i)=>`<button class="gallery-item ${i===0?'gallery-hero':''}" type="button" onclick="openPhoto('${base}${f}','${m.shortOpponent} • ${i===0?'Match Hero':'Matchday Photo'}')"><img src="${base}${f}?v=40" alt="${m.shortOpponent} ${i===0?'match hero':'matchday photo '+(i)}" loading="lazy" onerror="this.closest('.gallery-item').style.display='none'"></button>`).join('')}</div>`;
 }
 function openPhoto(src,caption){
   let modal=document.getElementById('photo-modal');
@@ -617,7 +629,7 @@ function openPhoto(src,caption){
     modal.addEventListener('click',e=>{ if(e.target===modal) modal.classList.remove('open'); });
     document.addEventListener('keydown',e=>{ if(e.key==='Escape') modal.classList.remove('open'); });
   }
-  modal.querySelector('.photo-modal-img').src=src+'?v=38';
+  modal.querySelector('.photo-modal-img').src=src+'?v=40';
   modal.querySelector('.photo-modal-caption').textContent=caption||'';
   modal.classList.add('open');
 }
@@ -638,13 +650,13 @@ window.openMatch=openMatch;
 
 function renderPlayers(){
   const ps=calcStats();
-  app.innerHTML=`<section><div class="page-title">SQUAD <span>///</span></div><div class="match-intro">The current Silvers squad, with shirt numbers, photographs and season-to-date stats. Tap a player for their full profile, three-season history and career milestones.</div><div class="player-grid">${ps.map(p=>`<button class="player-card" onclick="showPlayer('${escapeJs(p.name)}')"><div class="player-photo-wrap">${safePhoto(p)?`<img class="player-photo" src="${safePhoto(p)}?v=38" alt="${p.short}" loading="lazy" onerror="photoFail(this)">`:''}<div class="player-placeholder" style="display:${safePhoto(p)?'none':'flex'}"><span>#${p.no}</span></div></div><div class="shirt-num">#${p.no}</div><div class="player-name">${p.short}</div><small>${p.pos} • ${p.apps} APP • ${p.goals} G • ${p.assists} A</small></button>`).join('')}</div></section>`;
+  app.innerHTML=`<section><div class="page-title">SQUAD <span>///</span></div><div class="match-intro">The current Silvers squad, with shirt numbers, photographs and season-to-date stats. Tap a player for their full profile, three-season history and career milestones.</div><div class="player-grid">${ps.map(p=>`<button class="player-card" onclick="showPlayer('${escapeJs(p.name)}')"><div class="player-photo-wrap">${safePhoto(p)?`<img class="player-photo" src="${safePhoto(p)}?v=40" alt="${p.short}" loading="lazy" onerror="photoFail(this)">`:''}<div class="player-placeholder" style="display:${safePhoto(p)?'none':'flex'}"><span>#${p.no}</span></div></div><div class="shirt-num">#${p.no}</div><div class="player-name">${p.short}</div><small>${p.pos} • ${p.apps} APP • ${p.goals} G • ${p.assists} A</small></button>`).join('')}</div></section>`;
 }
 function photoFail(img){ img.style.display='none'; const ph=img.nextElementSibling; if(ph) ph.style.display='flex'; }
 function showPlayer(name){
   const p=calcStats().find(x=>x.name===name); if(!p) return;
   const h25=historicalFor(p.name), h24=historical2024For(p.name), career=careerFor(p.name,p), mile=playerMilestone(p.name,p);
-  const photo = safePhoto(p) ? `${safePhoto(p)}?v=38` : '';
+  const photo = safePhoto(p) ? `${safePhoto(p)}?v=40` : '';
   const mileHtml = mile ? `<div class="milestone-banner"><b>🏅 NEXT CAREER MILESTONE</b><span>${mile.next} ${mile.type.toLowerCase()} — <strong>${mile.diff}</strong> to go</span></div>` : '';
   app.innerHTML=`<section><button class="back" onclick="nav('players')">← BACK TO SQUAD</button><article class="card player-profile"><div class="profile-hero"><div class="profile-photo-wrap large">${photo?`<img class="profile-photo" src="${photo}" alt="${p.short}" onerror="photoFail(this)">`:''}<div class="player-placeholder" style="display:${photo?'none':'flex'}"><span>#${p.no}</span></div></div><div class="profile-top"><div class="profile-num">#${p.no}</div><div><div class="eyebrow">${p.short.toUpperCase()} • WESTERHOPE UNITED</div><h1>${p.name}</h1><p>${p.pos}</p>${p.status!=='Active'?`<span class="status-pill">${p.status.toUpperCase()}</span>`:''}</div></div></div>
   <div class="profile-section-title">2026/27</div><div class="profile-stats">${[['APPEARANCES',p.apps],['STARTS',p.starts],['GOALS',p.goals],['ASSISTS',p.assists],['G+A',p.gA],['POTM',p.potm],['PLAYERS’ PLAYER',p.pp],['CAPTAIN',p.captain]].map(x=>`<div><small>${x[0]}</small><b>${x[1]}</b></div>`).join('')}</div>
