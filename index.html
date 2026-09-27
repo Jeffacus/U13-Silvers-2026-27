@@ -54,47 +54,8 @@
       <div class="footer-sub">MORE THAN A TEAM &nbsp; • &nbsp; A COMMUNITY</div>
     </footer>
   </div>
-  <script src="data.js?v=51"></script>
-  <script src="app.js?v=51"></script>
+  <script src="data.js?v=55"></script>
+  <script src="app.js?v=55"></script>
 
-  <script>
-  (() => {
-    const CURRENT_BUILD = '51';
-    const RELOAD_KEY = 'silvers-update-reload';
-    const PAGE_BUILD = CURRENT_BUILD;
-
-    async function checkForUpdate() {
-      try {
-        const r = await fetch('version.json?t=' + Date.now(), { cache: 'no-store' });
-        if (!r.ok) return;
-        const v = await r.json();
-        const latestBuild = String(v.build || '');
-        if (!latestBuild || latestBuild === CURRENT_BUILD) return;
-
-        // Silently reload once so the installed Home Screen app picks up the
-        // newest HTML/JS without showing a permanent notification banner.
-        const attempted = sessionStorage.getItem(RELOAD_KEY);
-        if (attempted === latestBuild || latestBuild <= PAGE_BUILD) return;
-        sessionStorage.setItem(RELOAD_KEY, latestBuild);
-
-        const u = new URL(window.location.href);
-        u.searchParams.set('refresh', latestBuild + '-' + Date.now());
-        window.location.replace(u.toString());
-      } catch (e) {
-        // Best effort only: never interrupt normal app use because an update check failed.
-      }
-    }
-
-    // Clear the one-shot guard once we are on the current build.
-    try {
-      sessionStorage.removeItem(RELOAD_KEY);
-    } catch (e) {}
-
-    setTimeout(checkForUpdate, 700);
-    document.addEventListener('visibilitychange', () => { if (!document.hidden) checkForUpdate(); });
-    window.addEventListener('focus', checkForUpdate);
-    setInterval(checkForUpdate, 60000);
-  })();
-  </script>
 </body>
 </html>
