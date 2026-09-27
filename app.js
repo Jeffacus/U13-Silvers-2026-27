@@ -294,8 +294,8 @@ if (D.matches && !D.matches.some(m => m.id === 'm3')) {
 
 // Matchday 05 result — Berwick Rangers Community Academy, 2026-09-27.
 if (D.matches) {
-  D.matches = D.matches.filter(m => m.id !== 'm5');
-  D.matches.push({
+  const berwickMatchIndex = D.matches.findIndex(m => m.id === 'm5');
+  const berwickMatch = {
     id: 'm5',
     date: '2026-09-27',
     competition: 'Challenge Cup',
@@ -370,8 +370,13 @@ if (D.matches) {
       {player:'Yusuf Syed Ubaidur Rahman', text:'Unavailable.'}
     ],
     gallery: []
-  });
+  };
+  if (berwickMatchIndex >= 0) D.matches.splice(berwickMatchIndex, 1, berwickMatch);
+  else D.matches.push(berwickMatch);
 }
+
+// Always keep the completed match archive in chronological order.
+D.matches = [...D.matches].sort((a,b)=>String(a.date).localeCompare(String(b.date)));
 
 function normaliseTeamName(team){
   return String(team || '')
@@ -731,8 +736,9 @@ function heroMarkup(m, placement){
   const labelText = placement==='home' ? 'LATEST MATCH' : 'MATCH HERO';
   return `<section class="card latest-hero-card"><button class="latest-hero-button" type="button" onclick="openMatch('${m.id}')"><img src="${src}?v=47" alt="${m.shortOpponent} match hero"><div class="latest-hero-overlay"><div class="eyebrow">${labelText} ///</div><strong>${m.venue==='Home'?'WESTERHOPE UNITED':' '+m.shortOpponent} ${scoreLabel(m)}</strong><small>${m.venue==='Home'?'WESTERHOPE UNITED v '+m.shortOpponent:m.shortOpponent+' v WESTERHOPE UNITED'} • ${prettyDate(m.date)}</small></div></button></section>`;
 }
+function latestMatch(){ return [...D.matches].sort((a,b)=>String(a.date).localeCompare(String(b.date))).at(-1); }
 function renderHome(){
-  const s=teamStats(), ls=leagueTeamStats(), ps=calcStats(), last=D.matches[D.matches.length-1];
+  const s=teamStats(), ls=leagueTeamStats(), ps=calcStats(), last=latestMatch();
   const topScorer=[...ps].sort((a,b)=>b.goals-a.goals||a.short.localeCompare(b.short))[0];
   const topAssist=[...ps].sort((a,b)=>b.assists-a.assists||a.short.localeCompare(b.short))[0];
   const topGA=[...ps].sort((a,b)=>b.gA-a.gA||a.short.localeCompare(b.short))[0];
@@ -766,7 +772,7 @@ function renderMatches(){
   app.innerHTML=`<section><div class="page-title">MATCHES <span>///</span></div><div class="match-intro">Pre-match previews, starting line-ups, results, reports, statistics and matchday photography — all in one season archive.</div>${upcomingMatchCard()}<div class="archive-heading">MATCH ARCHIVE ///</div>${D.matches.slice().reverse().map(matchCard).join('')}</section>`;
 }
 function upcomingMatchCard(){
-  const last = D.matches[D.matches.length-1];
+  const last = latestMatch();
   const p = last?.next === RED_ROW_NEXT.opponent ? RED_ROW_NEXT : (last?.next === NORTH_SHIELDS_PREVIEW.opponent ? NORTH_SHIELDS_PREVIEW : (last?.next === BLAKELAW_PREVIEW.opponent ? BLAKELAW_PREVIEW : (last?.next === BERWICK_NEXT.opponent ? BERWICK_NEXT : RED_ROW_NEXT)));
   const isHome = p.venue==='Home';
   const previewButton = (p.paragraphs && p.paragraphs.length && p !== BERWICK_NEXT) ? `<button class="cta" onclick="openNextPreview()">READ MATCH PREVIEW →</button>` : `<span class="secondary-cta disabled-link">PREVIEW COMING SOON</span>`;
@@ -774,7 +780,7 @@ function upcomingMatchCard(){
 }
 
 function openNextPreview(){
-  const last = D.matches[D.matches.length-1];
+  const last = latestMatch();
   if(last?.next === BERWICK_NEXT.opponent){ renderPreview(BERWICK_NEXT,'MATCHDAY 05 ///'); return; }
   if(last?.next === RED_ROW_NEXT.opponent || D.matches.some(m=>m.id==='m3')) { renderPreview(RED_ROW_NEXT,'MATCHDAY 04 ///'); return; }
   const p = NORTH_SHIELDS_PREVIEW;
