@@ -54,13 +54,14 @@
       <div class="footer-sub">MORE THAN A TEAM &nbsp; • &nbsp; A COMMUNITY</div>
     </footer>
   </div>
-  <script src="data.js?v=46"></script>
-  <script src="app.js?v=46"></script>
+  <script src="data.js?v=48"></script>
+  <script src="app.js?v=48"></script>
 
   <script>
   (() => {
-    const CURRENT_BUILD = '45';
+    const CURRENT_BUILD = '48';
     const RELOAD_KEY = 'silvers-update-reload';
+    const PAGE_BUILD = CURRENT_BUILD;
 
     async function checkForUpdate() {
       try {
@@ -73,7 +74,7 @@
         // Silently reload once so the installed Home Screen app picks up the
         // newest HTML/JS without showing a permanent notification banner.
         const attempted = sessionStorage.getItem(RELOAD_KEY);
-        if (attempted === latestBuild) return;
+        if (attempted === latestBuild || latestBuild <= PAGE_BUILD) return;
         sessionStorage.setItem(RELOAD_KEY, latestBuild);
 
         const u = new URL(window.location.href);
