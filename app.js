@@ -289,6 +289,87 @@ if (D.matches && !D.matches.some(m => m.id === 'm3')) {
   });
 }
 
+
+// Matchday 05 result — Berwick Rangers Community Academy, 2026-09-27.
+if (D.matches && !D.matches.some(m => m.id === 'm5')) {
+  D.matches.push({
+    id: 'm5',
+    date: '2026-09-27',
+    competition: 'Challenge Cup',
+    venue: 'Away',
+    opponent: 'Berwick Rangers Community Academy U13 Be',
+    shortOpponent: 'BERWICK RANGERS COMMUNITY ACADEMY U13',
+    gf: 1, ga: 1, htFor: 1, htAgainst: 1,
+    shootout: 'Berwick won on penalties',
+    captain: 'Freddie Cowan',
+    potm: 'Theo Demosthenous',
+    playersPlayer: 'Freddie Cowan',
+    cleanSheet: false,
+    starters: ['Johnny Collinson','Freddie Cowan','Kane Rogerson','Ewan Dodds','Theo Demosthenous','Ollie Anderson','Jake Armstrong','Oliver Stubbs','Charlie Mulligan'],
+    subs: ['Blake Smith','Joseph Winwood','Kyran Archbold'],
+    unavailable: ['Yusuf Syed Ubaidur Rahman'],
+    milestones: [
+      {player:'Freddie Cowan', text:'40 Silvers appearances — reached at Berwick and captain for the day.'},
+      {player:'Kane Rogerson', text:'40 Silvers appearances — reached at Berwick before being forced off with a knee/head knock.'}
+    ],
+    goals: [{minute:27, scorer:'Theo Demosthenous', assister:'Charlie Mulligan'}],
+    headline: 'A brave cup exit on penalties.',
+    next: 'Killingworth F.C. U13 Reds',
+    nextDate: '2026-10-04',
+    nextTime: '10:30',
+    nextVenue: 'Valley View',
+    nextHome: true,
+    report: [
+      `The Silvers made their <b>longest trip of the season</b> on Sunday, heading north to face familiar opponents Berwick Rangers in the Challenge Cup. The boys arrived raring to go, had a positive warm-up and were reminded by <b>captain Freddie</b> that everyone knew what was required.`,
+      `<h3>🏅 FREDDIE & KANE HIT 40</h3><b>Freddie Cowan</b> returned to the starting team, wore the captain's armband and made his <b>40th Silvers appearance</b>. Beside him at the heart of the defence, <b>Kane Rogerson</b> also reached <b>40 Silvers appearances</b>. Two important career landmarks on the longest trip of the season.`,
+      `<h3>🔥 A STRONG START</h3>From the first whistle the Silvers looked to use the width, moving the ball towards the wingers and trying to get deliveries across to Charlie. Berwick had the first effort, a shot flashing across Johnny's goal, but it was Westerhope who soon began to create the more dangerous moments.`,
+      `On seven minutes Freddie's throw found Jake, who touched the ball and played an excellent pass into Oliver. Oliver moved it inside to Theo, who had tucked in from the left, and Theo's shot went over. Almost immediately Oliver won the ball from a Berwick goal kick and drove forward, but nobody could quite connect with his final pass.`,
+      `Berwick then showed their pace. They broke the offside line and found a route behind the defence, but <b>Johnny produced an excellent save</b>. From the goal kick Theo controlled the ball, drove down the wing and beat two players before finding Charlie. Charlie shot, and the Berwick goalkeeper responded with an outstanding save.`,
+      `<h3>🧱 WORK FROM THE STARTERS</h3><b>Freddie</b> provided good cover from right-back, adding steel to the back line. <b>Kane</b> repeatedly got his head to Berwick's long balls, challenged their front players and helped move possession across the back to start attacks again. <b>Ewan</b> distributed the ball well into Theo down the left.`,
+      `<b>Jake</b> looked noticeably stronger on the ball, winning challenges and trying to turn them into forward momentum. <b>Ollie</b> was constantly asking for the ball, looking to start attacks and becoming a real nuisance when Berwick tried to play out. <b>Oliver</b> carried the ball forward and linked with the attack, while <b>Charlie</b> continually stretched the Berwick defence with his movement and running in behind.`,
+      `The game then settled into a deep midfield battle, with both sides pressing without the ball and trying to work out the next pass. On 23 minutes Oliver took a throw, received it back and found Jake down the line before the ball returned to Oliver. His cross found Charlie, who took one touch and fired just wide.`,
+      `Berwick threatened again two minutes later, but Johnny made another fine save.`,
+      `<h3>⚽ 27' | BERWICK 0–1 WESTERHOPE</h3>Freddie took another throw and found Oliver. Oliver passed to Jake, who drove forward and released Charlie into the right-hand channel. The ball looked as though it was going out, but Charlie used his strength brilliantly to hold off the defender, keep it alive and find Theo. Theo allowed the ball to come across his body and struck a superb left-footed effort into the far corner.`,
+      `<b>⚽ THEO</b> — <b>🎯 assist Charlie</b>.`,
+      `Unfortunately the lead lasted barely a minute. Another long ball caused confusion and Berwick's striker got through. Johnny made an excellent first save, but could not recover quickly enough to stop the rebound crossing the line. <b>1–1.</b>`,
+      `The Silvers responded immediately. Oliver won the ball and played Theo through again, but the Berwick goalkeeper produced another excellent save. During the scramble around the equaliser, <b>Kane was forced off after taking a knee/head knock</b>. The defensive shape changed, but the players adapted.`,
+      `<h3>HALF-TIME | 1–1</h3>The scores were level, but the Silvers had already shown they were more than capable of competing with Berwick on their own patch.`,
+      `<h3>⚔️ SECOND HALF</h3>The chances continued. An Ollie corner was met by Charlie, who rose to head just wide. Ollie then combined with Jake in midfield before finding Oliver, who came inside from the left and shot over. Charlie intercepted a poor goal kick, drove forward and fired just over.`,
+      `The Silvers were beginning to turn the screw. A Berwick corner was cleared and fell to an attacker, but <b>Theo outmuscled him, won the ball and drove away</b>, almost producing a spectacular delivery through the bodies.`,
+      `Another excellent move saw Charlie win the ball and find Joseph. Joseph drove down the wing and fed Charlie again, before Charlie spotted Oliver in space. Oliver shot just wide. A further cross found Joseph, who got a foot to it while falling, only for the ball to squirm past the post.`,
+      `<h3>😱 SO CLOSE</h3>From the resulting corner, Oliver played short to Ollie. Ollie took one touch and whipped a beautiful curling ball towards the back post. <b>Joseph arrived and headed across goal — but the ball struck the post.</b>`,
+      `<h3>🔄 THE BENCH CONTRIBUTES</h3><b>Blake</b> came on and immediately began intercepting Berwick attacks and helping turn defence into attack. He played one forward ball into <b>Joseph</b>, who used his strength to beat the left-back and drive forward before seeing his effort saved. <b>Kyran</b> also came on and added further energy and width as the pitch began to stretch.`,
+      `<b>Johnny</b> had been called upon several times already and produced one more outstanding save when Berwick broke through late on. It kept the game level.`,
+      `The coaches were preparing further changes, but before those could be made the referee brought the game to an end. <b>FULL TIME: 1–1.</b>`,
+      `<h3>🎯 PENALTIES</h3>Because this was a cup tie, the match went straight to a shootout. The boys stepped up bravely and confidently, with both teams converting penalty after penalty. The shootout eventually went to <b>sudden death</b>. Berwick converted the decisive kick and progressed.`,
+      `It is a horrible way to leave a cup competition, but there is no criticism of anyone who stepped forward. Taking a penalty is brave; taking one in sudden death requires even more courage. The boys immediately supported each other, exactly as a team should.`,
+      `<h3>🏆 PLAYER OF THE MATCH — THEO</h3>Theo produced another excellent performance: a goal, huge running, defensive work and attacking threat. He was deservedly named <b>Player of the Match</b>.`,
+      `<h3>🏆 PLAYERS' PLAYER — FREDDIE</h3>Returning to the team, wearing the captain's armband and leading from the back, Freddie was recognised by his teammates with the <b>Players' Player</b> award.`,
+      `<h3>👏 EVERYBODY CONTRIBUTED</h3><b>Johnny</b> made several important saves. <b>Freddie</b> returned, captained the team, reached 40 appearances and worked tirelessly at right-back. <b>Kane</b> reached 40 appearances and was strong in the first half before his injury. <b>Ewan</b> distributed well from the left. <b>Theo</b> scored and earned Player of the Match. <b>Ollie</b> worked to start attacks and delivered dangerous corners. <b>Jake</b> showed greater strength on the ball and helped drive midfield play. <b>Oliver</b> carried the ball, created openings and remained dangerous. <b>Charlie</b> created the goal and worked relentlessly in attack. <b>Joseph</b> added energy and went agonisingly close with a header off the post. <b>Blake</b> made another encouraging contribution from the bench. <b>Kyran</b> came on and added energy and width. <b>Yusuf</b> was unavailable.`,
+      `<h3>📈 THE BIGGER PICTURE</h3>There is no criticism from the coaches. The Silvers created enough chances to win the game, played the football they had trained to play, adapted after Kane went off and continued creating right to the final whistle. On another day, several of those chances find the net.`,
+      `The Challenge Cup journey ends here, but the season certainly does not. There are other cup competitions to come and, importantly, <b>the league remains the main focus</b>. We live. We learn. We don't lose.`,
+      `A huge thank you to all the parents and supporters who made the long trip to Berwick, to <b>Jamie for running the line</b>, and to everyone who continues to support the Silvers home and away.`,
+      `<b>UP THE HOPE ///</b>`
+    ],
+    development: [
+      {player:'Johnny Collinson', text:'Made several important saves and kept the Silvers level during Berwick’s dangerous moments.'},
+      {player:'Freddie Cowan', text:'Returned, captained the side, reached 40 Silvers appearances and won Players’ Player.'},
+      {player:'Kane Rogerson', text:'Reached 40 Silvers appearances, dominated aerial challenges and was strong until forced off injured.'},
+      {player:'Ewan Dodds', text:'Distributed the ball well into Theo and helped maintain the left side.'},
+      {player:'Theo Demosthenous', text:'Scored, drove up and down the wing and earned Player of the Match.'},
+      {player:'Ollie Anderson', text:'Tried to start attacks, pressed without the ball and delivered dangerous corners.'},
+      {player:'Jake Armstrong', text:'Looked stronger on the ball and kept trying to turn midfield possession into forward attacks.'},
+      {player:'Oliver Stubbs', text:'Carried the ball, created openings and remained a constant attacking threat.'},
+      {player:'Charlie Mulligan', text:'Created the opening goal with excellent strength and kept stretching the defence.'},
+      {player:'Blake Smith', text:'Came on and intercepted well, helping turn defensive moments into attacks.'},
+      {player:'Joseph Winwood', text:'Added energy and attacking intent after coming on and went agonisingly close with a header off the post.'},
+      {player:'Kyran Archbold', text:'Came on and added energy and width as the game stretched.'},
+      {player:'Yusuf Syed Ubaidur Rahman', text:'Unavailable.'}
+    ],
+    gallery: []
+  });
+}
+
 function normaliseTeamName(team){
   return String(team || '')
     .toLowerCase()
@@ -638,13 +719,14 @@ function matchHeroPath(m){
   if(m.id==='m2') return 'assets/matches/blakelaw/hero.jpeg';
   if(m.id==='m3') return 'assets/matches/north-shields/hero.jpeg';
   if(m.id==='m4') return 'assets/matches/red-row/hero.jpeg';
+  if(m.id==='m5') return 'assets/matches/berwick/hero.jpeg';
   return '';
 }
 function heroMarkup(m, placement){
   const src=matchHeroPath(m);
   if(!src) return `<section class="card latest-hero-placeholder"><div class="latest-hero-overlay"><div class="eyebrow">MATCHDAY ${m?.id==='m3'?'03':'LATEST'} ///</div><strong>${m?.headline||'LATEST MATCH'}</strong><small>Hero photo coming soon</small></div></section>`;
   const labelText = placement==='home' ? 'LATEST MATCH' : 'MATCH HERO';
-  return `<section class="card latest-hero-card"><button class="latest-hero-button" type="button" onclick="openMatch('${m.id}')"><img src="${src}?v=44" alt="${m.shortOpponent} match hero"><div class="latest-hero-overlay"><div class="eyebrow">${labelText} ///</div><strong>${m.venue==='Home'?'WESTERHOPE UNITED':' '+m.shortOpponent} ${scoreLabel(m)}</strong><small>${m.venue==='Home'?'WESTERHOPE UNITED v '+m.shortOpponent:m.shortOpponent+' v WESTERHOPE UNITED'} • ${prettyDate(m.date)}</small></div></button></section>`;
+  return `<section class="card latest-hero-card"><button class="latest-hero-button" type="button" onclick="openMatch('${m.id}')"><img src="${src}?v=47" alt="${m.shortOpponent} match hero"><div class="latest-hero-overlay"><div class="eyebrow">${labelText} ///</div><strong>${m.venue==='Home'?'WESTERHOPE UNITED':' '+m.shortOpponent} ${scoreLabel(m)}</strong><small>${m.venue==='Home'?'WESTERHOPE UNITED v '+m.shortOpponent:m.shortOpponent+' v WESTERHOPE UNITED'} • ${prettyDate(m.date)}</small></div></button></section>`;
 }
 function renderHome(){
   const s=teamStats(), ls=leagueTeamStats(), ps=calcStats(), last=D.matches[D.matches.length-1];
@@ -728,14 +810,15 @@ function galleryPaths(m){
   if(m && m.id==='m2') return ['hero.jpeg', ...Array.from({length:6},(_,i)=>String(i+1).padStart(2,'0')+'.jpeg')];
   if(m && m.id==='m3') return ['hero.jpeg', ...Array.from({length:11},(_,i)=>String(i+1).padStart(2,'0')+'.JPG'), '12.jpg'];
   if(m && m.id==='m4') return ['hero.jpeg','01.jpeg'];
+  if(m && m.id==='m5') return ['hero.jpeg','01.jpeg','02.jpeg','03.jpeg','04.jpeg','05.jpeg','06.jpeg','07.jpeg'];
   return [];
 }
 function renderGallery(m){
   const files=galleryPaths(m);
   if(!files.length) return '<div class="gallery-empty">📸 <b>Matchday photos coming soon.</b></div>';
-  const folder=(m && m.id==='m1')?'cramlington':(m && m.id==='m2')?'blakelaw':(m && m.id==='m3')?'north-shields':(m && m.id==='m4')?'red-row':m.id;
+  const folder=(m && m.id==='m1')?'cramlington':(m && m.id==='m2')?'blakelaw':(m && m.id==='m3')?'north-shields':(m && m.id==='m4')?'red-row':(m && m.id==='m5')?'berwick':m.id;
   const base=`assets/matches/${folder}/`;
-  return `<div class="match-gallery">${files.map((f,i)=>`<button class="gallery-item ${i===0?'gallery-hero':''}" type="button" onclick="openPhoto('${base}${f}','${m.shortOpponent} • ${i===0?'Match Hero':'Matchday Photo'}')"><img src="${base}${f}?v=44" alt="${m.shortOpponent} ${i===0?'match hero':'matchday photo '+(i)}" loading="lazy" onerror="this.closest('.gallery-item').style.display='none'"></button>`).join('')}</div>`;
+  return `<div class="match-gallery">${files.map((f,i)=>`<button class="gallery-item ${i===0?'gallery-hero':''}" type="button" onclick="openPhoto('${base}${f}','${m.shortOpponent} • ${i===0?'Match Hero':'Matchday Photo'}')"><img src="${base}${f}?v=47" alt="${m.shortOpponent} ${i===0?'match hero':'matchday photo '+(i)}" loading="lazy" onerror="this.closest('.gallery-item').style.display='none'"></button>`).join('')}</div>`;
 }
 function openPhoto(src,caption){
   let modal=document.getElementById('photo-modal');
@@ -749,7 +832,7 @@ function openPhoto(src,caption){
     modal.addEventListener('click',e=>{ if(e.target===modal) modal.classList.remove('open'); });
     document.addEventListener('keydown',e=>{ if(e.key==='Escape') modal.classList.remove('open'); });
   }
-  modal.querySelector('.photo-modal-img').src=src+'?v=44';
+  modal.querySelector('.photo-modal-img').src=src+'?v=47';
   modal.querySelector('.photo-modal-caption').textContent=caption||'';
   modal.classList.add('open');
 }
@@ -757,8 +840,8 @@ window.openPhoto=openPhoto;
 function openMatch(id){
   const m=D.matches.find(x=>x.id===id); if(!m) return;
   const detailLeft = m.venue==='Home' ? `<div>${crestImg('Westerhope United','mini-crest')}<b>WESTERHOPE<br>UNITED</b></div>` : `<div>${crestImg(m.opponent,'mini-crest')}<b>${m.shortOpponent}</b></div>`; const detailRight = m.venue==='Home' ? `<div>${crestImg(m.opponent,'mini-crest')}<b>${m.shortOpponent}</b></div>` : `<div>${crestImg('Westerhope United','mini-crest')}<b>WESTERHOPE<br>UNITED</b></div>`; app.innerHTML=`<section><button class="back" onclick="nav('matches')">← BACK TO MATCHES</button><article class="card detail-card"><div class="section-head"><span>${m.venue.toUpperCase()} • ${m.competition.toUpperCase()}</span><small>${prettyDate(m.date)}</small></div>${heroMarkup(m,'match')}<div class="detail-title">${detailLeft}<div class="match-score"><strong>${scoreLabel(m)}</strong><small>HT ${m.htAgainst}-${m.htFor}</small></div>${detailRight}</div>
-  <div class="detail-meta"><span>©️ Captain: <b>${label(m.captain)}</b></span><span>🏆 POTM: <b>${label(m.potm)}</b></span><span>🏆 Players' Player: <b>${label(m.playersPlayer)}</b></span>${m.cleanSheet?`<span>🧤 Clean Sheet</span>`:''}</div>
-  ${m.id==='m2'?`<div class="report-heading">PRE-MATCH ARCHIVE ///</div><div class="preview-media"><img src="${BLAKELAW_PREVIEW.lineupImage}?v=26" alt="Blakelaw starting lineup" class="lineup-image" onerror="this.style.display='none'"><a class="cta wide" href="${BLAKELAW_PREVIEW.facebook}" target="_blank" rel="noopener">🎬 VIEW PRE-MATCH FACEBOOK POST →</a><button class="secondary-cta wide" onclick="openPreview()">READ ORIGINAL MATCH PREVIEW →</button></div>`:''}${m.id==='m3'?`<div class="report-heading">PRE-MATCH ARCHIVE ///</div><div class="preview-media"><img src="${NORTH_SHIELDS_PREVIEW.lineupImage}?v=44" alt="North Shields starting lineup" class="lineup-image" onerror="this.style.display='none'"><a class="cta wide" href="${NORTH_SHIELDS_PREVIEW.facebook}" target="_blank" rel="noopener">🎬 VIEW PRE-MATCH FACEBOOK POST →</a><button class="secondary-cta wide" onclick="openNextPreview()">READ ORIGINAL MATCH PREVIEW →</button></div>`:''}${m.id==='m4'?`<div class="report-heading">PRE-MATCH ARCHIVE ///</div><div class="preview-media"><img src="${RED_ROW_NEXT.lineupImage}?v=44" alt="Red Row starting lineup" class="lineup-image" onerror="this.style.display='none'"><a class="cta wide" href="${RED_ROW_NEXT.facebook}" target="_blank" rel="noopener">🎬 VIEW PRE-MATCH FACEBOOK POST →</a><button class="secondary-cta wide" onclick="renderPreview(RED_ROW_NEXT,'MATCHDAY 04 ///')">READ ORIGINAL MATCH PREVIEW →</button></div>`:''}${['m2','m3','m4'].includes(m.id)?`<div class="report-heading">FULL-TIME MEDIA ///</div><div class="preview-media"><a class="cta wide" href="${m.id==='m2'?'https://www.facebook.com/share/r/14rFrdhSK2L/?mibextid=wwXIfr':(m.id==='m3'?NORTH_SHIELDS_FULLTIME_VIDEO:'https://www.facebook.com/share/r/1C5tPsoQw8/?mibextid=wwXIfr')}" target="_blank" rel="noopener">🎬 WATCH FULL-TIME / MATCH REPORT VIDEO →</a></div>`:''}<div class="report-heading">MATCH REPORT</div>${m.report.map(p=>`<p class="report-p">${p}</p>`).join('')}
+  <div class="detail-meta"><span>©️ Captain: <b>${label(m.captain)}</b></span><span>🏆 POTM: <b>${label(m.potm)}</b></span><span>🏆 Players' Player: <b>${label(m.playersPlayer)}</b></span>${m.cleanSheet?`<span>🧤 Clean Sheet</span>`:''}</div>${m.id==='m5'?`<div class="milestone-callout"><div><b>🏅 MILESTONES</b></div><div>Freddie Cowan — <b>40 Silvers appearances</b></div><div>Kane Rogerson — <b>40 Silvers appearances</b></div></div>`:''}
+  ${m.id==='m2'?`<div class="report-heading">PRE-MATCH ARCHIVE ///</div><div class="preview-media"><img src="${BLAKELAW_PREVIEW.lineupImage}?v=26" alt="Blakelaw starting lineup" class="lineup-image" onerror="this.style.display='none'"><a class="cta wide" href="${BLAKELAW_PREVIEW.facebook}" target="_blank" rel="noopener">🎬 VIEW PRE-MATCH FACEBOOK POST →</a><button class="secondary-cta wide" onclick="openPreview()">READ ORIGINAL MATCH PREVIEW →</button></div>`:''}${m.id==='m3'?`<div class="report-heading">PRE-MATCH ARCHIVE ///</div><div class="preview-media"><img src="${NORTH_SHIELDS_PREVIEW.lineupImage}?v=44" alt="North Shields starting lineup" class="lineup-image" onerror="this.style.display='none'"><a class="cta wide" href="${NORTH_SHIELDS_PREVIEW.facebook}" target="_blank" rel="noopener">🎬 VIEW PRE-MATCH FACEBOOK POST →</a><button class="secondary-cta wide" onclick="openNextPreview()">READ ORIGINAL MATCH PREVIEW →</button></div>`:''}${m.id==='m4'?`<div class="report-heading">PRE-MATCH ARCHIVE ///</div><div class="preview-media"><img src="${RED_ROW_NEXT.lineupImage}?v=47" alt="Red Row starting lineup" class="lineup-image" onerror="this.style.display='none'"><a class="cta wide" href="${RED_ROW_NEXT.facebook}" target="_blank" rel="noopener">🎬 VIEW PRE-MATCH FACEBOOK POST →</a><button class="secondary-cta wide" onclick="renderPreview(RED_ROW_NEXT,'MATCHDAY 04 ///')">READ ORIGINAL MATCH PREVIEW →</button></div>`:''}${m.id==='m5'?`<div class="report-heading">PRE-MATCH ARCHIVE ///</div><div class="preview-media"><img src="${BERWICK_NEXT.lineupImage}?v=47" alt="Berwick starting lineup" class="lineup-image" onerror="this.style.display='none'"><a class="cta wide" href="${BERWICK_NEXT.facebook}" target="_blank" rel="noopener">🎬 VIEW PRE-MATCH FACEBOOK POST →</a><button class="secondary-cta wide" onclick="renderPreview(BERWICK_NEXT,'MATCHDAY 05 ///')">READ ORIGINAL MATCH PREVIEW →</button></div>`:''}${['m2','m3','m4','m5'].includes(m.id)?`<div class="report-heading">FULL-TIME MEDIA ///</div><div class="preview-media"><a class="cta wide" href="${m.id==='m2'?'https://www.facebook.com/share/r/14rFrdhSK2L/?mibextid=wwXIfr':(m.id==='m3'?NORTH_SHIELDS_FULLTIME_VIDEO:(m.id==='m4'?'https://www.facebook.com/share/r/1C5tPsoQw8/?mibextid=wwXIfr':BERWICK_FULLTIME_VIDEO))}" target="_blank" rel="noopener">🎬 WATCH FULL-TIME / MATCH REPORT VIDEO →</a></div>`:''}<div class="report-heading">MATCH REPORT</div>${m.report.map(p=>`<p class="report-p">${p}</p>`).join('')}
   <div class="report-heading">GOALS & ASSISTS</div><div class="goal-timeline">${m.goals.map(g=>`<div class="goal-row"><strong>${g.minute}'</strong><span class="goal-dot">⚽</span><b>${label(g.scorer)}</b>${g.assister?`<span class="assist">Assist: ${label(g.assister)}</span>`:`<span class="assist">Assist: —</span>`}</div>`).join('')}</div>
   <div class="report-heading">DEVELOPMENT NOTES</div><div class="dev-list">${m.development.map(x=>`<div class="dev-item"><b>${label(x.player)}</b><p>${x.text}</p></div>`).join('')}</div>
   <div class="report-heading">MATCHDAY GALLERY ///</div>${renderGallery(m)}
