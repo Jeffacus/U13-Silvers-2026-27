@@ -103,6 +103,8 @@ const BERWICK_NEXT = {
 
 const NORTH_SHIELDS_FULLTIME_VIDEO = 'https://www.facebook.com/share/r/1D57M5jrQt/?mibextid=wwXIfr';
 
+const BERWICK_FULLTIME_VIDEO = 'https://www.facebook.com/share/r/1FTy2FBwLW/?mibextid=wwXIfr';
+
 const BLAKELAW_PREVIEW = {
   opponent: 'Blakelaw Football Club U13 Roma',
   shortOpponent: 'BLAKELAW FC U13 ROMA',
