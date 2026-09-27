@@ -291,7 +291,8 @@ if (D.matches && !D.matches.some(m => m.id === 'm3')) {
 
 
 // Matchday 05 result — Berwick Rangers Community Academy, 2026-09-27.
-if (D.matches && !D.matches.some(m => m.id === 'm5')) {
+if (D.matches) {
+  D.matches = D.matches.filter(m => m.id !== 'm5');
   D.matches.push({
     id: 'm5',
     date: '2026-09-27',
