@@ -18,7 +18,8 @@ const CLUB_CRESTS = {
   'Cramlington Town Juniors U13 Cramlington': 'assets/clubs/cramlington-town-juniors.jpeg',
   'Red Row Raptors U13 Red Row Raptors u13s': 'assets/clubs/red-row-raptors.jpeg',
   'Red Row Raptors': 'assets/clubs/red-row-raptors.jpeg',
-  'Berwick Rangers Community Academy U13 Be': 'assets/clubs/berwick.rangers.jpeg'
+  'Berwick Rangers Community Academy U13 Be': 'assets/clubs/berwick.rangers.jpeg',
+  'Jarrow FC Youth Eagles': 'assets/clubs/jarrow-fc-youth-eagles.png'
 };
 
 const NORTH_SHIELDS_PREVIEW = {
@@ -99,6 +100,21 @@ const BERWICK_NEXT = {
     `<h3>👀 MILESTONE WATCH</h3><b>Kane</b> and <b>Freddie</b> are both on 39 Silvers appearances, so their next outing would bring up <b>#40</b>. <b>Blake</b> is on 38, while <b>Joseph</b> is sitting on 28 career goals and is two away from 30.`,
     `<b>MATCHDAY 05 ///</b><br><br>Sunday morning. 10:00. Berwick. Longest trip of the season. Another cup challenge. <b>UP THE HOPE ///</b>`
   ]
+};
+
+const JARROW_NEXT = {
+  opponent: 'Jarrow FC Youth Eagles',
+  shortOpponent: 'JARROW FC YOUTH EAGLES',
+  date: '2026-10-04',
+  time: '09:30',
+  venue: 'Home',
+  competition: 'Cup Fixture',
+  facebook: '',
+  lineupImage: 'assets/matches/jarrow/lineup.jpeg',
+  starters: [],
+  bench: [],
+  unavailable: [],
+  paragraphs: []
 };
 
 const NORTH_SHIELDS_FULLTIME_VIDEO = 'https://www.facebook.com/share/r/1D57M5jrQt/?mibextid=wwXIfr';
@@ -317,9 +333,9 @@ if (D.matches) {
     ],
     goals: [{minute:27, scorer:'Theo Demosthenous', assister:'Charlie Mulligan'}],
     headline: 'A brave cup exit on penalties.',
-    next: 'Killingworth F.C. U13 Reds',
+    next: 'Jarrow FC Youth Eagles',
     nextDate: '2026-10-04',
-    nextTime: '10:30',
+    nextTime: '09:30',
     nextVenue: 'Valley View',
     nextHome: true,
     report: [
@@ -750,7 +766,7 @@ function renderHome(){
   const nextTime = last.nextTime || (last.id==='m1' ? BLAKELAW_PREVIEW.time : 'TBC');
   const nextVenue = last.nextVenue || (last.nextHome ? 'Valley View' : 'Away');
   const nextHome = !!last.nextHome;
-  const nextPreview = last.next === RED_ROW_NEXT.opponent ? RED_ROW_NEXT : (last.next === NORTH_SHIELDS_PREVIEW.opponent ? NORTH_SHIELDS_PREVIEW : (last.next === BLAKELAW_PREVIEW.opponent ? BLAKELAW_PREVIEW : (last.next === BERWICK_NEXT.opponent ? BERWICK_NEXT : null)));
+  const nextPreview = last.next === RED_ROW_NEXT.opponent ? RED_ROW_NEXT : (last.next === NORTH_SHIELDS_PREVIEW.opponent ? NORTH_SHIELDS_PREVIEW : (last.next === BLAKELAW_PREVIEW.opponent ? BLAKELAW_PREVIEW : (last.next === BERWICK_NEXT.opponent ? BERWICK_NEXT : (last.next === JARROW_NEXT.opponent ? JARROW_NEXT : null))));
   const nextActions = nextPreview ? `<div class="home-preview-actions"><button class="cta" onclick="openNextPreview()">READ MATCH PREVIEW →</button>${nextPreview.facebook ? `<a class="secondary-cta" href="${nextPreview.facebook}" target="_blank" rel="noopener">🎬 MATCHDAY VIDEO</a>` : ''}</div>` : `<div class="home-preview-actions"><span class="secondary-cta disabled-link">PREVIEW COMING SOON</span></div>`;
   const nextTeams = nextHome
     ? `<div>${crestImg('Westerhope United','mini-crest small')}<b>WESTERHOPE<br>UNITED</b></div><span>V</span><div>${nextCrest}<b>${last.next.toUpperCase()}</b></div>`
@@ -775,7 +791,7 @@ function renderMatches(){
 }
 function upcomingMatchCard(){
   const last = latestMatch();
-  const p = last?.next === RED_ROW_NEXT.opponent ? RED_ROW_NEXT : (last?.next === NORTH_SHIELDS_PREVIEW.opponent ? NORTH_SHIELDS_PREVIEW : (last?.next === BLAKELAW_PREVIEW.opponent ? BLAKELAW_PREVIEW : (last?.next === BERWICK_NEXT.opponent ? BERWICK_NEXT : RED_ROW_NEXT)));
+  const p = last?.next === RED_ROW_NEXT.opponent ? RED_ROW_NEXT : (last?.next === NORTH_SHIELDS_PREVIEW.opponent ? NORTH_SHIELDS_PREVIEW : (last?.next === BLAKELAW_PREVIEW.opponent ? BLAKELAW_PREVIEW : (last?.next === BERWICK_NEXT.opponent ? BERWICK_NEXT : (last?.next === JARROW_NEXT.opponent ? JARROW_NEXT : RED_ROW_NEXT))));
   const isHome = p.venue==='Home';
   const previewButton = (p.paragraphs && p.paragraphs.length && p !== BERWICK_NEXT) ? `<button class="cta" onclick="openNextPreview()">READ MATCH PREVIEW →</button>` : `<span class="secondary-cta disabled-link">PREVIEW COMING SOON</span>`;
   return `<article class="card match-card upcoming-card"><div class="section-head"><span>UPCOMING • ${p.competition.toUpperCase()}</span><small>${prettyDate(p.date)}</small></div><div class="match-hero"><div class="hero-team">${isHome?crestImg('Westerhope United','mini-crest'):crestImg(p.opponent,'mini-crest')}<b>${isHome?'WESTERHOPE<br>UNITED':p.shortOpponent}</b></div><div class="match-score preview-v"><strong>V</strong><small>${p.time} KO</small></div><div class="hero-team">${isHome?crestImg(p.opponent,'mini-crest'):crestImg('Westerhope United','mini-crest')}<b>${isHome?p.shortOpponent:'WESTERHOPE<br>UNITED'}</b></div></div><div class="upcoming-meta">${isHome?'🏠 HOME':'✈️ AWAY'} &nbsp; • &nbsp; ${prettyDateLong(p.date)} &nbsp; • &nbsp; KICK-OFF ${p.time}${p.venue==='Home'?' &nbsp; • &nbsp; VALLEY VIEW':''}</div><div class="preview-buttons">${previewButton}${p.facebook?`<a class="secondary-cta" href="${p.facebook}" target="_blank" rel="noopener">🎬 MATCHDAY VIDEO</a>`:''}</div></article>`;
