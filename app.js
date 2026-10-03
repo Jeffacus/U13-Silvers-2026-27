@@ -108,13 +108,24 @@ const JARROW_NEXT = {
   date: '2026-10-04',
   time: '09:30',
   venue: 'Home',
-  competition: 'Cup Fixture',
-  facebook: '',
+  competition: 'Sunday U13 Presidents Cup',
+  facebook: 'https://www.facebook.com/share/r/1BwwXWPH1t/?mibextid=wwXIfr',
   lineupImage: 'assets/matches/jarrow/lineup.jpeg',
-  starters: [],
-  bench: [],
+  starters: ['Johnny','Theo','Kane','Freddie','Joseph','Ollie','Jake','Oliver','Charlie'],
+  bench: ['Kyran','Blake','Yusuf','Ewan'],
   unavailable: [],
-  paragraphs: []
+  paragraphs: [
+    `After progressing through the first round of the Presidents Cup, the Silvers have had a <b>late rearrangement</b> and now face a completely new challenge this Sunday morning at Valley View. Jarrow FC Youth Eagles are unfamiliar opposition: we have never played them before, they sit a division above, and they arrive unbeaten after winning all three of their league matches as well as progressing through their own cup tie. <b>A proper test — and a chance for a bit of giant killing.</b>`,
+    `Last weekend's Challenge Cup trip to Berwick ended in disappointment after a <b>1–1 draw and a penalty shootout defeat</b>, but there were still positives to take. <b>Theo</b> scored his first Silvers goal and was named <b>Player of the Match</b>, while captain <b>Freddie</b> collected <b>Players' Player</b>. <b>Charlie</b> supplied the assist. Now the focus switches quickly to another cup competition and another opportunity to respond.`,
+    `<h3>🧤 JOHNNY</h3><b>Johnny</b> starts in goal and will again be an important voice behind the defence. Against higher-division opposition, his concentration, communication and ability to make the big save when it matters could be vital.`,
+    `<h3>🛡️ THEO • KANE • FREDDIE</h3><b>Theo</b> starts on the left of the back three after his biggest Silvers moment so far at Berwick — a first goal for the club and a Player of the Match award. <b>Kane</b> anchors the middle and will be asked to keep doing what he has done so consistently: compete, organise and attack the ball. On the right, captain <b>Freddie</b> comes in fresh from being voted Players' Player last weekend and will have a big role in keeping the shape organised when Jarrow apply pressure.`,
+    `<h3>⚡ JOSEPH • OLLIE • JAKE • OLIVER</h3><b>Joseph</b> starts on the right and is sitting on <b>28 career Silvers goals</b>, so the 30-goal mark is beginning to come into view. <b>Ollie and Jake</b> start together in midfield, where their work rate, willingness to compete for second balls and ability to get Westerhope playing will be crucial. On the left, <b>Oliver</b> gives the Silvers a direct outlet and the chance to turn defence into attack quickly whenever the opportunity appears.`,
+    `<h3>🎯 CHARLIE</h3><b>Charlie</b> leads the line on <b>31 career Silvers goals</b>. He was the provider for Theo at Berwick and will be looking to add to either his goal or assist numbers again this weekend. His movement and willingness to keep making runs could be especially important against a strong Jarrow defence.`,
+    `<h3>💪 OPTIONS FROM THE BENCH</h3>The Silvers have a strong bench too. <b>Kyran, Blake, Yusuf and Ewan</b> all offer something different: energy and resilience from Kyran, defensive strength from Blake, pace and width from Yusuf, and flexibility across the back line from Ewan. Against opposition from the division above, rotation could be important and there is every chance the whole squad will be needed.`,
+    `<h3>🧠 LISTEN • COMMITMENT • ATTITUDE</h3>The message through the week has been deliberately simple: <b>listen, be committed, and have the right attitude.</b> If the boys bring those three things and apply the learning from the last few months, they will give themselves every chance. Do the simple things properly. Work for each other. Communicate. Compete for the next ball. And when the opportunity comes, be brave enough to take it.`,
+    `Jarrow are unbeaten. They're a division above. We've never played them before. <b>Perfect.</b> A brand-new opponent, a home cup tie and a chance to see exactly where this group is. And after last weekend's penalty drama at Berwick, if it somehow comes down to penalties again… maybe this time we get the chance to put that one right.`,
+    `<b>MATCHDAY 06 ///</b><br><br>Sunday morning. 09:30. Valley View. Cup football. <b>UP THE HOPE ///</b>`
+  ]
 };
 
 const NORTH_SHIELDS_FULLTIME_VIDEO = 'https://www.facebook.com/share/r/1D57M5jrQt/?mibextid=wwXIfr';
@@ -799,8 +810,9 @@ function upcomingMatchCard(){
 
 function openNextPreview(){
   const last = latestMatch();
+  if(last?.next === JARROW_NEXT.opponent){ renderPreview(JARROW_NEXT,'MATCHDAY 06 ///'); return; }
   if(last?.next === BERWICK_NEXT.opponent){ renderPreview(BERWICK_NEXT,'MATCHDAY 05 ///'); return; }
-  if(last?.next === RED_ROW_NEXT.opponent || D.matches.some(m=>m.id==='m3')) { renderPreview(RED_ROW_NEXT,'MATCHDAY 04 ///'); return; }
+  if(last?.next === RED_ROW_NEXT.opponent){ renderPreview(RED_ROW_NEXT,'MATCHDAY 04 ///'); return; }
   const p = NORTH_SHIELDS_PREVIEW;
   renderPreview(p,'MATCHDAY 03 ///');
 }
