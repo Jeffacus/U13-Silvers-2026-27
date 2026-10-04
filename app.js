@@ -128,6 +128,22 @@ const JARROW_NEXT = {
   ]
 };
 
+const NORTH_SHIELDS_AWAY_NEXT = {
+  opponent: 'North Shields Juniors U13 Blacks',
+  shortOpponent: 'NORTH SHIELDS JUNIORS U13 BLACKS',
+  date: '2026-10-11',
+  time: 'TBC',
+  venue: 'Away',
+  competition: 'NFL U13 Division 10',
+  facebook: '',
+  lineupImage: '',
+  starters: [],
+  bench: [],
+  unavailable: [],
+  paragraphs: []
+};
+
+
 const NORTH_SHIELDS_FULLTIME_VIDEO = 'https://www.facebook.com/share/r/1D57M5jrQt/?mibextid=wwXIfr';
 
 const BERWICK_FULLTIME_VIDEO = 'https://www.facebook.com/share/r/1FTy2FBwLW/?mibextid=wwXIfr';
@@ -400,6 +416,68 @@ if (D.matches) {
   };
   if (berwickMatchIndex >= 0) D.matches.splice(berwickMatchIndex, 1, berwickMatch);
   else D.matches.push(berwickMatch);
+}
+
+
+// Matchday 06 result — Presidents Cup v Jarrow FC Youth Eagles.
+// Cup result counts for player/all-competition stats, but not league points or position.
+{
+  const jarrowMatch = {
+    id: 'm6',
+    date: '2026-10-04',
+    competition: 'Sunday U13 Presidents Cup — Third Round',
+    venue: 'Home',
+    opponent: 'Jarrow FC Youth Eagles',
+    shortOpponent: 'Jarrow FC Youth Eagles',
+    gf: 1, ga: 9, htFor: 0, htAgainst: 5,
+    captain: 'Freddie Cowan',
+    potm: 'Johnny Collinson',
+    playersPlayer: 'Joseph Winwood',
+    cleanSheet: false,
+    starters: ['Johnny Collinson','Theo Demosthenous','Kane Rogerson','Freddie Cowan','Joseph Winwood','Ollie Anderson','Jake Armstrong','Oliver Stubbs','Charlie Mulligan'],
+    subs: ['Kyran Archbold','Blake Smith','Yusuf Syed Ubaidur Rahman','Ewan Dodds'],
+    goals: [{minute:48, scorer:'Joseph Winwood', assister:'Oliver Stubbs'}],
+    headline: 'A difficult cup morning.',
+    next: 'North Shields Juniors U13 Blacks',
+    nextDate: '2026-10-11',
+    nextTime: 'TBC',
+    nextVenue: 'Away',
+    nextHome: false,
+    report: [
+      `A difficult morning at Valley View saw the Silvers beaten <b>9–1 by a strong, physical and determined Jarrow FC Youth Eagles side</b> in the Presidents Cup. We knew before kick-off that this would be a step up. Jarrow arrived unbeaten, playing a division above, and having won every competitive game they had played so far.`,
+      `What disappointed the coaches was not simply the scoreline. During the week, we had spoken with the boys and parents about four things we wanted to see more consistently: <b>attitude, discipline, listening and commitment.</b> Unfortunately, particularly during the first half, Jarrow simply wanted it more.`,
+      `<h3>STARTING IX ///</h3><b>GK — Johnny Collinson</b><br><br><b>DEF — Theo Demosthenous, Kane Rogerson, Freddie Cowan ©</b><br><br><b>MID — Joseph Winwood, Ollie Anderson, Jake Armstrong, Oliver Stubbs</b><br><br><b>FWD — Charlie Mulligan</b>`,
+      `<h3>BENCH ///</h3><b>Kyran Archbold, Blake Smith, Yusuf Syed Ubaidur Rahman, Ewan Dodds</b>`,
+      `<h3>A TOUGH FIRST HALF</h3>Johnny was called into action almost immediately, getting down sharply to his right in the third minute to make an excellent early save. Two minutes later, Jarrow won possession in midfield and moved the ball forward quickly. They sliced through the Silvers without a meaningful challenge coming in and drilled the finish into the bottom corner for <b>0–1</b>.`,
+      `On nine minutes they threatened again. Theo got himself in the way of the initial effort, the loose ball struck the post, and Theo recovered quickly to turn and clear the danger. But the pressure continued. Jarrow worked the ball back down their left, their full-back drove inside onto his right foot and curled an excellent finish beyond Johnny for <b>0–2</b>.`,
+      `By 11 minutes it was <b>0–3</b>, with Westerhope struggling to match Jarrow physically and too often being beaten to first and second balls.`,
+      `There was a glimpse of what the Silvers could do on 15 minutes. Oliver battled to win possession on the left, turned and played a good ball through for Charlie. Charlie showed his pace to get away from his defender, took a touch and forced a good save from the Jarrow goalkeeper.`,
+      `At the other end, Johnny continued to give Westerhope every chance. When Jarrow were awarded a penalty after their striker was brought down in the area, Johnny produced one of the moments of the match — diving brilliantly to his right and pushing the spot-kick around the post. <b>A superb penalty save.</b>`,
+      `Johnny continued making save after save and was doing everything he could to keep the Silvers in the contest. But Jarrow's pressure eventually told again. Goals on 23 and 25 minutes sent the visitors into the break <b>5–0 ahead</b>.`,
+      `<h3>A BETTER RESPONSE</h3>There were some stern words at half-time. More importantly, there were questions for the boys to answer. The start of the second half was much better. Westerhope competed more, held their shape better and began to look a little more like the side we know they can be.`,
+      `There was greater structure, more willingness to challenge and more effort to support each other. For a spell, the difference in attitude was noticeable. But on 45 minutes Jarrow found their sixth. A ball played through down the right opened the Silvers up and, with several Jarrow midfielders arriving in the box, the move was finished well for <b>0–6</b>. The seventh followed shortly afterwards.`,
+      `<h3>JOSEPH GETS HIS REWARD</h3>The Silvers did get something back on <b>48 minutes</b>. Joseph had moved up front after swapping with Charlie and continued to chase, compete and put the work in despite the scoreline. A throw-in from Oliver was won by Joseph, who managed to turn his defender and get his shot away.`,
+      `The goalkeeper got something on it, but Joseph refused to give it up and bundled the loose ball over the line. <b>GOAL — Joseph Winwood, 48'</b> • <b>ASSIST — Oliver Stubbs.</b> It was a goal that summed up Joseph's performance — determination, graft and a refusal to stop working. It also takes Joseph to <b>29 career Silvers goals</b>. <b>One more and he reaches 30.</b>`,
+      `Jarrow added two late goals to complete the <b>9–1 victory</b>.`,
+      `<h3>⭐ PLAYER OF THE MATCH — JOHNNY COLLINSON</h3>There could be very little argument with this one. Johnny made save after save in both halves, including an outstanding penalty stop, and without him the scoreline could have been even more difficult. He kept competing from the first minute to the last.`,
+      `<h3>💙 PLAYERS' PLAYER — JOSEPH WINWOOD</h3>Joseph's teammates recognised the effort and determination he showed throughout. He kept battling, accepted the responsibility of moving up front and got the goal his performance deserved. That goal also leaves him <b>one away from 30 for the Silvers</b>.`,
+      `<h3>FIRST DEFEAT OF THE SEASON</h3>This was a heavy defeat, and there is no point pretending otherwise. It was also our <b>first defeat of the season</b>. The Berwick Challenge Cup tie finished 1–1 before penalties, so this was the first time this season the Silvers had been beaten in normal time.`,
+      `But it is important to keep the context clear. This was a <b>Presidents Cup tie against a team from the division above</b>, so the result has <b>no effect on our league points or league position</b>. The league record remains P3 W2 D1 L0, with seven points.`,
+      `What matters now is how we respond. Technical ability can take you a long way in football, but there are games where the biggest difference comes down to desire, discipline, bravery, concentration and being willing to compete for every single ball. Jarrow showed those qualities consistently. That gives us something very clear to work on.`,
+      `Training on Tuesday gives the boys the chance to draw a line under this one, learn from it and get back to work. Then we return to league action next Sunday with an <b>away trip to North Shields Juniors Blacks</b>. Another challenge, another opportunity to show a reaction, and another chance to get back to doing the things we know we can do.`,
+      `A massive thank you as always to all of the parents who helped put the goals up, take them back down and stayed behind the boys from the touchline on what was a difficult morning. And a special thank you to <b>Ian for running the line</b>. The support around this team matters just as much on days like today as it does after a win.`,
+      `We learn from it. We dust ourselves off. We go again. <b>UP THE HOPE ///</b>`
+    ],
+    development: [
+      {player:'Johnny Collinson', text:'Player of the Match after save after save in both halves, including an outstanding penalty stop.'},
+      {player:'Joseph Winwood', text:'Players’ Player, scored on 48 minutes and is now one goal away from 30 career Silvers goals.'},
+      {player:'Oliver Stubbs', text:'Created the Silvers goal with the throw-in and assist for Joseph on 48 minutes.'}
+    ],
+    gallery: []
+  };
+  const jarrowMatchIndex = D.matches.findIndex(m => m.id === 'm6');
+  if (jarrowMatchIndex >= 0) D.matches.splice(jarrowMatchIndex, 1, jarrowMatch);
+  else D.matches.push(jarrowMatch);
 }
 
 // Always keep the completed match archive in chronological order.
@@ -777,7 +855,7 @@ function renderHome(){
   const nextTime = last.nextTime || (last.id==='m1' ? BLAKELAW_PREVIEW.time : 'TBC');
   const nextVenue = last.nextVenue || (last.nextHome ? 'Valley View' : 'Away');
   const nextHome = !!last.nextHome;
-  const nextPreview = last.next === RED_ROW_NEXT.opponent ? RED_ROW_NEXT : (last.next === NORTH_SHIELDS_PREVIEW.opponent ? NORTH_SHIELDS_PREVIEW : (last.next === BLAKELAW_PREVIEW.opponent ? BLAKELAW_PREVIEW : (last.next === BERWICK_NEXT.opponent ? BERWICK_NEXT : (last.next === JARROW_NEXT.opponent ? JARROW_NEXT : null))));
+  const nextPreview = last.id==='m6' ? null : (last.next === RED_ROW_NEXT.opponent ? RED_ROW_NEXT : (last.next === NORTH_SHIELDS_PREVIEW.opponent ? NORTH_SHIELDS_PREVIEW : (last.next === BLAKELAW_PREVIEW.opponent ? BLAKELAW_PREVIEW : (last.next === BERWICK_NEXT.opponent ? BERWICK_NEXT : (last.next === JARROW_NEXT.opponent ? JARROW_NEXT : null)))));
   const nextActions = nextPreview ? `<div class="home-preview-actions"><button class="cta" onclick="openNextPreview()">READ MATCH PREVIEW →</button>${nextPreview.facebook ? `<a class="secondary-cta" href="${nextPreview.facebook}" target="_blank" rel="noopener">🎬 MATCHDAY VIDEO</a>` : ''}</div>` : `<div class="home-preview-actions"><span class="secondary-cta disabled-link">PREVIEW COMING SOON</span></div>`;
   const nextTeams = nextHome
     ? `<div>${crestImg('Westerhope United','mini-crest small')}<b>WESTERHOPE<br>UNITED</b></div><span>V</span><div>${nextCrest}<b>${last.next.toUpperCase()}</b></div>`
@@ -787,7 +865,7 @@ function renderHome(){
     <section class="card league-spotlight"><div class="league-spot-left"><span class="eyebrow">LEAGUE SNAPSHOT</span><strong>${ls.pts} PTS</strong><small>Northumberland Football League • U13 Division 10</small></div><div class="league-spot-stats"><span><b>P</b>${ls.played}</span><span><b>W</b>${ls.won}</span><span><b>GF</b>${ls.gf}</span><span><b>GD</b>${ls.gd>=0?'+'+ls.gd:ls.gd}</span></div><button class="secondary-cta" onclick="nav('table')">VIEW TABLE →</button></section>
     ${heroMarkup(last,'home')}
     <section class="two-col">
-      <article class="card result-card"><div class="section-head"><span>LATEST RESULT</span><small>${prettyDate(last.date)}</small></div><div class="matchup"><div class="team">${last.venue==='Home'?crestImg('Westerhope United','mini-crest'):crestImg(last.opponent,'mini-crest')}<b>${last.venue==='Home'?'WESTERHOPE<br>UNITED':last.shortOpponent}</b></div><div class="score"><div>${last.venue==='Home'?last.gf:last.ga} <span>-</span> ${last.venue==='Home'?last.ga:last.gf}</div><small>HT ${last.venue==='Home'?last.htFor:last.htAgainst}-${last.venue==='Home'?last.htAgainst:last.htFor}</small></div><div class="team">${last.venue==='Home'?crestImg(last.opponent,'mini-crest'):crestImg('Westerhope United','mini-crest')}<b>${last.venue==='Home'?last.shortOpponent:'WESTERHOPE<br>UNITED'}</b></div></div><div class="win-banner">✓ ${last.headline.toUpperCase()}</div><button class="text-link" onclick="openMatch('${last.id}')">VIEW MATCH →</button></article>
+      <article class="card result-card"><div class="section-head"><span>LATEST RESULT</span><small>${prettyDate(last.date)}</small></div><div class="matchup"><div class="team">${last.venue==='Home'?crestImg('Westerhope United','mini-crest'):crestImg(last.opponent,'mini-crest')}<b>${last.venue==='Home'?'WESTERHOPE<br>UNITED':last.shortOpponent}</b></div><div class="score"><div>${last.venue==='Home'?last.gf:last.ga} <span>-</span> ${last.venue==='Home'?last.ga:last.gf}</div><small>HT ${last.venue==='Home'?last.htFor:last.htAgainst}-${last.venue==='Home'?last.htAgainst:last.htFor}</small></div><div class="team">${last.venue==='Home'?crestImg(last.opponent,'mini-crest'):crestImg('Westerhope United','mini-crest')}<b>${last.venue==='Home'?last.shortOpponent:'WESTERHOPE<br>UNITED'}</b></div></div><div class="win-banner">${last.gf>last.ga?'✓':(last.gf===last.ga?'=':'•')} ${last.headline.toUpperCase()}</div><button class="text-link" onclick="openMatch('${last.id}')">VIEW MATCH →</button></article>
       <article class="card next-card"><div class="section-head"><span>NEXT MATCH</span><small>${prettyDate(last.nextDate)}</small></div><div class="next-title">${nextTeams}</div><div class="next-meta">📍 ${nextHome ? 'HOME • '+nextVenue : 'AWAY'} &nbsp; • &nbsp; ${prettyDateLong(last.nextDate)} &nbsp; • &nbsp; KICK-OFF ${nextTime}</div>${nextActions}</article>
     </section>
     <section class="card"><div class="section-head"><span>KEY STATS</span><small>AFTER ${s.played} MATCHES • ALL COMPETITIONS</small></div><div class="stat-grid">${metricCard('⚽','TOP SCORER',topScorer?.short||'—',topScorer?.goals||0)}${metricCard('🎯','ASSIST LEADER',topAssist?.short||'—',topAssist?.assists||0)}${metricCard('📈','GOAL CONTRIBUTIONS',topGA?.short||'—',topGA?.gA||0)}${metricCard('🧤','CLEAN SHEETS','Team',s.clean)}</div></section>
@@ -802,7 +880,7 @@ function renderMatches(){
 }
 function upcomingMatchCard(){
   const last = latestMatch();
-  const p = last?.next === RED_ROW_NEXT.opponent ? RED_ROW_NEXT : (last?.next === NORTH_SHIELDS_PREVIEW.opponent ? NORTH_SHIELDS_PREVIEW : (last?.next === BLAKELAW_PREVIEW.opponent ? BLAKELAW_PREVIEW : (last?.next === BERWICK_NEXT.opponent ? BERWICK_NEXT : (last?.next === JARROW_NEXT.opponent ? JARROW_NEXT : RED_ROW_NEXT))));
+  const p = last?.id==='m6' ? NORTH_SHIELDS_AWAY_NEXT : (last?.next === RED_ROW_NEXT.opponent ? RED_ROW_NEXT : (last?.next === NORTH_SHIELDS_PREVIEW.opponent ? NORTH_SHIELDS_PREVIEW : (last?.next === BLAKELAW_PREVIEW.opponent ? BLAKELAW_PREVIEW : (last?.next === BERWICK_NEXT.opponent ? BERWICK_NEXT : (last?.next === JARROW_NEXT.opponent ? JARROW_NEXT : RED_ROW_NEXT)))));
   const isHome = p.venue==='Home';
   const previewButton = (p.paragraphs && p.paragraphs.length && p !== BERWICK_NEXT) ? `<button class="cta" onclick="openNextPreview()">READ MATCH PREVIEW →</button>` : `<span class="secondary-cta disabled-link">PREVIEW COMING SOON</span>`;
   return `<article class="card match-card upcoming-card"><div class="section-head"><span>UPCOMING • ${p.competition.toUpperCase()}</span><small>${prettyDate(p.date)}</small></div><div class="match-hero"><div class="hero-team">${isHome?crestImg('Westerhope United','mini-crest'):crestImg(p.opponent,'mini-crest')}<b>${isHome?'WESTERHOPE<br>UNITED':p.shortOpponent}</b></div><div class="match-score preview-v"><strong>V</strong><small>${p.time} KO</small></div><div class="hero-team">${isHome?crestImg(p.opponent,'mini-crest'):crestImg('Westerhope United','mini-crest')}<b>${isHome?p.shortOpponent:'WESTERHOPE<br>UNITED'}</b></div></div><div class="upcoming-meta">${isHome?'🏠 HOME':'✈️ AWAY'} &nbsp; • &nbsp; ${prettyDateLong(p.date)} &nbsp; • &nbsp; KICK-OFF ${p.time}${p.venue==='Home'?' &nbsp; • &nbsp; VALLEY VIEW':''}</div><div class="preview-buttons">${previewButton}${p.facebook?`<a class="secondary-cta" href="${p.facebook}" target="_blank" rel="noopener">🎬 MATCHDAY VIDEO</a>`:''}</div></article>`;
@@ -810,6 +888,7 @@ function upcomingMatchCard(){
 
 function openNextPreview(){
   const last = latestMatch();
+  if(last?.id === 'm6') return;
   if(last?.next === JARROW_NEXT.opponent){ renderPreview(JARROW_NEXT,'MATCHDAY 06 ///'); return; }
   if(last?.next === BERWICK_NEXT.opponent){ renderPreview(BERWICK_NEXT,'MATCHDAY 05 ///'); return; }
   if(last?.next === RED_ROW_NEXT.opponent){ renderPreview(RED_ROW_NEXT,'MATCHDAY 04 ///'); return; }
@@ -832,10 +911,11 @@ window.openPreview=openPreview;
 window.openNextPreview=openNextPreview;
 window.renderPreview=renderPreview;
 function scoreLabel(m){ return m.venue==='Home' ? `${m.gf}–${m.ga}` : `${m.ga}–${m.gf}`; }
+function halfTimeLabel(m){ return m.venue==='Home' ? `${m.htFor}-${m.htAgainst}` : `${m.htAgainst}-${m.htFor}`; }
 function matchCard(m){
   const lineup = m.starters.map(n=>`<span class="chip">#${playerByName(n)?.no??''} ${label(n)}</span>`).join('');
   const subs = m.subs.map(n=>`<span class="chip sub">#${playerByName(n)?.no??''} ${label(n)}</span>`).join('');
-  const leftTeam = m.venue==='Home' ? `<div class="hero-team">${crestImg('Westerhope United','mini-crest')}<b>WESTERHOPE<br>UNITED</b></div>` : `<div class="hero-team">${crestImg(m.opponent,'mini-crest')}<b>${m.shortOpponent}</b></div>`; const rightTeam = m.venue==='Home' ? `<div class="hero-team">${crestImg(m.opponent,'mini-crest')}<b>${m.shortOpponent}</b></div>` : `<div class="hero-team">${crestImg('Westerhope United','mini-crest')}<b>WESTERHOPE<br>UNITED</b></div>`; return `<article class="card match-card"><div class="section-head"><span>${m.venue.toUpperCase()} • ${m.competition.toUpperCase()}</span><small>${prettyDate(m.date)}</small></div><div class="match-hero">${leftTeam}<div class="match-score"><strong>${scoreLabel(m)}</strong><small>HALF TIME ${m.htAgainst}-${m.htFor}</small></div>${rightTeam}</div>
+  const leftTeam = m.venue==='Home' ? `<div class="hero-team">${crestImg('Westerhope United','mini-crest')}<b>WESTERHOPE<br>UNITED</b></div>` : `<div class="hero-team">${crestImg(m.opponent,'mini-crest')}<b>${m.shortOpponent}</b></div>`; const rightTeam = m.venue==='Home' ? `<div class="hero-team">${crestImg(m.opponent,'mini-crest')}<b>${m.shortOpponent}</b></div>` : `<div class="hero-team">${crestImg('Westerhope United','mini-crest')}<b>WESTERHOPE<br>UNITED</b></div>`; return `<article class="card match-card"><div class="section-head"><span>${m.venue.toUpperCase()} • ${m.competition.toUpperCase()}</span><small>${prettyDate(m.date)}</small></div><div class="match-hero">${leftTeam}<div class="match-score"><strong>${scoreLabel(m)}</strong><small>HALF TIME ${halfTimeLabel(m)}</small></div>${rightTeam}</div>
   <div class="match-flags"><span>🏆 PLAYER OF THE MATCH: <b>${label(m.potm)}</b></span><span>🏆 PLAYERS' PLAYER: <b>${label(m.playersPlayer)}</b></span>${m.cleanSheet?`<span>🧤 CLEAN SHEET</span>`:''}<span>©️ CAPTAIN: <b>${label(m.captain)}</b></span></div>
   <div class="subheading">GOALS</div><div class="goal-timeline">${m.goals.map(g=>`<div class="goal-row"><strong>${g.minute}'</strong><span class="goal-dot">⚽</span><b>${label(g.scorer)}</b>${g.assister?`<span class="assist">(${label(g.assister)})</span>`:`<span class="assist">No assist recorded</span>`}</div>`).join('')}</div>
   <div class="subheading">STARTING XI</div><div class="chip-row">${lineup}</div>
@@ -878,13 +958,13 @@ function openPhoto(src,caption){
 window.openPhoto=openPhoto;
 function openMatch(id){
   const m=D.matches.find(x=>x.id===id); if(!m) return;
-  const detailLeft = m.venue==='Home' ? `<div>${crestImg('Westerhope United','mini-crest')}<b>WESTERHOPE<br>UNITED</b></div>` : `<div>${crestImg(m.opponent,'mini-crest')}<b>${m.shortOpponent}</b></div>`; const detailRight = m.venue==='Home' ? `<div>${crestImg(m.opponent,'mini-crest')}<b>${m.shortOpponent}</b></div>` : `<div>${crestImg('Westerhope United','mini-crest')}<b>WESTERHOPE<br>UNITED</b></div>`; app.innerHTML=`<section><button class="back" onclick="nav('matches')">← BACK TO MATCHES</button><article class="card detail-card"><div class="section-head"><span>${m.venue.toUpperCase()} • ${m.competition.toUpperCase()}</span><small>${prettyDate(m.date)}</small></div>${heroMarkup(m,'match')}<div class="detail-title">${detailLeft}<div class="match-score"><strong>${scoreLabel(m)}</strong><small>HT ${m.htAgainst}-${m.htFor}</small></div>${detailRight}</div>
+  const detailLeft = m.venue==='Home' ? `<div>${crestImg('Westerhope United','mini-crest')}<b>WESTERHOPE<br>UNITED</b></div>` : `<div>${crestImg(m.opponent,'mini-crest')}<b>${m.shortOpponent}</b></div>`; const detailRight = m.venue==='Home' ? `<div>${crestImg(m.opponent,'mini-crest')}<b>${m.shortOpponent}</b></div>` : `<div>${crestImg('Westerhope United','mini-crest')}<b>WESTERHOPE<br>UNITED</b></div>`; app.innerHTML=`<section><button class="back" onclick="nav('matches')">← BACK TO MATCHES</button><article class="card detail-card"><div class="section-head"><span>${m.venue.toUpperCase()} • ${m.competition.toUpperCase()}</span><small>${prettyDate(m.date)}</small></div>${heroMarkup(m,'match')}<div class="detail-title">${detailLeft}<div class="match-score"><strong>${scoreLabel(m)}</strong><small>HT ${halfTimeLabel(m)}</small></div>${detailRight}</div>
   <div class="detail-meta"><span>©️ Captain: <b>${label(m.captain)}</b></span><span>🏆 POTM: <b>${label(m.potm)}</b></span><span>🏆 Players' Player: <b>${label(m.playersPlayer)}</b></span>${m.cleanSheet?`<span>🧤 Clean Sheet</span>`:''}</div>${m.id==='m5'?`<div class="milestone-callout"><div><b>🏅 MILESTONES</b></div><div>Freddie Cowan — <b>40 Silvers appearances</b></div><div>Kane Rogerson — <b>40 Silvers appearances</b></div></div>`:''}
-  ${m.id==='m2'?`<div class="report-heading">PRE-MATCH ARCHIVE ///</div><div class="preview-media"><img src="${BLAKELAW_PREVIEW.lineupImage}?v=26" alt="Blakelaw starting lineup" class="lineup-image" onerror="this.style.display='none'"><a class="cta wide" href="${BLAKELAW_PREVIEW.facebook}" target="_blank" rel="noopener">🎬 VIEW PRE-MATCH FACEBOOK POST →</a><button class="secondary-cta wide" onclick="openPreview()">READ ORIGINAL MATCH PREVIEW →</button></div>`:''}${m.id==='m3'?`<div class="report-heading">PRE-MATCH ARCHIVE ///</div><div class="preview-media"><img src="${NORTH_SHIELDS_PREVIEW.lineupImage}?v=44" alt="North Shields starting lineup" class="lineup-image" onerror="this.style.display='none'"><a class="cta wide" href="${NORTH_SHIELDS_PREVIEW.facebook}" target="_blank" rel="noopener">🎬 VIEW PRE-MATCH FACEBOOK POST →</a><button class="secondary-cta wide" onclick="openNextPreview()">READ ORIGINAL MATCH PREVIEW →</button></div>`:''}${m.id==='m4'?`<div class="report-heading">PRE-MATCH ARCHIVE ///</div><div class="preview-media"><img src="${RED_ROW_NEXT.lineupImage}?v=56" alt="Red Row starting lineup" class="lineup-image" onerror="this.style.display='none'"><a class="cta wide" href="${RED_ROW_NEXT.facebook}" target="_blank" rel="noopener">🎬 VIEW PRE-MATCH FACEBOOK POST →</a><button class="secondary-cta wide" onclick="renderPreview(RED_ROW_NEXT,'MATCHDAY 04 ///')">READ ORIGINAL MATCH PREVIEW →</button></div>`:''}${m.id==='m5'?`<div class="report-heading">PRE-MATCH ARCHIVE ///</div><div class="preview-media"><img src="${BERWICK_NEXT.lineupImage}?v=56" alt="Berwick starting lineup" class="lineup-image" onerror="this.style.display='none'"><a class="cta wide" href="${BERWICK_NEXT.facebook}" target="_blank" rel="noopener">🎬 VIEW PRE-MATCH FACEBOOK POST →</a><button class="secondary-cta wide" onclick="renderPreview(BERWICK_NEXT,'MATCHDAY 05 ///')">READ ORIGINAL MATCH PREVIEW →</button></div>`:''}${['m2','m3','m4','m5'].includes(m.id)?`<div class="report-heading">FULL-TIME MEDIA ///</div><div class="preview-media"><a class="cta wide" href="${m.id==='m2'?'https://www.facebook.com/share/r/14rFrdhSK2L/?mibextid=wwXIfr':(m.id==='m3'?NORTH_SHIELDS_FULLTIME_VIDEO:(m.id==='m4'?'https://www.facebook.com/share/r/1C5tPsoQw8/?mibextid=wwXIfr':BERWICK_FULLTIME_VIDEO))}" target="_blank" rel="noopener">🎬 WATCH FULL-TIME / MATCH REPORT VIDEO →</a></div>`:''}<div class="report-heading">MATCH REPORT</div>${m.report.map(p=>`<p class="report-p">${p}</p>`).join('')}
+  ${m.id==='m2'?`<div class="report-heading">PRE-MATCH ARCHIVE ///</div><div class="preview-media"><img src="${BLAKELAW_PREVIEW.lineupImage}?v=26" alt="Blakelaw starting lineup" class="lineup-image" onerror="this.style.display='none'"><a class="cta wide" href="${BLAKELAW_PREVIEW.facebook}" target="_blank" rel="noopener">🎬 VIEW PRE-MATCH FACEBOOK POST →</a><button class="secondary-cta wide" onclick="openPreview()">READ ORIGINAL MATCH PREVIEW →</button></div>`:''}${m.id==='m3'?`<div class="report-heading">PRE-MATCH ARCHIVE ///</div><div class="preview-media"><img src="${NORTH_SHIELDS_PREVIEW.lineupImage}?v=44" alt="North Shields starting lineup" class="lineup-image" onerror="this.style.display='none'"><a class="cta wide" href="${NORTH_SHIELDS_PREVIEW.facebook}" target="_blank" rel="noopener">🎬 VIEW PRE-MATCH FACEBOOK POST →</a><button class="secondary-cta wide" onclick="openNextPreview()">READ ORIGINAL MATCH PREVIEW →</button></div>`:''}${m.id==='m4'?`<div class="report-heading">PRE-MATCH ARCHIVE ///</div><div class="preview-media"><img src="${RED_ROW_NEXT.lineupImage}?v=56" alt="Red Row starting lineup" class="lineup-image" onerror="this.style.display='none'"><a class="cta wide" href="${RED_ROW_NEXT.facebook}" target="_blank" rel="noopener">🎬 VIEW PRE-MATCH FACEBOOK POST →</a><button class="secondary-cta wide" onclick="renderPreview(RED_ROW_NEXT,'MATCHDAY 04 ///')">READ ORIGINAL MATCH PREVIEW →</button></div>`:''}${m.id==='m5'?`<div class="report-heading">PRE-MATCH ARCHIVE ///</div><div class="preview-media"><img src="${BERWICK_NEXT.lineupImage}?v=56" alt="Berwick starting lineup" class="lineup-image" onerror="this.style.display='none'"><a class="cta wide" href="${BERWICK_NEXT.facebook}" target="_blank" rel="noopener">🎬 VIEW PRE-MATCH FACEBOOK POST →</a><button class="secondary-cta wide" onclick="renderPreview(BERWICK_NEXT,'MATCHDAY 05 ///')">READ ORIGINAL MATCH PREVIEW →</button></div>`:''}${m.id==='m6'?`<div class="report-heading">PRE-MATCH ARCHIVE ///</div><div class="preview-media"><img src="${JARROW_NEXT.lineupImage}?v=61" alt="Jarrow starting lineup" class="lineup-image" onerror="this.style.display='none'"><a class="cta wide" href="${JARROW_NEXT.facebook}" target="_blank" rel="noopener">🎬 VIEW PRE-MATCH FACEBOOK POST →</a><button class="secondary-cta wide" onclick="renderPreview(JARROW_NEXT,'MATCHDAY 06 ///')">READ ORIGINAL MATCH PREVIEW →</button></div>`:''}${['m2','m3','m4','m5','m6'].includes(m.id)?`<div class="report-heading">FULL-TIME MEDIA ///</div><div class="preview-media"><a class="cta wide" href="${m.id==='m2'?'https://www.facebook.com/share/r/14rFrdhSK2L/?mibextid=wwXIfr':(m.id==='m3'?NORTH_SHIELDS_FULLTIME_VIDEO:(m.id==='m4'?'https://www.facebook.com/share/r/1C5tPsoQw8/?mibextid=wwXIfr':(m.id==='m5'?BERWICK_FULLTIME_VIDEO:'https://www.facebook.com/share/18EymDjh9s/?mibextid=wwXIfr')))}" target="_blank" rel="noopener">🎬 WATCH FULL-TIME / MATCH REPORT VIDEO →</a></div>`:''}<div class="report-heading">MATCH REPORT</div>${m.report.map(p=>`<p class="report-p">${p}</p>`).join('')}
   <div class="report-heading">GOALS & ASSISTS</div><div class="goal-timeline">${m.goals.map(g=>`<div class="goal-row"><strong>${g.minute}'</strong><span class="goal-dot">⚽</span><b>${label(g.scorer)}</b>${g.assister?`<span class="assist">Assist: ${label(g.assister)}</span>`:`<span class="assist">Assist: —</span>`}</div>`).join('')}</div>
   <div class="report-heading">DEVELOPMENT NOTES</div><div class="dev-list">${m.development.map(x=>`<div class="dev-item"><b>${label(x.player)}</b><p>${x.text}</p></div>`).join('')}</div>
   <div class="report-heading">MATCHDAY GALLERY ///</div>${renderGallery(m)}
-  <div class="summary-strip"><div><small>FULL TIME</small><b>${scoreLabel(m)}</b></div><div><small>HALF TIME</small><b>${m.htAgainst}-${m.htFor}</b></div><div><small>GOALS</small><b>${m.goals.length}</b></div><div><small>CLEAN SHEET</small><b>${m.cleanSheet?'YES':'NO'}</b></div></div>
+  <div class="summary-strip"><div><small>FULL TIME</small><b>${scoreLabel(m)}</b></div><div><small>HALF TIME</small><b>${halfTimeLabel(m)}</b></div><div><small>GOALS</small><b>${m.goals.length}</b></div><div><small>CLEAN SHEET</small><b>${m.cleanSheet?'YES':'NO'}</b></div></div>
   </article></section>`;
   window.scrollTo({top:0,behavior:'smooth'});
 }
