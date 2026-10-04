@@ -757,6 +757,10 @@ if (D.matches && !D.matches.some(m => m.id === 'm4')) {
   });
 }
 
+// Red Row is injected later than the other completed matches. Re-sort here so
+// Latest Result, Recent Games and all-competition form always stay chronological.
+D.matches = [...D.matches].sort((a,b)=>String(a.date).localeCompare(String(b.date)));
+
 function calcStats(){
   const out = Object.fromEntries(D.squad.map(p => [p.name, {...p, apps:0, starts:0, goals:0, assists:0, gA:0, potm:0, pp:0, captain:0}]));
   D.matches.forEach(m=>{
