@@ -854,7 +854,7 @@ function heroMarkup(m, placement){
   const labelText = placement==='home' ? 'LATEST MATCH' : 'MATCH HERO';
   const fallback = m.id==='m5' ? 'hero.jpeg' : '';
   const onerror = fallback ? `this.onerror=null;this.src='assets/matches/berwick/${fallback}?v=57'` : '';
-  return `<section class="card latest-hero-card"><button class="latest-hero-button" type="button" onclick="openMatch('${m.id}')"><img src="${src}?v=62" alt="${m.shortOpponent} match hero" ${onerror?`onerror="${onerror}"`:''}><div class="latest-hero-overlay"><div class="eyebrow">${labelText} ///</div><strong>${m.venue==='Home'?'WESTERHOPE UNITED':' '+m.shortOpponent} ${scoreLabel(m)}</strong><small>${m.venue==='Home'?'WESTERHOPE UNITED v '+m.shortOpponent:m.shortOpponent+' v WESTERHOPE UNITED'} • ${prettyDate(m.date)}</small></div></button></section>`;
+  return `<section class="card latest-hero-card"><button class="latest-hero-button" type="button" onclick="openMatch('${m.id}')"><img src="${src}?v=65" alt="${m.shortOpponent} match hero" ${onerror?`onerror="${onerror}"`:''}><div class="latest-hero-overlay"><div class="eyebrow">${labelText} ///</div><strong>${m.venue==='Home'?'WESTERHOPE UNITED':' '+m.shortOpponent} ${scoreLabel(m)}</strong><small>${m.venue==='Home'?'WESTERHOPE UNITED v '+m.shortOpponent:m.shortOpponent+' v WESTERHOPE UNITED'} • ${prettyDate(m.date)}</small></div></button></section>`;
 }
 function latestMatch(){ return [...D.matches].sort((a,b)=>String(a.date).localeCompare(String(b.date))).at(-1); }
 function renderHome(){
