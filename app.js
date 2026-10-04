@@ -1069,6 +1069,69 @@ function homeLeaderCard(ps,key,title,icon,unit){
   return `<article class="home-leader-card"><div class="home-leader-head"><span>${icon}</span><div><small>2026/27</small><b>${title}</b></div></div>${leaderVisual(rows,unit)}</article>`;
 }
 
+
+function careerBaseline(name,key){
+  const h24=historical2024For(name), h25=historicalFor(name);
+  if(key==='apps') return (h24.apps||0)+(h25.apps||0);
+  if(key==='goals') return (h24.goals||0)+(h25.goals||0);
+  if(key==='assists') return (h24.assists||0)+(h25.assists||0);
+  if(key==='gA') return (h24.goals||0)+(h24.assists||0)+(h25.goals||0)+(h25.assists||0);
+  return 0;
+}
+function matchCareerIncrement(m,name,key){
+  if(key==='apps') return (m.starters.includes(name)||m.subs.includes(name)) ? 1 : 0;
+  if(key==='goals') return m.goals.filter(g=>g.scorer===name).length;
+  if(key==='assists') return m.goals.filter(g=>g.assister===name).length;
+  if(key==='gA') return m.goals.filter(g=>g.scorer===name||g.assister===name).length;
+  return 0;
+}
+function milestoneReachedAt(name,key,threshold){
+  let total=careerBaseline(name,key);
+  if(total>=threshold) return -1; // Reached before the current-season match record begins.
+  for(let i=0;i<D.matches.length;i++){
+    total+=matchCareerIncrement(D.matches[i],name,key);
+    if(total>=threshold) return i;
+  }
+  return -1;
+}
+function careerMetricRows(ps,key){
+  return ps.map(p=>({p,c:careerFor(p.name,p)}));
+}
+function careerClubThresholds(ps,key){
+  const rows=careerMetricRows(ps,key), max=Math.max(0,...rows.map(x=>Number(x.c[key]||0)));
+  const top=Math.floor(max/10)*10, out=[];
+  for(let t=top;t>=10;t-=10){ if(rows.some(x=>Number(x.c[key]||0)>=t)) out.push(t); }
+  return out;
+}
+function careerClubMembers(ps,key,threshold){
+  return careerMetricRows(ps,key)
+    .filter(x=>Number(x.c[key]||0)>=threshold)
+    .map(x=>({...x,reached:milestoneReachedAt(x.p.name,key,threshold)}))
+    .sort((a,b)=>{
+      if(a.reached>=0 && b.reached>=0) return b.reached-a.reached || b.c[key]-a.c[key] || a.p.name.localeCompare(b.p.name);
+      if(a.reached>=0) return -1;
+      if(b.reached>=0) return 1;
+      return b.c[key]-a.c[key] || a.p.name.localeCompare(b.p.name);
+    });
+}
+function careerMemberCard(x,key,threshold,isFirst){
+  const p=x.p, photo=safePhoto(p), value=x.c[key];
+  const latest=isFirst && x.reached>=0;
+  return `<div class="career-member${latest?' latest':''}"><div class="career-member-photo">${photo?`<img src="${photo}?v=68" alt="${p.name}" loading="lazy" onerror="photoFail(this)">`:`<div class="career-member-fallback">#${p.no}</div>`}${latest?'<span class="career-latest-badge">LATEST</span>':''}</div><div class="career-member-copy"><b>${p.name}</b><small>#${p.no} • ${value} ${key==='apps'?'apps':key==='goals'?'goals':key==='assists'?'assists':'G+A'}</small></div></div>`;
+}
+function careerMilestoneClub(ps,key,labelText,threshold){
+  const members=careerClubMembers(ps,key,threshold);
+  return `<section class="career-milestone-club"><div class="career-milestone-head"><div><strong>${threshold}+ ${labelText} CLUB ///</strong><small>${members.length} MEMBER${members.length===1?'':'S'}</small></div></div><div class="career-member-grid">${members.map((x,i)=>careerMemberCard(x,key,threshold,i===0)).join('')}</div></section>`;
+}
+function careerClubCategory(ps,key,labelText,icon){
+  const thresholds=careerClubThresholds(ps,key);
+  if(!thresholds.length) return '';
+  return `<div class="career-club-category"><div class="career-category-title"><span>${icon}</span><div><small>CAREER</small><b>${labelText}</b></div></div><div class="career-club-stack">${thresholds.map(t=>careerMilestoneClub(ps,key,labelText,t)).join('')}</div></div>`;
+}
+function careerClubsHtml(ps){
+  return `<article class="card career-clubs-wrap"><div class="section-head"><span>CAREER CLUBS ///</span><small>HIGHEST MILESTONE FIRST</small></div><div class="mini-note">Every qualifying player is shown with their photo and name. Clubs are cumulative, so reaching a higher landmark does not remove a player from the earlier clubs. Where the milestone was reached during 2026/27, the newest member is placed first and marked <b>LATEST</b> for an easy screenshot-ready achievement post.</div><div class="career-clubs-grid">${careerClubCategory(ps,'apps','APPEARANCES','👕')}${careerClubCategory(ps,'goals','GOALS','⚽')}${careerClubCategory(ps,'assists','ASSISTS','🎯')}${careerClubCategory(ps,'gA','GOAL CONTRIBUTIONS','🔥')}</div></article>`;
+}
+
 function renderStats(){
   const ps=calcStats(), s=teamStats(), splits=teamGoalSplits(), venueRows=scorersByVenue(), streaks=currentHotStreaks();
   const rank=[...ps].filter(p=>p.apps>0).sort((a,b)=>b.gA-a.gA||b.goals-a.goals||b.assists-a.assists||a.short.localeCompare(b.short));
@@ -1084,6 +1147,7 @@ function renderStats(){
     <article class="card league-form-card"><div class="section-head"><span>LEAGUE FORM ///</span><small>DIVISION 10 • RESULT-DRIVEN</small></div><div class="mini-note"><b>Built from the individual league results we have captured.</b> Teams stop at the number of games they have actually played, so games in hand are not treated as defeats.</div>${leagueTrackerSvg()}${leagueFormGroups()}</article>
     <article class="card stat-hero"><div class="section-head"><span>SEASON SNAPSHOT</span><small>ALL COMPETITIONS • ${D.season}</small></div><div class="snapshot wide-snapshot">${[['PLAYED',s.played],['WIN %',s.winPct+'%'],['GOALS',s.gf],['CONCEDED',s.ga],['GD',s.gd>=0?'+'+s.gd:s.gd],['CLEAN SHEETS',s.clean],['CLEAN SHEET %',s.cleanPct+'%'],['GOALS / GAME',s.played?(s.gf/s.played).toFixed(2):'0.00']].map(x=>`<div><small>${x[0]}</small><b>${x[1]}</b></div>`).join('')}</div></article>
     <article class="card season-leaders-wrap"><div class="section-head"><span>SEASON LEADERS ///</span><small>AUTO-UPDATES FROM MATCH DATA</small></div><div class="mini-note">The leader photos and Top 5 rankings change automatically whenever the next completed match is added with its scorers, assists, Player of the Match and Players’ Player.</div><div class="season-leader-grid">${seasonLeaderCard(ps,'goals','GOALS','⚽','GOALS')}${seasonLeaderCard(ps,'assists','ASSISTS','🎯','ASSISTS')}${seasonLeaderCard(ps,'gA','GOAL CONTRIBUTIONS','🔥','G+A')}${seasonLeaderCard(ps,'potm','PLAYER OF THE MATCH','⭐','POTM')}${seasonLeaderCard(ps,'pp','PLAYERS’ PLAYER','💙','AWARDS')}</div></article>
+    ${careerClubsHtml(ps)}
     <article class="card"><div class="section-head"><span>FULL PLAYER LEADERBOARD</span><small>2026/27</small></div><div class="leader-list"><div class="leader-header"><span>#</span><span>PLAYER</span><span>APP</span><span>G</span><span>A</span><span>G+A</span></div>${rank.map((p,i)=>`<div><span class="rank">${i+1}</span><b>#${p.no} ${p.short}</b><span>${p.apps}</span><strong>${p.goals}</strong><strong>${p.assists}</strong><strong>${p.gA}</strong></div>`).join('')}</div></article>
     <section class="two-col">
       <article class="card"><div class="section-head"><span>HOME / AWAY</span><small>TEAM RECORD</small></div><div class="snapshot">${[['HOME WINS',s.home.w+'/'+s.home.p],['AWAY WINS',s.away.w+'/'+s.away.p],['HOME WIN %',pct(s.home.w,s.home.p)+'%'],['AWAY WIN %',pct(s.away.w,s.away.p)+'%']].map(x=>`<div><small>${x[0]}</small><b>${x[1]}</b></div>`).join('')}</div><div class="mini-note">Home advantage index: ${s.home.p&&s.away.p ? (pct(s.home.w,s.home.p)-pct(s.away.w,s.away.p))+' percentage points' : 'too early to judge'}</div></article>
