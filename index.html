@@ -11,7 +11,7 @@
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
   <meta http-equiv="Pragma" content="no-cache">
   <meta http-equiv="Expires" content="0">
-  <link rel="manifest" href="manifest.json?v=65">
+  <link rel="manifest" href="manifest.json?v=66">
   <link rel="apple-touch-icon" sizes="180x180" href="assets/icons/apple-touch-icon.png?v=46">
   <link rel="icon" type="image/png" sizes="192x192" href="assets/icons/icon-192.png?v=46">
   <link rel="stylesheet" href="styles.css?v=46">
@@ -27,12 +27,17 @@
     .latest-hero-overlay small{opacity:.85}
     .latest-hero-placeholder{min-height:170px;background:linear-gradient(135deg,#0b0b0b,#1c1c1c);display:flex;align-items:flex-end}
     .latest-hero-placeholder .latest-hero-overlay{position:static;background:none}
-    @media (max-width:700px){.latest-hero-button img{height:clamp(200px,58vw,280px).latest-hero-overlay{padding:22px 18px 16px}.latest-hero-overlay strong{font-size:1.05rem}.latest-hero-placeholder{min-height:145px}}
+    @media (max-width:700px){.latest-hero-button img{height:clamp(200px,58vw,280px)}.latest-hero-overlay{padding:22px 18px 16px}.latest-hero-overlay strong{font-size:1.05rem}.latest-hero-placeholder{min-height:145px}}
   </style>
 
 <style>
 .league-form-card .section-head{margin-bottom:12px}.league-chart-wrap{width:100%;overflow-x:auto;background:linear-gradient(180deg,rgba(255,255,255,.02),rgba(255,255,255,.00));border-radius:16px;padding:6px 0}.league-chart-wrap svg{display:block;width:100%;min-width:740px;height:auto}.league-team-crest-end{cursor:pointer}.form-groups{display:grid;gap:12px;margin-top:16px}.form-group{border:1px solid rgba(255,255,255,.10);border-radius:14px;padding:12px;background:rgba(255,255,255,.025)}.form-group-head{display:flex;align-items:baseline;justify-content:space-between;gap:8px;margin-bottom:10px}.form-group-head b{font-size:.95rem;color:#ffd500}.form-group-head span{font-size:.68rem;color:rgba(255,255,255,.45);text-transform:uppercase;letter-spacing:.08em}.form-group-teams{display:flex;flex-wrap:wrap;gap:9px}.form-team-pill{appearance:none;border:1px solid rgba(255,255,255,.09);border-radius:12px;padding:8px 10px;background:rgba(0,0,0,.18);color:#fff;display:flex;align-items:center;gap:8px;cursor:pointer;text-align:left;min-width:180px}.form-team-pill:hover,.form-team-pill.active{border-color:rgba(255,213,0,.55);box-shadow:0 0 0 1px rgba(255,213,0,.10) inset}.form-team-pill.our-team{border-color:rgba(255,213,0,.45)}.form-pill-crest{display:inline-flex;align-items:center;justify-content:center}.form-team-pill .table-crest{width:28px;height:28px;object-fit:contain}.form-pill-name{font-weight:700;font-size:.76rem;flex:1}.form-pill-meta{font-size:.62rem;color:rgba(255,255,255,.52);white-space:nowrap}@media (max-width:900px){.form-team-pill{min-width:0;flex:1 1 calc(50% - 8px)}.league-chart-wrap svg{min-width:720px}}@media (max-width:600px){.form-team-pill{flex-basis:100%}.league-chart-wrap{margin-left:-4px;margin-right:-4px}}
 </style>
+
+<style>
+.season-leader-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px;margin-top:14px}.season-leader-card{min-width:0;border:1px solid #343434;background:#0b0b0b;border-radius:14px;overflow:hidden}.season-leader-head{display:flex;align-items:center;gap:9px;padding:11px 12px;border-bottom:1px solid #272727}.season-leader-head>span{font-size:24px}.season-leader-head small{display:block;color:#777;font-size:8px;letter-spacing:1px}.season-leader-head b{display:block;font-size:10px;letter-spacing:.6px;margin-top:2px}.leader-visual{height:190px;position:relative;background:#111;overflow:hidden}.leader-visual img{width:100%;height:100%;object-fit:cover;object-position:center top;display:block}.leader-visual.split{display:grid;grid-template-columns:1fr 1fr}.leader-half{position:relative;min-width:0;overflow:hidden}.leader-half:first-child{border-right:1px solid rgba(255,255,255,.18)}.leader-half span{position:absolute;top:7px;left:7px;background:rgba(0,0,0,.72);border-radius:999px;padding:4px 7px;font-size:8px;font-weight:900}.leader-overlay{position:absolute;left:0;right:0;bottom:0;padding:34px 11px 10px;background:linear-gradient(180deg,transparent,rgba(0,0,0,.94));display:grid;gap:2px}.leader-overlay small,.leader-names small{color:#ffd500;font-size:8px;letter-spacing:1px}.leader-overlay b,.leader-names b{font-size:12px}.leader-overlay strong,.leader-names strong{font-size:20px;color:#fff}.leader-overlay.shared{text-align:center}.leader-visual.many,.leader-visual.empty{display:flex;align-items:center;justify-content:center;padding:18px;box-sizing:border-box}.leader-names{text-align:center;display:grid;gap:8px}.leader-photo-fallback{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:42px;font-weight:950;color:#aaa;background:linear-gradient(145deg,#202020,#090909)}.season-rank-list{padding:4px 10px 8px}.season-rank-list>div{display:grid;grid-template-columns:24px 1fr 28px;gap:6px;align-items:center;padding:7px 0;border-bottom:1px solid #222;font-size:9px}.season-rank-list>div:last-child{border-bottom:0}.season-rank-list span{color:#777}.season-rank-list strong{text-align:right;color:#ffd500;font-size:12px}.leader-empty-row{display:block!important;color:#777;text-align:center;padding:12px!important}@media(max-width:1100px){.season-leader-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}@media(max-width:700px){.season-leader-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.leader-visual{height:165px}.season-leader-head{padding:9px}.season-leader-head>span{font-size:20px}.season-leader-head b{font-size:9px}}@media(max-width:390px){.season-leader-grid{grid-template-columns:1fr}.leader-visual{height:210px}}
+</style>
+
 </head>
 <body>
   <div class="app-shell">
@@ -57,8 +62,8 @@
       <div class="footer-sub">MORE THAN A TEAM &nbsp; • &nbsp; A COMMUNITY</div>
     </footer>
   </div>
-  <script src="data.js?v=65"></script>
-  <script src="app.js?v=65"></script>
+  <script src="data.js?v=66"></script>
+  <script src="app.js?v=66"></script>
 
 </body>
 </html>

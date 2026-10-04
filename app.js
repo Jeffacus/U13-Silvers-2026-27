@@ -854,7 +854,7 @@ function heroMarkup(m, placement){
   const labelText = placement==='home' ? 'LATEST MATCH' : 'MATCH HERO';
   const fallback = m.id==='m5' ? 'hero.jpeg' : '';
   const onerror = fallback ? `this.onerror=null;this.src='assets/matches/berwick/${fallback}?v=57'` : '';
-  return `<section class="card latest-hero-card"><button class="latest-hero-button" type="button" onclick="openMatch('${m.id}')"><img src="${src}?v=65" alt="${m.shortOpponent} match hero" ${onerror?`onerror="${onerror}"`:''}><div class="latest-hero-overlay"><div class="eyebrow">${labelText} ///</div><strong>${m.venue==='Home'?'WESTERHOPE UNITED':' '+m.shortOpponent} ${scoreLabel(m)}</strong><small>${m.venue==='Home'?'WESTERHOPE UNITED v '+m.shortOpponent:m.shortOpponent+' v WESTERHOPE UNITED'} • ${prettyDate(m.date)}</small></div></button></section>`;
+  return `<section class="card latest-hero-card"><button class="latest-hero-button" type="button" onclick="openMatch('${m.id}')"><img src="${src}?v=66" alt="${m.shortOpponent} match hero" ${onerror?`onerror="${onerror}"`:''}><div class="latest-hero-overlay"><div class="eyebrow">${labelText} ///</div><strong>${m.venue==='Home'?'WESTERHOPE UNITED':' '+m.shortOpponent} ${scoreLabel(m)}</strong><small>${m.venue==='Home'?'WESTERHOPE UNITED v '+m.shortOpponent:m.shortOpponent+' v WESTERHOPE UNITED'} • ${prettyDate(m.date)}</small></div></button></section>`;
 }
 function latestMatch(){ return [...D.matches].sort((a,b)=>String(a.date).localeCompare(String(b.date))).at(-1); }
 function renderHome(){
@@ -1040,6 +1040,30 @@ function currentHotStreaks(){
   return calcStats().map(p=>({p,form:recentFormForPlayer(p.name,6),streak:playerStreak(p.name)})).filter(x=>x.form.goals>0).sort((a,b)=>b.streak-a.streak||b.form.goals-a.form.goals||b.form.assists-a.form.assists);
 }
 function pct(a,b){ return b ? Math.round(a/b*100) : 0; }
+
+function rankedMetric(ps,key){
+  const rows=[...ps].filter(p=>p.apps>0 && Number(p[key]||0)>0).sort((a,b)=>(b[key]||0)-(a[key]||0)||b.gA-a.gA||b.goals-a.goals||b.assists-a.assists||a.short.localeCompare(b.short));
+  let last=null, rank=0;
+  return rows.map((p,i)=>{ if(last===null || p[key]!==last) rank=i+1; last=p[key]; return {p,value:p[key],rank}; }).filter(x=>x.rank<=5);
+}
+function leaderVisual(rows,labelText){
+  if(!rows.length) return `<div class="leader-visual empty"><div class="leader-names"><b>NO DATA YET</b></div></div>`;
+  const topValue=rows[0].value;
+  const leaders=rows.filter(x=>x.value===topValue).map(x=>x.p);
+  if(leaders.length===1){
+    const p=leaders[0], photo=safePhoto(p);
+    return `<div class="leader-visual single">${photo?`<img src="${photo}?v=66" alt="${p.short}" loading="lazy" onerror="photoFail(this)">`:`<div class="leader-photo-fallback">#${p.no}</div>`}<div class="leader-overlay"><small>${labelText}</small><b>${p.short}</b><strong>${topValue}</strong></div></div>`;
+  }
+  if(leaders.length===2){
+    return `<div class="leader-visual split">${leaders.map(p=>{const photo=safePhoto(p);return `<div class="leader-half">${photo?`<img src="${photo}?v=66" alt="${p.short}" loading="lazy" onerror="photoFail(this)">`:`<div class="leader-photo-fallback">#${p.no}</div>`}<span>${p.short}</span></div>`;}).join('')}<div class="leader-overlay shared"><small>${labelText}</small><b>${leaders.map(p=>p.short).join(' & ')}</b><strong>${topValue} EACH</strong></div></div>`;
+  }
+  return `<div class="leader-visual many"><div class="leader-names"><small>${labelText}</small><b>${leaders.map(p=>p.short).join(' • ')}</b><strong>${topValue} EACH</strong></div></div>`;
+}
+function seasonLeaderCard(ps,key,title,icon,unit){
+  const rows=rankedMetric(ps,key);
+  return `<article class="season-leader-card"><div class="season-leader-head"><span>${icon}</span><div><small>2026/27</small><b>${title}</b></div></div>${leaderVisual(rows,unit)}<div class="season-rank-list">${rows.length?rows.map(x=>`<div><span>${x.rank}${x.rank===1?'':'='}</span><b>#${x.p.no} ${x.p.short}</b><strong>${x.value}</strong></div>`).join(''):'<div class="leader-empty-row">No data yet</div>'}</div></article>`;
+}
+
 function renderStats(){
   const ps=calcStats(), s=teamStats(), splits=teamGoalSplits(), venueRows=scorersByVenue(), streaks=currentHotStreaks();
   const rank=[...ps].filter(p=>p.apps>0).sort((a,b)=>b.gA-a.gA||b.goals-a.goals||b.assists-a.assists||a.short.localeCompare(b.short));
@@ -1051,10 +1075,11 @@ function renderStats(){
   const cleanPlayers=ps.filter(p=>p.apps>0).map(p=>{const hist=playerMatchHistory(p.name); return {p,count:hist.filter(m=>m.cleanSheet).length};}).sort((a,b)=>b.count-a.count);
   app.innerHTML=`<section>
     <div class="page-title">STATS <span>///</span></div>
-    <div class="match-intro">Season-to-date numbers plus the trends that will become more interesting as the matches build up. Form is based on appearances, not minutes.</div>
+    <div class="match-intro">Season-to-date numbers plus the trends that will become more interesting as the matches build up. Goals, assists and match awards are calculated automatically from the completed match data.</div>
     <article class="card league-form-card"><div class="section-head"><span>LEAGUE FORM ///</span><small>DIVISION 10 • RESULT-DRIVEN</small></div><div class="mini-note"><b>Built from the individual league results we have captured.</b> Teams stop at the number of games they have actually played, so games in hand are not treated as defeats.</div>${leagueTrackerSvg()}${leagueFormGroups()}</article>
     <article class="card stat-hero"><div class="section-head"><span>SEASON SNAPSHOT</span><small>ALL COMPETITIONS • ${D.season}</small></div><div class="snapshot wide-snapshot">${[['PLAYED',s.played],['WIN %',s.winPct+'%'],['GOALS',s.gf],['CONCEDED',s.ga],['GD',s.gd>=0?'+'+s.gd:s.gd],['CLEAN SHEETS',s.clean],['CLEAN SHEET %',s.cleanPct+'%'],['GOALS / GAME',s.played?(s.gf/s.played).toFixed(2):'0.00']].map(x=>`<div><small>${x[0]}</small><b>${x[1]}</b></div>`).join('')}</div></article>
-    <article class="card"><div class="section-head"><span>PLAYER LEADERBOARD</span><small>2026/27</small></div><div class="leader-list"><div class="leader-header"><span>#</span><span>PLAYER</span><span>APP</span><span>G</span><span>A</span><span>G+A</span></div>${rank.map((p,i)=>`<div><span class="rank">${i+1}</span><b>#${p.no} ${p.short}</b><span>${p.apps}</span><strong>${p.goals}</strong><strong>${p.assists}</strong><strong>${p.gA}</strong></div>`).join('')}</div></article>
+    <article class="card season-leaders-wrap"><div class="section-head"><span>SEASON LEADERS ///</span><small>AUTO-UPDATES FROM MATCH DATA</small></div><div class="mini-note">The leader photos and Top 5 rankings change automatically whenever the next completed match is added with its scorers, assists, Player of the Match and Players’ Player.</div><div class="season-leader-grid">${seasonLeaderCard(ps,'goals','GOALS','⚽','GOALS')}${seasonLeaderCard(ps,'assists','ASSISTS','🎯','ASSISTS')}${seasonLeaderCard(ps,'gA','GOAL CONTRIBUTIONS','🔥','G+A')}${seasonLeaderCard(ps,'potm','PLAYER OF THE MATCH','⭐','POTM')}${seasonLeaderCard(ps,'pp','PLAYERS’ PLAYER','💙','AWARDS')}</div></article>
+    <article class="card"><div class="section-head"><span>FULL PLAYER LEADERBOARD</span><small>2026/27</small></div><div class="leader-list"><div class="leader-header"><span>#</span><span>PLAYER</span><span>APP</span><span>G</span><span>A</span><span>G+A</span></div>${rank.map((p,i)=>`<div><span class="rank">${i+1}</span><b>#${p.no} ${p.short}</b><span>${p.apps}</span><strong>${p.goals}</strong><strong>${p.assists}</strong><strong>${p.gA}</strong></div>`).join('')}</div></article>
     <section class="two-col">
       <article class="card"><div class="section-head"><span>HOME / AWAY</span><small>TEAM RECORD</small></div><div class="snapshot">${[['HOME WINS',s.home.w+'/'+s.home.p],['AWAY WINS',s.away.w+'/'+s.away.p],['HOME WIN %',pct(s.home.w,s.home.p)+'%'],['AWAY WIN %',pct(s.away.w,s.away.p)+'%']].map(x=>`<div><small>${x[0]}</small><b>${x[1]}</b></div>`).join('')}</div><div class="mini-note">Home advantage index: ${s.home.p&&s.away.p ? (pct(s.home.w,s.home.p)-pct(s.away.w,s.away.p))+' percentage points' : 'too early to judge'}</div></article>
       <article class="card"><div class="section-head"><span>GOALS BY HALF</span><small>TEAM</small></div><div class="snapshot"><div><small>FIRST HALF</small><b>${splits.first}</b></div><div><small>SECOND HALF</small><b>${splits.second}</b></div><div><small>1ST HALF %</small><b>${pct(splits.first,splits.total)}%</b></div><div><small>2ND HALF %</small><b>${pct(splits.second,splits.total)}%</b></div></div></article>
@@ -1066,7 +1091,6 @@ function renderStats(){
     </section>
     <article class="card"><div class="section-head"><span>GOAL COMBINATIONS</span><small>ASSISTER → SCORER</small></div>${pairRows.length?`<div class="combo-list">${pairRows.map(([k,v])=>`<div><b>${k}</b><strong>${v}</strong></div>`).join('')}</div>`:'<div class="placeholder">No recorded combinations yet.</div>'}</article>
     <article class="card"><div class="section-head"><span>CAREER MILESTONE WATCH</span><small>2024/25 → 2026/27</small></div><div class="milestone-list">${milestoneWatch().slice(0,8).map(x=>`<div class="mile-row"><b>#${x.p.no} ${x.p.short}</b><span>${x.m.next} ${x.m.type.toLowerCase()}</span><strong>${x.m.diff} to go</strong></div>`).join('')}</div><div class="mini-note">Career totals combine the 2024/25 and 2025/26 records with the current 2026/27 season. Milestones are the next useful landmark for appearances, goals, assists or goal contributions.</div></article>
-    <article class="card"><div class="section-head"><span>STATS WE CAN UNLOCK LATER</span><small>AS THE DATA GROWS</small></div><div class="unlock-grid"><div><b>SCORING STREAKS</b><span>e.g. 4 goals in last 6 appearances</span></div><div><b>HOME SCORING</b><span>e.g. scored in every home appearance</span></div><div><b>PARTNERSHIPS</b><span>e.g. Joseph + Charlie goal/assist link-ups</span></div><div><b>LINEUP RECORD</b><span>e.g. results when Freddie and Jake start together</span></div></div></article>
   </section>`;
   wireLeagueTracker();
 }
