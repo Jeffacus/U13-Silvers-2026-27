@@ -1105,7 +1105,11 @@ function careerClubThresholds(ps,key){
 }
 function careerClubMembers(ps,key,threshold){
   return careerMetricRows(ps,key)
-    .filter(x=>Number(x.c[key]||0)>=threshold)
+    .filter(x=>{
+      const value=Number(x.c[key]||0);
+      const highest=Math.floor(value/10)*10;
+      return value>=10 && highest===threshold;
+    })
     .map(x=>({...x,reached:milestoneReachedAt(x.p.name,key,threshold)}))
     .sort((a,b)=>{
       if(a.reached>=0 && b.reached>=0) return b.reached-a.reached || b.c[key]-a.c[key] || a.p.name.localeCompare(b.p.name);
@@ -1117,7 +1121,7 @@ function careerClubMembers(ps,key,threshold){
 function careerMemberCard(x,key,threshold,isFirst){
   const p=x.p, photo=safePhoto(p), value=x.c[key];
   const latest=isFirst && x.reached>=0;
-  return `<div class="career-member${latest?' latest':''}"><div class="career-member-photo">${photo?`<img src="${photo}?v=68" alt="${p.name}" loading="lazy" onerror="photoFail(this)">`:`<div class="career-member-fallback">#${p.no}</div>`}${latest?'<span class="career-latest-badge">LATEST</span>':''}</div><div class="career-member-copy"><b>${p.name}</b><small>#${p.no} • ${value} ${key==='apps'?'apps':key==='goals'?'goals':key==='assists'?'assists':'G+A'}</small></div></div>`;
+  return `<div class="career-member${latest?' latest':''}"><div class="career-member-photo">${photo?`<img src="${photo}?v=69" alt="${p.name}" loading="lazy" onerror="photoFail(this)">`:`<div class="career-member-fallback">#${p.no}</div>`}${latest?'<span class="career-latest-badge">LATEST</span>':''}</div><div class="career-member-copy"><b>${p.name}</b><small>#${p.no} • ${value} ${key==='apps'?'apps':key==='goals'?'goals':key==='assists'?'assists':'G+A'}</small></div></div>`;
 }
 function careerMilestoneClub(ps,key,labelText,threshold){
   const members=careerClubMembers(ps,key,threshold);
@@ -1129,7 +1133,7 @@ function careerClubCategory(ps,key,labelText,icon){
   return `<div class="career-club-category"><div class="career-category-title"><span>${icon}</span><div><small>CAREER</small><b>${labelText}</b></div></div><div class="career-club-stack">${thresholds.map(t=>careerMilestoneClub(ps,key,labelText,t)).join('')}</div></div>`;
 }
 function careerClubsHtml(ps){
-  return `<article class="card career-clubs-wrap"><div class="section-head"><span>CAREER CLUBS ///</span><small>HIGHEST MILESTONE FIRST</small></div><div class="mini-note">Every qualifying player is shown with their photo and name. Clubs are cumulative, so reaching a higher landmark does not remove a player from the earlier clubs. Where the milestone was reached during 2026/27, the newest member is placed first and marked <b>LATEST</b> for an easy screenshot-ready achievement post.</div><div class="career-clubs-grid">${careerClubCategory(ps,'apps','APPEARANCES','👕')}${careerClubCategory(ps,'goals','GOALS','⚽')}${careerClubCategory(ps,'assists','ASSISTS','🎯')}${careerClubCategory(ps,'gA','GOAL CONTRIBUTIONS','🔥')}</div></article>`;
+  return `<article class="card career-clubs-wrap"><div class="section-head"><span>CAREER CLUBS ///</span><small>HIGHEST MILESTONE FIRST</small></div><div class="mini-note">Every qualifying player is shown with their photo and name in the highest 10-step career club they have reached. When a player moves up to the next landmark, they move out of the previous club. Where the milestone was reached during 2026/27, the newest member is placed first and marked <b>LATEST</b> for an easy screenshot-ready achievement post.</div><div class="career-clubs-grid">${careerClubCategory(ps,'apps','APPEARANCES','👕')}${careerClubCategory(ps,'goals','GOALS','⚽')}${careerClubCategory(ps,'assists','ASSISTS','🎯')}${careerClubCategory(ps,'gA','GOAL CONTRIBUTIONS','🔥')}</div></article>`;
 }
 
 function renderStats(){
