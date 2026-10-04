@@ -854,7 +854,7 @@ function heroMarkup(m, placement){
   const labelText = placement==='home' ? 'LATEST MATCH' : 'MATCH HERO';
   const fallback = m.id==='m5' ? 'hero.jpeg' : '';
   const onerror = fallback ? `this.onerror=null;this.src='assets/matches/berwick/${fallback}?v=57'` : '';
-  return `<section class="card latest-hero-card"><button class="latest-hero-button" type="button" onclick="openMatch('${m.id}')"><img src="${src}?v=66" alt="${m.shortOpponent} match hero" ${onerror?`onerror="${onerror}"`:''}><div class="latest-hero-overlay"><div class="eyebrow">${labelText} ///</div><strong>${m.venue==='Home'?'WESTERHOPE UNITED':' '+m.shortOpponent} ${scoreLabel(m)}</strong><small>${m.venue==='Home'?'WESTERHOPE UNITED v '+m.shortOpponent:m.shortOpponent+' v WESTERHOPE UNITED'} • ${prettyDate(m.date)}</small></div></button></section>`;
+  return `<section class="card latest-hero-card"><button class="latest-hero-button" type="button" onclick="openMatch('${m.id}')"><img src="${src}?v=67" alt="${m.shortOpponent} match hero" ${onerror?`onerror="${onerror}"`:''}><div class="latest-hero-overlay"><div class="eyebrow">${labelText} ///</div><strong>${m.venue==='Home'?'WESTERHOPE UNITED':' '+m.shortOpponent} ${scoreLabel(m)}</strong><small>${m.venue==='Home'?'WESTERHOPE UNITED v '+m.shortOpponent:m.shortOpponent+' v WESTERHOPE UNITED'} • ${prettyDate(m.date)}</small></div></button></section>`;
 }
 function latestMatch(){ return [...D.matches].sort((a,b)=>String(a.date).localeCompare(String(b.date))).at(-1); }
 function renderHome(){
@@ -881,7 +881,7 @@ function renderHome(){
       <article class="card result-card"><div class="section-head"><span>LATEST RESULT</span><small>${prettyDate(last.date)}</small></div><div class="matchup"><div class="team">${last.venue==='Home'?crestImg('Westerhope United','mini-crest'):crestImg(last.opponent,'mini-crest')}<b>${last.venue==='Home'?'WESTERHOPE<br>UNITED':last.shortOpponent}</b></div><div class="score"><div>${last.venue==='Home'?last.gf:last.ga} <span>-</span> ${last.venue==='Home'?last.ga:last.gf}</div><small>HT ${last.venue==='Home'?last.htFor:last.htAgainst}-${last.venue==='Home'?last.htAgainst:last.htFor}</small></div><div class="team">${last.venue==='Home'?crestImg(last.opponent,'mini-crest'):crestImg('Westerhope United','mini-crest')}<b>${last.venue==='Home'?last.shortOpponent:'WESTERHOPE<br>UNITED'}</b></div></div><div class="win-banner">${last.gf>last.ga?'✓':(last.gf===last.ga?'=':'•')} ${last.headline.toUpperCase()}</div><button class="text-link" onclick="openMatch('${last.id}')">VIEW MATCH →</button></article>
       <article class="card next-card"><div class="section-head"><span>NEXT MATCH</span><small>${prettyDate(last.nextDate)}</small></div><div class="next-title">${nextTeams}</div><div class="next-meta">📍 ${nextHome ? 'HOME • '+nextVenue : 'AWAY'} &nbsp; • &nbsp; ${prettyDateLong(last.nextDate)} &nbsp; • &nbsp; KICK-OFF ${nextTime}</div>${nextActions}</article>
     </section>
-    <section class="card"><div class="section-head"><span>KEY STATS</span><small>AFTER ${s.played} MATCHES • ALL COMPETITIONS</small></div><div class="stat-grid">${metricCard('⚽','TOP SCORER',topScorer?.short||'—',topScorer?.goals||0)}${metricCard('🎯','ASSIST LEADER',topAssist?.short||'—',topAssist?.assists||0)}${metricCard('📈','GOAL CONTRIBUTIONS',topGA?.short||'—',topGA?.gA||0)}${metricCard('🧤','CLEAN SHEETS','Team',s.clean)}</div></section>
+    <section class="card home-key-stats"><div class="section-head"><span>KEY STATS ///</span><small>AFTER ${s.played} MATCHES • ALL COMPETITIONS</small></div><div class="mini-note">Season leaders update automatically from the completed match data. Leader photos change whenever somebody moves top or shares first place.</div><div class="home-leader-grid">${homeLeaderCard(ps,'goals','GOALS','⚽','GOALS')}${homeLeaderCard(ps,'assists','ASSISTS','🎯','ASSISTS')}${homeLeaderCard(ps,'gA','GOAL CONTRIBUTIONS','🔥','G+A')}${homeLeaderCard(ps,'potm','PLAYER OF THE MATCH','⭐','POTM')}${homeLeaderCard(ps,'pp','PLAYERS’ PLAYER','💙','AWARDS')}</div><div class="home-team-stat">${metricCard('🧤','TEAM CLEAN SHEETS','Silvers',s.clean)}</div></section>
     <section class="two-col"><article class="card"><div class="section-head"><span>CURRENT FORM</span><small>ALL COMPETITIONS</small></div><div class="form-row">${D.matches.slice(-5).map(m=>`<span class="form ${m.gf>m.ga?'w':m.gf===m.ga?'d':'l'}">${m.gf>m.ga?'W':m.gf===m.ga?'D':'L'}</span>`).join('')}</div></article><article class="card"><div class="section-head"><span>DID YOU KNOW?</span></div><div class="didyou"><div class="bulb">💡</div><p><b>${ls.pts} league points:</b> the Silvers are unbeaten after ${ls.played} league games, with ${ls.gf} goals scored and ${ls.ga} conceded. Cup matches do not count towards the league table or league points.</p></div></article></section>
     <section class="card"><div class="section-head"><span>MILESTONE WATCH</span><small>CAREER</small></div>${milestoneWatch().slice(0,3).map(x=>`<div class="mile-row"><b>#${x.p.no} ${x.p.short}</b><span>${x.m.next} ${x.m.type.toLowerCase()}</span><strong>${x.m.diff} to go</strong></div>`).join('')}</section>
     <section class="card quote"><span class="slash">///</span><b>MORE THAN A TEAM. A COMMUNITY.</b><span class="slash">///</span></section>`;
@@ -1052,16 +1052,21 @@ function leaderVisual(rows,labelText){
   const leaders=rows.filter(x=>x.value===topValue).map(x=>x.p);
   if(leaders.length===1){
     const p=leaders[0], photo=safePhoto(p);
-    return `<div class="leader-visual single">${photo?`<img src="${photo}?v=66" alt="${p.short}" loading="lazy" onerror="photoFail(this)">`:`<div class="leader-photo-fallback">#${p.no}</div>`}<div class="leader-overlay"><small>${labelText}</small><b>${p.short}</b><strong>${topValue}</strong></div></div>`;
+    return `<div class="leader-visual single">${photo?`<img src="${photo}?v=67" alt="${p.short}" loading="lazy" onerror="photoFail(this)">`:`<div class="leader-photo-fallback">#${p.no}</div>`}<div class="leader-overlay"><small>${labelText}</small><b>${p.short}</b><strong>${topValue}</strong></div></div>`;
   }
   if(leaders.length===2){
-    return `<div class="leader-visual split">${leaders.map(p=>{const photo=safePhoto(p);return `<div class="leader-half">${photo?`<img src="${photo}?v=66" alt="${p.short}" loading="lazy" onerror="photoFail(this)">`:`<div class="leader-photo-fallback">#${p.no}</div>`}<span>${p.short}</span></div>`;}).join('')}<div class="leader-overlay shared"><small>${labelText}</small><b>${leaders.map(p=>p.short).join(' & ')}</b><strong>${topValue} EACH</strong></div></div>`;
+    return `<div class="leader-visual split">${leaders.map(p=>{const photo=safePhoto(p);return `<div class="leader-half">${photo?`<img src="${photo}?v=67" alt="${p.short}" loading="lazy" onerror="photoFail(this)">`:`<div class="leader-photo-fallback">#${p.no}</div>`}<span>${p.short}</span></div>`;}).join('')}<div class="leader-overlay shared"><small>${labelText}</small><b>${leaders.map(p=>p.short).join(' & ')}</b><strong>${topValue} EACH</strong></div></div>`;
   }
   return `<div class="leader-visual many"><div class="leader-names"><small>${labelText}</small><b>${leaders.map(p=>p.short).join(' • ')}</b><strong>${topValue} EACH</strong></div></div>`;
 }
 function seasonLeaderCard(ps,key,title,icon,unit){
   const rows=rankedMetric(ps,key);
   return `<article class="season-leader-card"><div class="season-leader-head"><span>${icon}</span><div><small>2026/27</small><b>${title}</b></div></div>${leaderVisual(rows,unit)}<div class="season-rank-list">${rows.length?rows.map(x=>`<div><span>${x.rank}${x.rank===1?'':'='}</span><b>#${x.p.no} ${x.p.short}</b><strong>${x.value}</strong></div>`).join(''):'<div class="leader-empty-row">No data yet</div>'}</div></article>`;
+}
+
+function homeLeaderCard(ps,key,title,icon,unit){
+  const rows=rankedMetric(ps,key);
+  return `<article class="home-leader-card"><div class="home-leader-head"><span>${icon}</span><div><small>2026/27</small><b>${title}</b></div></div>${leaderVisual(rows,unit)}</article>`;
 }
 
 function renderStats(){
