@@ -1,10 +1,10 @@
 (function () {
   try {
     var target = new URL('../', window.location.href);
-    target.searchParams.set('app', '71');
+    target.searchParams.set('app', '72');
     target.hash = window.location.hash;
     window.location.replace(target.href);
   } catch (e) {
-    window.location.replace('../?app=71');
+    window.location.replace('../?app=72');
   }
 }());
