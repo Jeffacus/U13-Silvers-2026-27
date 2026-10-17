@@ -168,14 +168,26 @@ const PONTELAND_NEXT = {
   shortOpponent: 'PONTELAND UNITED JUNIORS U13 ROCKETS',
   date: '2026-10-18',
   time: 'TBC',
-  venue: 'Away',
+  venue: 'Home',
   competition: 'NFL U13 Division 10',
   facebook: '',
-  lineupImage: 'assets/matches/ponteland-away/lineup.jpeg',
-  starters: [],
-  bench: [],
+  lineupImage: 'assets/matches/ponteland/lineup.jpeg',
+  starters: ['Johnny Collinson','Freddie Cowan','Theo Demosthenous','Kane Rogerson','Jake Armstrong','Ollie Anderson','Yusuf Syed Ubaidur Rahman','Oliver Stubbs','Joseph Winwood'],
+  bench: ['Charlie Mulligan','Kyran Archbold','Ewan Dodds','Blake Smith'],
   unavailable: [],
-  paragraphs: []
+  paragraphs: [
+    `The Silvers are back at Valley View on Sunday as the league campaign continues, with Westerhope sitting <b>top of Division 10 on 10 points</b> after three wins and one draw from their opening four matches. The boys remain <b>unbeaten in the league</b> and will be looking to build on last weekend's excellent <b>4–0 away win at North Shields</b>.`,
+    `<h3>🏆 TOP OF THE LEAGUE</h3>The table is beginning to take shape, and the Silvers have made an excellent start. With <b>10 points from four games</b> and two league clean sheets already, Westerhope go into Sunday knowing that another positive result keeps the early promotion push moving in the right direction.`,
+    `<h3>🧤 JOHNNY</h3><b>Johnny</b> starts in goal again. He was part of last weekend's hard-earned clean sheet at North Shields and will be looking to keep the defensive standards high again at Valley View.`,
+    `<h3>🛡️ FREDDIE • THEO</h3>There is a change at the back this week, with <b>Freddie</b> and <b>Theo</b> forming the defensive pairing. Both bring strength, experience and the ability to carry the ball out when the opportunity is there.`,
+    `<h3>⚙️ KANE • JAKE • OLLIE</h3><b>Kane and Jake</b> sit in midfield, with <b>Ollie</b> playing just ahead of them in the attacking midfield role. The aim is to use the ball quickly, find the wide spaces and keep pulling the Ponteland shape around as possession moves from side to side.`,
+    `<h3>⚡ JOSEPH • OLIVER • YUSUF</h3><b>Joseph</b> starts on the right, <b>Oliver</b> returns to the starting lineup after his recent injury, and <b>Yusuf</b> leads the attack. There is plenty of pace and movement in the front line, with the coaches looking for the same confidence and attacking intent that produced such a strong second half against North Shields.`,
+    `<h3>🎯 MILESTONE WATCH</h3><b>Joseph</b> is still just <b>one goal away from 30 career Silvers goals</b>, having already reached <b>40 career goal contributions</b>. <b>Oliver</b> comes into the game on <b>9 goal contributions this season</b>, while <b>Charlie</b> is on <b>32 career goals</b> and continues to climb the all-time scoring list.`,
+    `<h3>💪 A VERY STRONG BENCH</h3>The options from the bench are <b>Charlie, Kyran, Ewan and Blake</b>. That gives the coaches plenty of flexibility as the game develops, and with the new shape being worked on in training, everyone will have an opportunity to contribute.`,
+    `<h3>🔄 THE NEXT TEST</h3>Tuesday's training gave the boys the chance to work on the different formation, moving the ball wide, attacking the spaces and rotating as the ball travels across the pitch. Now the challenge is to take that learning into a competitive game against a Ponteland side that will be looking to make their own mark.`,
+    `<h3>🏠 VALLEY VIEW</h3>It is an early start at home, but the ingredients are there for another good morning: league football, home advantage, top of the table and a group coming off the back of a strong response against North Shields.`,
+    `<b>MATCHDAY 08 ///</b><br><br>Sunday at Valley View. Ponteland United Juniors U13 Rockets. Another league test. Another chance to keep the unbeaten start going. <b>UP THE HOPE ///</b>`
+  ]
 };
 
 
@@ -1036,7 +1048,7 @@ function upcomingMatchCard(){
 
 function openNextPreview(){
   const last = latestMatch();
-  if(last?.id === 'm7'){ return; }
+  if(last?.id === 'm7'){ renderPreview(PONTELAND_NEXT,'MATCHDAY 08 ///'); return; }
   if(last?.id === 'm6'){ renderPreview(NORTH_SHIELDS_AWAY_NEXT,'MATCHDAY 07 ///'); return; }
   if(last?.next === JARROW_NEXT.opponent){ renderPreview(JARROW_NEXT,'MATCHDAY 06 ///'); return; }
   if(last?.next === BERWICK_NEXT.opponent){ renderPreview(BERWICK_NEXT,'MATCHDAY 05 ///'); return; }
@@ -1057,7 +1069,7 @@ function renderPreview(p,matchLabel){
   const leftPreviewTeam = isHome ? `<div>${crestImg('Westerhope United','mini-crest')}<b>WESTERHOPE<br>UNITED</b></div>` : `<div>${crestImg(p.opponent,'mini-crest')}<b>${p.shortOpponent}</b></div>`;
   const rightPreviewTeam = isHome ? `<div>${crestImg(p.opponent,'mini-crest')}<b>${p.shortOpponent}</b></div>` : `<div>${crestImg('Westerhope United','mini-crest')}<b>WESTERHOPE<br>UNITED</b></div>`;
   const venueMeta = isHome ? `<span>🏠 <b>HOME</b></span><span>📍 <b>VALLEY VIEW</b></span>` : `<span>✈️ <b>AWAY</b></span>`;
-  app.innerHTML=`<section><button class="back" onclick="nav('matches')">← BACK TO MATCHES</button><article class="card detail-card preview-detail"><div class="section-head"><span>MATCH PREVIEW • ${p.competition.toUpperCase()}</span><small>${prettyDate(p.date)}</small></div><div class="detail-title">${leftPreviewTeam}<div class="match-score preview-v"><strong>V</strong><small>${p.time} KO</small></div>${rightPreviewTeam}</div><div class="detail-meta">${venueMeta}<span>📅 <b>${dateLong.toUpperCase()}</b></span><span>⏰ <b>${p.time}</b></span></div><div class="preview-media"><img src="${p.lineupImage}?v=72" alt="${p.shortOpponent} starting lineup" class="lineup-image" onerror="this.style.display='none'"><div class="mini-note">Starting IX graphic • matchday lineup</div>${p.facebook ? `<a class="secondary-cta wide" href="${p.facebook}" target="_blank" rel="noopener">🎬 WATCH MATCHDAY POST →</a>` : ""}</div><div class="report-heading">MATCH PREVIEW ///</div>${p.paragraphs.map(x=>`<p class="report-p preview-p">${x}</p>`).join('')}<div class="report-heading">STARTING IX ///</div><div class="chip-row">${starters}</div><div class="report-heading">BENCH ///</div><div class="chip-row">${bench}</div>${unavailable}<div class="preview-footer"><b>${matchLabel}</b><span>${p.shortOpponent} • ${dateLong.toUpperCase()} • ${p.time}</span><strong>UP THE HOPE ///</strong></div></article></section>`;
+  app.innerHTML=`<section><button class="back" onclick="nav('matches')">← BACK TO MATCHES</button><article class="card detail-card preview-detail"><div class="section-head"><span>MATCH PREVIEW • ${p.competition.toUpperCase()}</span><small>${prettyDate(p.date)}</small></div><div class="detail-title">${leftPreviewTeam}<div class="match-score preview-v"><strong>V</strong><small>${p.time} KO</small></div>${rightPreviewTeam}</div><div class="detail-meta">${venueMeta}<span>📅 <b>${dateLong.toUpperCase()}</b></span><span>⏰ <b>${p.time}</b></span></div><div class="preview-media"><img src="${p.lineupImage}?v=73" alt="${p.shortOpponent} starting lineup" class="lineup-image" onerror="this.style.display='none'"><div class="mini-note">Starting IX graphic • matchday lineup</div>${p.facebook ? `<a class="secondary-cta wide" href="${p.facebook}" target="_blank" rel="noopener">🎬 WATCH MATCHDAY POST →</a>` : ""}</div><div class="report-heading">MATCH PREVIEW ///</div>${p.paragraphs.map(x=>`<p class="report-p preview-p">${x}</p>`).join('')}<div class="report-heading">STARTING IX ///</div><div class="chip-row">${starters}</div><div class="report-heading">BENCH ///</div><div class="chip-row">${bench}</div>${unavailable}<div class="preview-footer"><b>${matchLabel}</b><span>${p.shortOpponent} • ${dateLong.toUpperCase()} • ${p.time}</span><strong>UP THE HOPE ///</strong></div></article></section>`;
   window.scrollTo({top:0,behavior:'smooth'});
 }
 window.openPreview=openPreview;
