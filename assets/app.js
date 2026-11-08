@@ -603,6 +603,61 @@ if (D.matches) {
   else D.matches.push(pontelandMatch);
 }
 
+// Matchday 09 — Remembrance Sunday, Blakelaw Roma at Valley View, 8 November 2026.
+// No pre-match Facebook or lineup image; one match hero image is supplied under blakelaw-away.
+{
+  const remembranceMatch = {
+    id:'m9', date:'2026-11-08', competition:'NFL U13 Division 10', venue:'Home',
+    opponent:'Blakelaw Football Club U13 Roma', shortOpponent:'BLAKELAW FOOTBALL CLUB U13 ROMA',
+    gf:0, ga:0, htFor:0, htAgainst:0, captain:'Freddie Cowan',
+    potm:'Theo Demosthenous', playersPlayer:'Jake Armstrong', cleanSheet:true,
+    starters:['Johnny Collinson','Joseph Winwood','Kane Rogerson','Theo Demosthenous','Ollie Anderson','Jake Armstrong','Freddie Cowan','Oliver Stubbs','Charlie Mulligan'],
+    subs:['Kyran Archbold','Yusuf Syed Ubaidur Rahman','Ewan Dodds'],
+    unavailable:['Blake Smith'],
+    goals:[], headline:'A point earned. A clean sheet. A positive response.',
+    next:'Killingworth F.C. U13 Blues',nextDate:'2026-11-15',nextTime:'10:30',nextVenue:'Killingworth',nextHome:false,
+    lineupImage:'',
+    report:[
+      `<h3>MATCH REPORT /// A POINT EARNED, A CLEAN SHEET AND A POSITIVE RESPONSE</h3>After two weeks without a match and limited training over half-term, the Silvers returned to Valley View for a tense and disciplined <b>0–0 draw against Blakelaw Roma</b>. The biggest positive was a much-improved attitude and collective commitment after the Ponteland disappointment. A point keeps the boys in the conversation towards the top of Division 10.`,
+      `<h3>REMEMBRANCE SUNDAY /// WE WILL REMEMBER THEM</h3>Before kick-off, both teams, coaches, parents and supporters observed a minute's silence impeccably. Thank you to everybody for showing their respect on an occasion bigger than football. <b>Lest We Forget. 🌺</b>`,
+      `<h3>STARTING IX /// 3–3–2</h3><b>GK:</b> Johnny<br><b>DEF:</b> Joseph (right), Kane (centre), Theo (left)<br><b>MID:</b> Ollie, Jake, Freddie ©<br><b>ATT:</b> Oliver, Charlie<br><b>SUBSTITUTES USED:</b> Kyran, Yusuf, Ewan.<br><b>UNAVAILABLE:</b> Blake (illness).<br><br>A slightly different shape gave the Silvers a solid back three and a fiercely competitive midfield.`,
+      `<h3>A MIDFIELD BATTLE ///</h3>Neither side gave an inch. <b>Jake, Ollie and Freddie</b> battled for possession in the middle, while <b>Joseph, Kane and Theo</b> covered well, defended with discipline and forced play towards the wings. <b>Oliver and Charlie</b> worked hard up front but found it difficult to link up against a well-organised defence.`,
+      `<h3>8' — CHARLIE FROM RANGE</h3>After a Blakelaw handball around 25 yards out, Charlie stepped up for the free kick but sent it over the crossbar.`,
+      `<h3>14' — JOHNNY DOWN TO HIS RIGHT</h3>Johnny produced an excellent low save to his right, showing the quicker movement and reach he has been working on in goalkeeper training. The resulting corner did not trouble the Silvers. <b>HALF-TIME: 0–0.</b>`,
+      `<h3>FRESH LEGS, SAME BATTLE ///</h3>Ewan came on shortly after half-time at left-back and produced a strong, committed display, getting stuck into tackles and doing his best to build attacks from the back. Kyran and Yusuf also contributed after coming on. Both sides continued to defend strongly, with little space through the middle.`,
+      `<h3>SECOND HALF +9' — THEO DENIED</h3>Kyran and Charlie combined well to release Theo, who broke through on goal. The Blakelaw keeper made an excellent save to his right. A positive moment from Theo's willingness to drive forward.`,
+      `<h3>SECOND HALF +15' — YUSUF GOES CLOSE</h3>Kyran's throw reached Yusuf, who played into Jake and continued down the line. Jake returned the ball; Yusuf cut inside and drove his effort just wide of the post. Exactly the sort of quick combination and movement the coaches are working on.`,
+      `<h3>SECOND HALF +20' — THEO OFF THE LINE</h3>A dangerous goalmouth scramble demanded an instant reaction. Theo produced a superb <b>goal-line clearance</b> to keep the score level — as important as any goal at the other end.`,
+      `<h3>SECOND HALF +27' — OFF THE POST</h3>A bouncing ball fell to a Blakelaw midfielder, who struck a thunderous effort. Johnny stretched at full reach, but the shot hit the outside of the post and went behind. A huge let-off.`,
+      `<h3>DRAMA AT THE DEATH ///</h3>In the dying moments, a challenge involving Oliver in the area initially brought a penalty decision against Westerhope, but it was overturned for an offside infringement against a Blakelaw player. A dramatic conclusion to an extremely tight contest.`,
+      `<h3>THE RESPONSE ///</h3>A draw was a fair result between two disciplined sides. There is more to work on: moving the ball faster into attack, linking up in the final third and using our pace behind the defence. But the improvement in <b>listening, attitude, heading, tackling and physical commitment</b> was clear. <b>Steven and Jeff</b> were appreciative of the response from every player.`,
+      `<h3>PLAYER OF THE MATCH — THEO</h3>Theo's marauding runs, recovery tackling, chance on goal and vital goal-line clearance made him a deserving Player of the Match.`,
+      `<h3>PLAYERS' PLAYER — JAKE</h3>Jake was voted Players' Player for his headers, ball-winning, determined midfield work and the way he applied recent training messages.`,
+      `<h3>THIRD LEAGUE CLEAN SHEET ///</h3>A big well done to <b>Johnny, Joseph, Kane, Theo, Ewan</b> and every teammate who contributed to the defensive shutout. This was the <b>third league clean sheet in six league matches — 50% of league games</b>. Keeping goals out matters as much as scoring them.`,
+      `<h3>APPEARANCE MILESTONE WATCH ///</h3>No player reached a new multiple-of-10 career appearance milestone today, but there are exciting ones close: <b>Kyran</b> is on <b>9 appearances</b> and one away from 10; <b>Yusuf</b> is on <b>29</b> and one away from 30; <b>Johnny</b> and <b>Jake</b> are on <b>48 each</b>, just two away from 50. <b>Ewan</b> made career appearance <b>#32</b> today and played his part in another clean sheet. All figures include cup and league matches.<br><br><b>Blake</b> was unavailable through illness.`,
+      `<h3>THANK YOU ///</h3>Thanks to <b>Ant for running the line</b>, to all the parents helping set up and take down the goals, corner flags, Respect barriers and matchday equipment, and to everyone supporting on the touchline.`,
+      `<h3>FINAL RESULT ///</h3><b>Westerhope United U13 Silvers 0–0 Blakelaw Football Club U13 Roma</b><br><b>HALF-TIME:</b> 0–0<br><b>FULL-TIME:</b> 0–0<br><b>GOALS:</b> None<br><b>ASSISTS:</b> None<br><b>POTM:</b> Theo<br><b>PLAYERS' PLAYER:</b> Jake<br><b>LEAGUE:</b> P6 W3 D2 L1 • GF14 GA6 • GD+8 • 11 points.<br><b>CLEAN SHEETS:</b> 3 from 6 league matches (50%).<br><br><b>UP THE HOPE ///</b>`
+    ],
+    development:[
+      {player:'Johnny Collinson',text:'Important save low to his right and another clean sheet, applying goalkeeper training.'},
+      {player:'Joseph Winwood',text:'Disciplined right-side defending in the back three and part of the clean-sheet effort.'},
+      {player:'Kane Rogerson',text:'Organised centre-back work and strong coverage in a competitive match.'},
+      {player:'Theo Demosthenous',text:'Player of the Match: driving runs, tackling back, a saved chance and a vital goal-line clearance.'},
+      {player:'Ollie Anderson',text:'Worked hard in a congested midfield and competed for second balls.'},
+      {player:'Jake Armstrong',text:'Players’ Player: headers, tackles and excellent application of training work.'},
+      {player:'Freddie Cowan',text:'Captain and midfield competitor, helping the team stay disciplined.'},
+      {player:'Oliver Stubbs',text:'Worked hard up front in a tight match with limited attacking space.'},
+      {player:'Charlie Mulligan',text:'Threatened from a first-half free kick and combined with Kyran to release Theo.'},
+      {player:'Kyran Archbold',text:'Provided fresh energy, linking with Charlie and taking the throw that began Yusuf’s chance.'},
+      {player:'Yusuf Syed Ubaidur Rahman',text:'Combined with Jake down the line and went close with a second-half shot; now on 29 career appearances.'},
+      {player:'Ewan Dodds',text:'Came on shortly after half-time at left-back, got stuck into tackles and looked to build the play from defence; career appearance #32 and part of the third league clean sheet.'},
+      {player:'Blake Smith',text:'Unavailable through illness; no appearance credited.'}
+    ], gallery:[]
+  };
+  const idx=D.matches.findIndex(m=>m.id==='m9');
+  if(idx>=0) D.matches.splice(idx,1,remembranceMatch); else D.matches.push(remembranceMatch);
+}
+
 D.matches = [...D.matches].sort((a,b)=>String(a.date).localeCompare(String(b.date)));
 
 function normaliseTeamName(team){
@@ -666,7 +721,9 @@ const LEAGUE_RESULTS = [
   {date:'2026-10-11', home:'Cramlington Town Juniors U13 Cramlington', away:'Killingworth F.C. U13 Blues', hg:1, ag:2},
   {date:'2026-10-11', home:'Killingworth F.C. U13 Reds', away:'Bedlington FC U13 Malaga', hg:4, ag:1},
   {date:'2026-10-11', home:'North Shields Juniors U13 Blacks', away:'Westerhope United U13 Silvers', hg:0, ag:4},
-  {date:'2026-10-11', home:'Ponteland United Juniors U13 Rockets', away:'Cramlington Blue Star FC U13 Milan', hg:3, ag:0}
+  {date:'2026-10-11', home:'Ponteland United Juniors U13 Rockets', away:'Cramlington Blue Star FC U13 Milan', hg:3, ag:0},
+  {date:'2026-10-18', home:'Westerhope United U13 Silvers', away:'Ponteland United Juniors U13 Rockets', hg:2, ag:4},
+  {date:'2026-11-08', home:'Westerhope United U13 Silvers', away:'Blakelaw Football Club U13 Roma', hg:0, ag:0}
 ].sort((a,b)=>a.date.localeCompare(b.date));
 
 const LEAGUE_TEAMS = [
@@ -983,10 +1040,11 @@ if (D.matches && !D.matches.some(m => m.id === 'm4')) {
 D.matches = [...D.matches].sort((a,b)=>String(a.date).localeCompare(String(b.date)));
 
 function calcStats(){
-  const out = Object.fromEntries(D.squad.map(p => [p.name, {...p, apps:0, starts:0, goals:0, assists:0, gA:0, potm:0, pp:0, captain:0}]));
+  const out = Object.fromEntries(D.squad.map(p => [p.name, {...p, apps:0, starts:0, goals:0, assists:0, gA:0, potm:0, pp:0, captain:0, cleanSheets:0}]));
   D.matches.forEach(m=>{
     m.starters.forEach(n=>{if(out[n]){out[n].apps++;out[n].starts++;}});
     m.subs.forEach(n=>{if(out[n]) out[n].apps++;});
+    if(m.cleanSheet) [...new Set([...m.starters,...m.subs])].forEach(n=>{if(out[n]) out[n].cleanSheets++;});
     m.goals.forEach(g=>{if(out[g.scorer]) out[g.scorer].goals++; if(g.assister && out[g.assister]) out[g.assister].assists++;});
     if(out[m.potm]) out[m.potm].potm++;
     if(out[m.playersPlayer]) out[m.playersPlayer].pp++;
@@ -1068,6 +1126,7 @@ function matchHeroPath(m){
   if(m.id==='m5') return 'assets/matches/berwick/HERO.JPEG';
   if(m.id==='m6') return 'assets/matches/jarrow/hero.jpeg';
   if(m.id==='m7') return 'assets/matches/north-shields-away/hero.jpeg';
+  if(m.id==='m9') return 'assets/matches/blakelaw-away/hero.jpeg';
   return '';
 }
 function heroMarkup(m, placement){
@@ -1076,7 +1135,7 @@ function heroMarkup(m, placement){
   const labelText = placement==='home' ? 'LATEST MATCH' : 'MATCH HERO';
   const fallback = m.id==='m5' ? 'hero.jpeg' : '';
   const onerror = fallback ? `this.onerror=null;this.src='assets/matches/berwick/${fallback}?v=57'` : '';
-  return `<section class="card latest-hero-card"><button class="latest-hero-button" type="button" onclick="openMatch('${m.id}')"><img src="${src}?v=74" alt="${m.shortOpponent} match hero" ${onerror?`onerror="${onerror}"`:''}><div class="latest-hero-overlay"><div class="eyebrow">${labelText} ///</div><strong>${m.venue==='Home'?'WESTERHOPE UNITED':' '+m.shortOpponent} ${scoreLabel(m)}</strong><small>${m.venue==='Home'?'WESTERHOPE UNITED v '+m.shortOpponent:m.shortOpponent+' v WESTERHOPE UNITED'} • ${prettyDate(m.date)}</small></div></button></section>`;
+  return `<section class="card latest-hero-card"><button class="latest-hero-button" type="button" onclick="openMatch('${m.id}')"><img src="${src}?v=78" alt="${m.shortOpponent} match hero" ${onerror?`onerror="${onerror}"`:''}><div class="latest-hero-overlay"><div class="eyebrow">${labelText} ///</div><strong>${m.venue==='Home'?'WESTERHOPE UNITED':' '+m.shortOpponent} ${scoreLabel(m)}</strong><small>${m.venue==='Home'?'WESTERHOPE UNITED v '+m.shortOpponent:m.shortOpponent+' v WESTERHOPE UNITED'} • ${prettyDate(m.date)}</small></div></button></section>`;
 }
 function latestMatch(){ return [...D.matches].sort((a,b)=>String(a.date).localeCompare(String(b.date))).at(-1); }
 function renderHome(){
@@ -1091,7 +1150,7 @@ function renderHome(){
   const nextTime = nextTbc ? 'TBC' : (last.nextTime || (last.id==='m1' ? BLAKELAW_PREVIEW.time : 'TBC'));
   const nextVenue = nextTbc ? 'TBC' : (last.nextVenue || (last.nextHome ? 'Valley View' : 'Away'));
   const nextHome = !nextTbc && !!last.nextHome;
-  const nextPreview = nextTbc ? null : (last.id==='m7' ? PONTELAND_NEXT : (last.id==='m6' ? NORTH_SHIELDS_AWAY_NEXT : (last.next === RED_ROW_NEXT.opponent ? RED_ROW_NEXT : (last.next === NORTH_SHIELDS_PREVIEW.opponent ? NORTH_SHIELDS_PREVIEW : (last.next === BLAKELAW_PREVIEW.opponent ? BLAKELAW_PREVIEW : (last.next === BERWICK_NEXT.opponent ? BERWICK_NEXT : (last.next === JARROW_NEXT.opponent ? JARROW_NEXT : null))))));
+  const nextPreview = nextTbc ? null : (last.id==='m7' ? PONTELAND_NEXT : (last.id==='m6' ? NORTH_SHIELDS_AWAY_NEXT : (last.next === RED_ROW_NEXT.opponent ? RED_ROW_NEXT : (last.next === NORTH_SHIELDS_PREVIEW.opponent ? NORTH_SHIELDS_PREVIEW : (last.next === BLAKELAW_PREVIEW.opponent ? BLAKELAW_PREVIEW : (last.next === BERWICK_NEXT.opponent ? BERWICK_NEXT : (last.next === JARROW_NEXT.opponent ? JARROW_NEXT : null)))))));
   const nextActions = (nextPreview && nextPreview.paragraphs && nextPreview.paragraphs.length) ? `<div class="home-preview-actions"><button class="cta" onclick="openNextPreview()">READ MATCH PREVIEW →</button>${nextPreview.facebook ? `<a class="secondary-cta" href="${nextPreview.facebook}" target="_blank" rel="noopener">🎬 MATCHDAY VIDEO</a>` : ''}</div>` : `<div class="home-preview-actions"><span class="secondary-cta disabled-link">PREVIEW COMING SOON</span></div>`;
   const nextTeams = nextTbc
     ? `<div><b>NEXT FIXTURE</b></div><span>•</span><div><b>TO BE CONFIRMED</b></div>`
@@ -1107,7 +1166,7 @@ function renderHome(){
       <article class="card next-card"><div class="section-head"><span>NEXT MATCH</span><small>${nextTbc?'TBC':prettyDate(last.nextDate)}</small></div><div class="next-title">${nextTeams}</div><div class="next-meta">${nextTbc?'📅 DATE / TIME TO BE CONFIRMED':`📍 ${nextHome ? 'HOME • '+nextVenue : 'AWAY'} &nbsp; • &nbsp; ${prettyDateLong(last.nextDate)} &nbsp; • &nbsp; KICK-OFF ${nextTime}`}</div>${nextActions}</article>
     </section>
     <section class="card home-key-stats"><div class="section-head"><span>KEY STATS ///</span><small>AFTER ${s.played} MATCHES • ALL COMPETITIONS</small></div><div class="mini-note">Season leaders update automatically from the completed match data. Leader photos change whenever somebody moves top or shares first place.</div><div class="home-leader-grid">${homeLeaderCard(ps,'goals','GOALS','⚽','GOALS')}${homeLeaderCard(ps,'assists','ASSISTS','🎯','ASSISTS')}${homeLeaderCard(ps,'gA','GOAL CONTRIBUTIONS','🔥','G+A')}${homeLeaderCard(ps,'potm','PLAYER OF THE MATCH','⭐','POTM')}${homeLeaderCard(ps,'pp','PLAYERS’ PLAYER','💙','AWARDS')}</div><div class="home-team-stat">${metricCard('🧤','TEAM CLEAN SHEETS','Silvers',s.clean)}</div></section>
-    <section class="two-col"><article class="card"><div class="section-head"><span>CURRENT FORM</span><small>ALL COMPETITIONS</small></div><div class="form-row">${D.matches.slice(-5).map(m=>`<span class="form ${m.gf>m.ga?'w':m.gf===m.ga?'d':'l'}">${m.gf>m.ga?'W':m.gf===m.ga?'D':'L'}</span>`).join('')}</div></article><article class="card"><div class="section-head"><span>DID YOU KNOW?</span></div><div class="didyou"><div class="bulb">💡</div><p><b>${ls.pts} league points:</b> the Silvers are unbeaten after ${ls.played} league games, with ${ls.gf} goals scored and ${ls.ga} conceded. Cup matches do not count towards the league table or league points.</p></div></article></section>
+    <section class="two-col"><article class="card"><div class="section-head"><span>CURRENT FORM</span><small>ALL COMPETITIONS</small></div><div class="form-row">${D.matches.slice(-5).map(m=>`<span class="form ${m.gf>m.ga?'w':m.gf===m.ga?'d':'l'}">${m.gf>m.ga?'W':m.gf===m.ga?'D':'L'}</span>`).join('')}</div></article><article class="card"><div class="section-head"><span>DID YOU KNOW?</span></div><div class="didyou"><div class="bulb">💡</div><p><b>${ls.pts} league points:</b> the Silvers have ${ls.won} wins, ${ls.draw} draws and ${ls.lost} defeats from ${ls.played} league games, with ${ls.gf} goals scored and ${ls.ga} conceded. Cup matches do not count towards the league table or league points.</p></div></article></section>
     <section class="card"><div class="section-head"><span>MILESTONE WATCH</span><small>CAREER</small></div>${milestoneWatch().slice(0,3).map(x=>`<div class="mile-row"><b>#${x.p.no} ${x.p.short}</b><span>${x.m.next} ${x.m.type.toLowerCase()}</span><strong>${x.m.diff} to go</strong></div>`).join('')}</section>
     <section class="card quote"><span class="slash">///</span><b>MORE THAN A TEAM. A COMMUNITY.</b><span class="slash">///</span></section>`;
 }
@@ -1117,12 +1176,14 @@ function renderMatches(){
   app.innerHTML=`<section><div class="page-title">MATCHES <span>///</span></div><div class="match-intro">Pre-match previews, starting line-ups, results, reports, statistics and matchday photography — all in one season archive.</div>${upcomingMatchCard()}<div class="archive-heading">MATCH ARCHIVE ///</div>${D.matches.slice().reverse().map(matchCard).join('')}</section>`;
 }
 function upcomingMatchCard(){
-  const last = latestMatch();
+  const last=latestMatch();
   if(!last || !last.next || last.next==='TBC') return `<article class="card next-card"><div class="section-head"><span>NEXT MATCH</span><small>TBC</small></div><div class="next-title"><div><b>NEXT FIXTURE TO BE CONFIRMED</b></div></div><div class="next-meta">DATE / TIME / OPPOSITION TO BE CONFIRMED</div></article>`;
-  const p = last?.id==='m7' ? PONTELAND_NEXT : (last?.id==='m6' ? NORTH_SHIELDS_AWAY_NEXT : (last?.next === RED_ROW_NEXT.opponent ? RED_ROW_NEXT : (last?.next === NORTH_SHIELDS_PREVIEW.opponent ? NORTH_SHIELDS_PREVIEW : (last?.next === BLAKELAW_PREVIEW.opponent ? BLAKELAW_PREVIEW : (last?.next === BERWICK_NEXT.opponent ? BERWICK_NEXT : (last?.next === JARROW_NEXT.opponent ? JARROW_NEXT : RED_ROW_NEXT))))));
-  const isHome = p.venue==='Home';
-  const previewButton = (p.paragraphs && p.paragraphs.length && p !== BERWICK_NEXT) ? `<button class="cta" onclick="openNextPreview()">READ MATCH PREVIEW →</button>` : `<span class="secondary-cta disabled-link">PREVIEW COMING SOON</span>`;
-  return `<article class="card match-card upcoming-card"><div class="section-head"><span>UPCOMING • ${p.competition.toUpperCase()}</span><small>${prettyDate(p.date)}</small></div><div class="match-hero"><div class="hero-team">${isHome?crestImg('Westerhope United','mini-crest'):crestImg(p.opponent,'mini-crest')}<b>${isHome?'WESTERHOPE<br>UNITED':p.shortOpponent}</b></div><div class="match-score preview-v"><strong>V</strong><small>${p.time} KO</small></div><div class="hero-team">${isHome?crestImg(p.opponent,'mini-crest'):crestImg('Westerhope United','mini-crest')}<b>${isHome?p.shortOpponent:'WESTERHOPE<br>UNITED'}</b></div></div><div class="upcoming-meta">${isHome?'🏠 HOME':'✈️ AWAY'} &nbsp; • &nbsp; ${prettyDateLong(p.date)} &nbsp; • &nbsp; KICK-OFF ${p.time}${p.venue==='Home'?' &nbsp; • &nbsp; VALLEY VIEW':''}</div><div class="preview-buttons">${previewButton}${p.facebook?`<a class="secondary-cta" href="${p.facebook}" target="_blank" rel="noopener">🎬 MATCHDAY VIDEO</a>`:''}</div></article>`;
+  const home=!!last.nextHome;
+  const opponent=last.next;
+  const opponentLabel=opponent==='Killingworth F.C. U13 Blues'?'KILLINGWORTH BLUES':opponent.toUpperCase();
+  const left=home?'WESTERHOPE UNITED':opponentLabel;
+  const right=home?opponentLabel:'WESTERHOPE UNITED';
+  return `<article class="card match-card upcoming-card"><div class="section-head"><span>UPCOMING • NFL U13 DIVISION 10</span><small>${prettyDate(last.nextDate)}</small></div><div class="match-hero"><div class="hero-team">${crestImg(home?'Westerhope United':opponent,'mini-crest')}<b>${left}</b></div><div class="match-score preview-v"><strong>V</strong><small>${last.nextTime} KO</small></div><div class="hero-team">${crestImg(home?opponent:'Westerhope United','mini-crest')}<b>${right}</b></div></div><div class="upcoming-meta">${home?'🏠 HOME':'✈️ AWAY'} &nbsp; • &nbsp; ${prettyDateLong(last.nextDate)} &nbsp; • &nbsp; KICK-OFF ${last.nextTime}</div><div class="preview-buttons"><span class="secondary-cta disabled-link">LINEUP / PREVIEW NOT YET AVAILABLE</span></div></article>`;
 }
 
 function openNextPreview(){
@@ -1161,7 +1222,7 @@ function matchCard(m){
   const subs = m.subs.map(n=>`<span class="chip sub">#${playerByName(n)?.no??''} ${label(n)}</span>`).join('');
   const leftTeam = m.venue==='Home' ? `<div class="hero-team">${crestImg('Westerhope United','mini-crest')}<b>WESTERHOPE<br>UNITED</b></div>` : `<div class="hero-team">${crestImg(m.opponent,'mini-crest')}<b>${m.shortOpponent}</b></div>`; const rightTeam = m.venue==='Home' ? `<div class="hero-team">${crestImg(m.opponent,'mini-crest')}<b>${m.shortOpponent}</b></div>` : `<div class="hero-team">${crestImg('Westerhope United','mini-crest')}<b>WESTERHOPE<br>UNITED</b></div>`; return `<article class="card match-card"><div class="section-head"><span>${m.venue.toUpperCase()} • ${m.competition.toUpperCase()}</span><small>${prettyDate(m.date)}</small></div><div class="match-hero">${leftTeam}<div class="match-score"><strong>${scoreLabel(m)}</strong><small>HALF TIME ${halfTimeLabel(m)}</small></div>${rightTeam}</div>
   <div class="match-flags"><span>🏆 PLAYER OF THE MATCH: <b>${label(m.potm)}</b></span><span>🏆 PLAYERS' PLAYER: <b>${label(m.playersPlayer)}</b></span>${m.cleanSheet?`<span>🧤 CLEAN SHEET</span>`:''}<span>©️ CAPTAIN: <b>${label(m.captain)}</b></span></div>
-  <div class="subheading">GOALS</div><div class="goal-timeline">${m.goals.map(g=>`<div class="goal-row"><strong>${g.minute}'</strong><span class="goal-dot">⚽</span><b>${label(g.scorer)}</b>${g.assister?`<span class="assist">(${label(g.assister)})</span>`:`<span class="assist">No assist recorded</span>`}</div>`).join('')}</div>
+  <div class="subheading">GOALS</div><div class="goal-timeline">${m.goals.length?m.goals.map(g=>`<div class="goal-row"><strong>${g.minute}'</strong><span class="goal-dot">⚽</span><b>${label(g.scorer)}</b>${g.assister?`<span class="assist">(${label(g.assister)})</span>`:`<span class="assist">No assist recorded</span>`}</div>`).join(''):'<span class="assist">No goals or assists recorded.</span>'}</div>
   <div class="subheading">STARTING XI</div><div class="chip-row">${lineup}</div>
   <div class="subheading">SUBSTITUTES USED</div><div class="chip-row">${subs}</div>
   <button class="cta wide" onclick="openMatch('${m.id}')">READ FULL MATCH REPORT →</button>
@@ -1177,14 +1238,15 @@ function galleryPaths(m){
   if(m && m.id==='m6') return ['hero.jpeg'];
   if(m && m.id==='m7') return ['hero.jpeg','01.jpeg'];
   if(m && m.id==='m8') return [];
+  if(m && m.id==='m9') return ['hero.jpeg'];
   return [];
 }
 function renderGallery(m){
   const files=galleryPaths(m);
-  if(!files.length) return '<div class="gallery-empty">📸 <b>Matchday photos coming soon.</b></div>';
-  const folder=(m && m.id==='m1')?'cramlington':(m && m.id==='m2')?'blakelaw':(m && m.id==='m3')?'north-shields':(m && m.id==='m4')?'red-row':(m && m.id==='m5')?'berwick':(m && m.id==='m6')?'jarrow':(m && m.id==='m7')?'north-shields-away':(m && m.id==='m8')?'ponteland':m.id;
+  if(!files.length) return `<div class="gallery-empty">📸 <b>Matchday photos coming soon.</b></div>`;
+  const folder=(m && m.id==='m1')?'cramlington':(m && m.id==='m2')?'blakelaw':(m && m.id==='m3')?'north-shields':(m && m.id==='m4')?'red-row':(m && m.id==='m5')?'berwick':(m && m.id==='m6')?'jarrow':(m && m.id==='m7')?'north-shields-away':(m && m.id==='m8')?'ponteland':(m && m.id==='m9')?'blakelaw-away':m.id;
   const base=`assets/matches/${folder}/`;
-  return `<div class="match-gallery">${files.map((f,i)=>`<button class="gallery-item ${i===0?'gallery-hero':''}" type="button" onclick="openPhoto('${base}${f}','${m.shortOpponent} • ${i===0?'Match Hero':'Matchday Photo'}')"><img src="${base}${f}?v=74" alt="${m.shortOpponent} ${i===0?'match hero':'matchday photo '+(i)}" loading="lazy" onerror="this.closest('.gallery-item').style.display='none'"></button>`).join('')}</div>`;
+  return `<div class="match-gallery">${files.map((f,i)=>`<button class="gallery-item ${i===0?'gallery-hero':''}" type="button" onclick="openPhoto('${base}${f}','${m.shortOpponent} • ${i===0?'Match Hero':'Matchday Photo'}')"><img src="${base}${f}?v=78" alt="${m.shortOpponent} ${i===0?'match hero':'matchday photo '+(i)}" loading="lazy" onerror="this.closest('.gallery-item').style.display='none'"></button>`).join('')}</div>`;
 }
 function openPhoto(src,caption){
   let modal=document.getElementById('photo-modal');
@@ -1208,7 +1270,7 @@ function openMatch(id){
   const detailLeft = m.venue==='Home' ? `<div>${crestImg('Westerhope United','mini-crest')}<b>WESTERHOPE<br>UNITED</b></div>` : `<div>${crestImg(m.opponent,'mini-crest')}<b>${m.shortOpponent}</b></div>`; const detailRight = m.venue==='Home' ? `<div>${crestImg(m.opponent,'mini-crest')}<b>${m.shortOpponent}</b></div>` : `<div>${crestImg('Westerhope United','mini-crest')}<b>WESTERHOPE<br>UNITED</b></div>`; app.innerHTML=`<section><button class="back" onclick="nav('matches')">← BACK TO MATCHES</button><article class="card detail-card"><div class="section-head"><span>${m.venue.toUpperCase()} • ${m.competition.toUpperCase()}</span><small>${prettyDate(m.date)}</small></div>${heroMarkup(m,'match')}<div class="detail-title">${detailLeft}<div class="match-score"><strong>${scoreLabel(m)}</strong><small>HT ${halfTimeLabel(m)}</small></div>${detailRight}</div>
   <div class="detail-meta"><span>©️ Captain: <b>${label(m.captain)}</b></span><span>🏆 POTM: <b>${label(m.potm)}</b></span><span>🏆 Players' Player: <b>${label(m.playersPlayer)}</b></span>${m.cleanSheet?`<span>🧤 Clean Sheet</span>`:''}</div>${m.id==='m5'?`<div class="milestone-callout"><div><b>🏅 MILESTONES</b></div><div>Freddie Cowan — <b>40 Silvers appearances</b></div><div>Kane Rogerson — <b>40 Silvers appearances</b></div></div>`:(m.id==='m6'?`<div class="milestone-callout"><div><b>🏅 MILESTONE</b></div><div>Joseph Winwood — <b>40 career goal contributions</b> (29 goals, 11 assists)</div></div>`:'')}
   ${m.id==='m2'?`<div class="report-heading">PRE-MATCH ARCHIVE ///</div><div class="preview-media"><img src="${BLAKELAW_PREVIEW.lineupImage}?v=26" alt="Blakelaw starting lineup" class="lineup-image" onerror="this.style.display='none'"><a class="cta wide" href="${BLAKELAW_PREVIEW.facebook}" target="_blank" rel="noopener">🎬 VIEW PRE-MATCH FACEBOOK POST →</a><button class="secondary-cta wide" onclick="openPreview()">READ ORIGINAL MATCH PREVIEW →</button></div>`:''}${m.id==='m3'?`<div class="report-heading">PRE-MATCH ARCHIVE ///</div><div class="preview-media"><img src="${NORTH_SHIELDS_PREVIEW.lineupImage}?v=44" alt="North Shields starting lineup" class="lineup-image" onerror="this.style.display='none'"><a class="cta wide" href="${NORTH_SHIELDS_PREVIEW.facebook}" target="_blank" rel="noopener">🎬 VIEW PRE-MATCH FACEBOOK POST →</a><button class="secondary-cta wide" onclick="renderPreview(NORTH_SHIELDS_PREVIEW,'MATCHDAY 03 ///')">READ ORIGINAL MATCH PREVIEW →</button></div>`:''}${m.id==='m4'?`<div class="report-heading">PRE-MATCH ARCHIVE ///</div><div class="preview-media"><img src="${RED_ROW_NEXT.lineupImage}?v=56" alt="Red Row starting lineup" class="lineup-image" onerror="this.style.display='none'"><a class="cta wide" href="${RED_ROW_NEXT.facebook}" target="_blank" rel="noopener">🎬 VIEW PRE-MATCH FACEBOOK POST →</a><button class="secondary-cta wide" onclick="renderPreview(RED_ROW_NEXT,'MATCHDAY 04 ///')">READ ORIGINAL MATCH PREVIEW →</button></div>`:''}${m.id==='m5'?`<div class="report-heading">PRE-MATCH ARCHIVE ///</div><div class="preview-media"><img src="${BERWICK_NEXT.lineupImage}?v=56" alt="Berwick starting lineup" class="lineup-image" onerror="this.style.display='none'"><a class="cta wide" href="${BERWICK_NEXT.facebook}" target="_blank" rel="noopener">🎬 VIEW PRE-MATCH FACEBOOK POST →</a><button class="secondary-cta wide" onclick="renderPreview(BERWICK_NEXT,'MATCHDAY 05 ///')">READ ORIGINAL MATCH PREVIEW →</button></div>`:''}${m.id==='m6'?`<div class="report-heading">PRE-MATCH ARCHIVE ///</div><div class="preview-media"><img src="${JARROW_NEXT.lineupImage}?v=61" alt="Jarrow starting lineup" class="lineup-image" onerror="this.style.display='none'"><a class="cta wide" href="${JARROW_NEXT.facebook}" target="_blank" rel="noopener">🎬 VIEW PRE-MATCH FACEBOOK POST →</a><button class="secondary-cta wide" onclick="renderPreview(JARROW_NEXT,'MATCHDAY 06 ///')">READ ORIGINAL MATCH PREVIEW →</button></div>`:''}${m.id==='m7'?`<div class="report-heading">PRE-MATCH ARCHIVE ///</div><div class="preview-media"><img src="${NORTH_SHIELDS_AWAY_NEXT.lineupImage}?v=74" alt="North Shields away starting lineup" class="lineup-image" onerror="this.style.display='none'"><button class="secondary-cta wide" onclick="renderPreview(NORTH_SHIELDS_AWAY_NEXT,'MATCHDAY 07 ///')">READ ORIGINAL MATCH PREVIEW →</button></div>`:''}${m.id==='m8'?`<div class=\"report-heading\">PRE-MATCH ARCHIVE ///</div><div class=\"preview-media\"><img src=\"assets/matches/ponteland/lineup.jpeg?v=74\" alt=\"Ponteland starting lineup\" class=\"lineup-image\" onerror=\"this.style.display='none'\"><button class=\"secondary-cta wide\" onclick=\"renderPreview(PONTELAND_NEXT,'MATCHDAY 08 ///')\">READ ORIGINAL MATCH PREVIEW →</button></div>`:''}${['m2','m3','m4','m5','m6','m7'].includes(m.id)?`<div class="report-heading">FULL-TIME MEDIA ///</div><div class="preview-media"><a class="cta wide" href="${m.id==='m2'?'https://www.facebook.com/share/r/14rFrdhSK2L/?mibextid=wwXIfr':(m.id==='m3'?NORTH_SHIELDS_FULLTIME_VIDEO:(m.id==='m4'?'https://www.facebook.com/share/r/1C5tPsoQw8/?mibextid=wwXIfr':(m.id==='m5'?BERWICK_FULLTIME_VIDEO:(m.id==='m6'?'https://www.facebook.com/share/18EymDjh9s/?mibextid=wwXIfr':'https://www.facebook.com/share/r/19UHoMKRDV/?mibextid=wwXIfr'))))}" target="_blank" rel="noopener">🎬 WATCH FULL-TIME / MATCH REPORT VIDEO →</a></div>`:''}${m.id==='m8'?`<div class=\"report-heading\">FULL-TIME MEDIA ///</div><div class=\"preview-media\"><a class=\"cta wide\" href=\"https://www.facebook.com/share/r/1D8HdxsGTn/?mibextid=wwXIfr\" target=\"_blank\" rel=\"noopener\">🎬 WATCH FULL-TIME / MATCH REPORT VIDEO →</a></div>`:''}<div class="report-heading">MATCH REPORT</div>${m.report.map(p=>`<p class="report-p">${p}</p>`).join('')}
-  <div class="report-heading">GOALS & ASSISTS</div><div class="goal-timeline">${m.goals.map(g=>`<div class="goal-row"><strong>${g.minute}'</strong><span class="goal-dot">⚽</span><b>${label(g.scorer)}</b>${g.assister?`<span class="assist">Assist: ${label(g.assister)}</span>`:`<span class="assist">Assist: —</span>`}</div>`).join('')}</div>
+  <div class="report-heading">GOALS & ASSISTS</div><div class="goal-timeline">${m.goals.length?m.goals.map(g=>`<div class="goal-row"><strong>${g.minute}'</strong><span class="goal-dot">⚽</span><b>${label(g.scorer)}</b>${g.assister?`<span class="assist">Assist: ${label(g.assister)}</span>`:`<span class="assist">Assist: —</span>`}</div>`).join(''):'<span class="assist">No goals or assists recorded.</span>'}</div>
   <div class="report-heading">DEVELOPMENT NOTES</div><div class="dev-list">${m.development.map(x=>`<div class="dev-item"><b>${label(x.player)}</b><p>${x.text}</p></div>`).join('')}</div>
   <div class="report-heading">MATCHDAY GALLERY ///</div>${renderGallery(m)}
   <div class="summary-strip"><div><small>FULL TIME</small><b>${scoreLabel(m)}</b></div><div><small>HALF TIME</small><b>${halfTimeLabel(m)}</b></div><div><small>GOALS</small><b>${m.goals.length}</b></div><div><small>CLEAN SHEET</small><b>${m.cleanSheet?'YES':'NO'}</b></div></div>
@@ -1408,9 +1470,9 @@ function renderTable(){
   const resultsUrl = 'https://fulltime.thefa.com/results.html?selectedSeason=260632843&selectedFixtureGroupAgeGroup=10&selectedFixtureGroupKey=1_253565231&selectedRelatedFixtureOption=3&selectedDateCode=all&previousSelectedFixtureGroupAgeGroup=10&previousSelectedFixtureGroupKey=&previousSelectedClub=';
   const fixturesUrl = 'https://fulltime.thefa.com/fixtures.html?selectedSeason=260632843&selectedFixtureGroupAgeGroup=10&selectedFixtureGroupKey=1_253565231&selectedDateCode=all&selectedClub=&selectedTeam=&selectedRelatedFixtureOption=3&selectedFixtureDateStatus=&selectedFixtureStatus=&previousSelectedFixtureGroupAgeGroup=10&previousSelectedFixtureGroupKey=2_117640819&previousSelectedClub=&itemsPerPage=25';
   app.innerHTML=`<section><div class="page-title">TABLE <span>///</span></div>
-    <article class="card league-form-card"><div class="section-head"><span>LEAGUE FORM ///</span><small>RESULT-DRIVEN • ${LEAGUE_RESULTS.length} RESULTS</small></div><div class="mini-note">Our league tracker is calculated from the individual Division 10 results captured so far — not the unstable FA table page. ${leagueTrackerSvg()}</div></article>
+    <article class="card league-form-card"><div class="section-head"><span>LEAGUE FORM ///</span><small>RESULT-DRIVEN • ${LEAGUE_RESULTS.length} RESULTS</small></div><div class="mini-note">Our league tracker uses the Division 10 results supplied so far (some other clubs’ latest results may not yet be recorded). ${leagueTrackerSvg()}</div></article>
     <article class="card"><div class="section-head"><span>LEAGUE TABLE</span><small>RESULT-DRIVEN • U13 DIVISION 10</small></div>
-      <div class="mini-note live-note"><b>Calculated league snapshot:</b> Built from the ${LEAGUE_RESULTS.length} individual Division 10 results captured to date. Use <b>FA FULL-TIME</b> to navigate to the latest official standings; direct division links can change on the FA site.</div>
+      <div class="mini-note live-note"><b>Calculated league snapshot:</b> Built from ${LEAGUE_RESULTS.length} known Division 10 results; other clubs’ recent results may be missing, so positions are provisional. Use <b>FA FULL-TIME</b> to navigate to the latest official standings; direct division links can change on the FA site.</div>
       <div class="table-scroll"><table class="league-table"><thead><tr><th>POS</th><th>TEAM</th><th>P</th><th>W</th><th>D</th><th>L</th><th>PTS</th></tr></thead><tbody>${rows}</tbody></table></div>
       <div class="table-actions"><a class="cta link" href="${tableUrl}" target="_blank" rel="noopener noreferrer">OPEN FA FULL-TIME →</a><a class="secondary-cta link" href="${resultsUrl}" target="_blank" rel="noopener noreferrer">OFFICIAL RESULTS →</a><a class="secondary-cta link" href="${fixturesUrl}" target="_blank" rel="noopener noreferrer">ALL FIXTURES →</a></div>
     </article>
