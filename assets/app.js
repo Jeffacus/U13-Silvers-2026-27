@@ -1126,7 +1126,7 @@ function matchHeroPath(m){
   if(m.id==='m5') return 'assets/matches/berwick/HERO.JPEG';
   if(m.id==='m6') return 'assets/matches/jarrow/hero.jpeg';
   if(m.id==='m7') return 'assets/matches/north-shields-away/hero.jpeg';
-  if(m.id==='m9') return 'assets/matches/blakelaw-away/hero.jpeg';
+  if(m.id==='m9') return '/U13-Silvers-2026-27/assets/matches/blakelaw-away/hero.jpeg';
   return '';
 }
 function heroMarkup(m, placement){
@@ -1134,8 +1134,8 @@ function heroMarkup(m, placement){
   if(!src) return `<section class="card latest-hero-placeholder"><div class="latest-hero-overlay"><div class="eyebrow">MATCHDAY ${m?.id==='m3'?'03':'LATEST'} ///</div><strong>${m?.headline||'LATEST MATCH'}</strong><small>Hero photo coming soon</small></div></section>`;
   const labelText = placement==='home' ? 'LATEST MATCH' : 'MATCH HERO';
   const fallback = m.id==='m5' ? 'hero.jpeg' : '';
-  const onerror = fallback ? `this.onerror=null;this.src='assets/matches/berwick/${fallback}?v=57'` : '';
-  return `<section class="card latest-hero-card"><button class="latest-hero-button" type="button" onclick="openMatch('${m.id}')"><img src="${src}?v=78" alt="${m.shortOpponent} match hero" ${onerror?`onerror="${onerror}"`:''}><div class="latest-hero-overlay"><div class="eyebrow">${labelText} ///</div><strong>${m.venue==='Home'?'WESTERHOPE UNITED':' '+m.shortOpponent} ${scoreLabel(m)}</strong><small>${m.venue==='Home'?'WESTERHOPE UNITED v '+m.shortOpponent:m.shortOpponent+' v WESTERHOPE UNITED'} • ${prettyDate(m.date)}</small></div></button></section>`;
+  const onerror = m.id==='m9' ? `this.onerror=null;this.src='https://jeffacus.github.io/U13-Silvers-2026-27/assets/matches/blakelaw-away/hero.jpeg?rev=79b'` : (fallback ? `this.onerror=null;this.src='assets/matches/berwick/${fallback}?v=57'` : '');
+  return `<section class="card latest-hero-card"><button class="latest-hero-button" type="button" onclick="openMatch('${m.id}')"><img src="${src}?v=79" alt="${m.shortOpponent} match hero" ${onerror?`onerror="${onerror}"`:''}><div class="latest-hero-overlay"><div class="eyebrow">${labelText} ///</div><strong>${m.venue==='Home'?'WESTERHOPE UNITED':' '+m.shortOpponent} ${scoreLabel(m)}</strong><small>${m.venue==='Home'?'WESTERHOPE UNITED v '+m.shortOpponent:m.shortOpponent+' v WESTERHOPE UNITED'} • ${prettyDate(m.date)}</small></div></button></section>`;
 }
 function latestMatch(){ return [...D.matches].sort((a,b)=>String(a.date).localeCompare(String(b.date))).at(-1); }
 function renderHome(){
@@ -1245,8 +1245,8 @@ function renderGallery(m){
   const files=galleryPaths(m);
   if(!files.length) return `<div class="gallery-empty">📸 <b>Matchday photos coming soon.</b></div>`;
   const folder=(m && m.id==='m1')?'cramlington':(m && m.id==='m2')?'blakelaw':(m && m.id==='m3')?'north-shields':(m && m.id==='m4')?'red-row':(m && m.id==='m5')?'berwick':(m && m.id==='m6')?'jarrow':(m && m.id==='m7')?'north-shields-away':(m && m.id==='m8')?'ponteland':(m && m.id==='m9')?'blakelaw-away':m.id;
-  const base=`assets/matches/${folder}/`;
-  return `<div class="match-gallery">${files.map((f,i)=>`<button class="gallery-item ${i===0?'gallery-hero':''}" type="button" onclick="openPhoto('${base}${f}','${m.shortOpponent} • ${i===0?'Match Hero':'Matchday Photo'}')"><img src="${base}${f}?v=78" alt="${m.shortOpponent} ${i===0?'match hero':'matchday photo '+(i)}" loading="lazy" onerror="this.closest('.gallery-item').style.display='none'"></button>`).join('')}</div>`;
+  const base=m && m.id==='m9' ? '/U13-Silvers-2026-27/assets/matches/blakelaw-away/' : `assets/matches/${folder}/`;
+  return `<div class="match-gallery">${files.map((f,i)=>`<button class="gallery-item ${i===0?'gallery-hero':''}" type="button" onclick="openPhoto('${base}${f}','${m.shortOpponent} • ${i===0?'Match Hero':'Matchday Photo'}')"><img src="${base}${f}?v=79" alt="${m.shortOpponent} ${i===0?'match hero':'matchday photo '+(i)}" loading="lazy" onerror="this.closest('.gallery-item').style.display='none'"></button>`).join('')}</div>`;
 }
 function openPhoto(src,caption){
   let modal=document.getElementById('photo-modal');
