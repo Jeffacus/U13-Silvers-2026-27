@@ -723,7 +723,17 @@ const LEAGUE_RESULTS = [
   {date:'2026-10-11', home:'North Shields Juniors U13 Blacks', away:'Westerhope United U13 Silvers', hg:0, ag:4},
   {date:'2026-10-11', home:'Ponteland United Juniors U13 Rockets', away:'Cramlington Blue Star FC U13 Milan', hg:3, ag:0},
   {date:'2026-10-18', home:'Westerhope United U13 Silvers', away:'Ponteland United Juniors U13 Rockets', hg:2, ag:4},
-  {date:'2026-11-08', home:'Westerhope United U13 Silvers', away:'Blakelaw Football Club U13 Roma', hg:0, ag:0}
+  {date:'2026-11-08', home:'Westerhope United U13 Silvers', away:'Blakelaw Football Club U13 Roma', hg:0, ag:0},
+  {date:'2026-10-18', home:'Bedlington FC U13 Malaga', away:'North Shields Juniors U13 Blacks', hg:3, ag:2},
+  {date:'2026-10-18', home:'Blakelaw Football Club U13 Roma', away:'Killingworth F.C. U13 Reds', hg:2, ag:0},
+  {date:'2026-10-18', home:'Cramlington Blue Star FC U13 Milan', away:'Killingworth F.C. U13 Blues', hg:1, ag:2},
+  {date:'2026-11-01', home:'Cramlington Town Juniors U13 Cramlington', away:'Blakelaw Football Club U13 Roma', hg:1, ag:7},
+  {date:'2026-11-08', home:'Cramlington Blue Star FC U13 Milan', away:'Bedlington FC U13 Malaga', hg:0, ag:2},
+  {date:'2026-11-08', home:'Killingworth F.C. U13 Reds', away:'Ponteland United Juniors U13 Rockets', hg:1, ag:2},
+  {date:'2026-11-08', home:'North Shields Juniors U13 Blacks', away:'Cramlington Town Juniors U13 Cramlington', hg:1, ag:6},
+  {date:'2026-11-15', home:'Bedlington FC U13 Malaga', away:'Blakelaw Football Club U13 Roma', hg:4, ag:2},
+  {date:'2026-11-15', home:'Killingworth F.C. U13 Blues', away:'Westerhope United U13 Silvers', hg:3, ag:1},
+  {date:'2026-11-15', home:'Killingworth F.C. U13 Reds', away:'North Shields Juniors U13 Blacks', hg:6, ag:0}
 ].sort((a,b)=>a.date.localeCompare(b.date));
 
 const LEAGUE_TEAMS = [
@@ -760,12 +770,12 @@ const LEAGUE_SHORT_NAMES = {
   'North Shields Juniors U13 Blacks':'North Shields'
 };
 const LEAGUE_OFFICIAL_TIE_ORDER = {
-  'Westerhope United U13 Silvers':1,
-  'Killingworth F.C. U13 Blues':2,
+  'Westerhope United U13 Silvers':5,
+  'Killingworth F.C. U13 Blues':1,
   'Ponteland United Juniors U13 Rockets':3,
-  'Bedlington FC U13 Malaga':4,
+  'Bedlington FC U13 Malaga':2,
   'Killingworth F.C. U13 Reds':5,
-  'Blakelaw Football Club U13 Roma':6,
+  'Blakelaw Football Club U13 Roma':4,
   'Cramlington Town Juniors U13 Cramlington':7,
   'Cramlington Blue Star FC U13 Milan':8,
   'North Shields Juniors U13 Blacks':9
@@ -1037,6 +1047,45 @@ if (D.matches && !D.matches.some(m => m.id === 'm4')) {
   else D.matches.push(northShieldsAwayMatch);
 }
 
+// Matchday 10 — Killingworth Blues away, Sunday 15 November 2026.
+// No pre-match Facebook post; one real hero photograph in killingworth-blues.
+{
+  const killingworthMatch = {
+    id:'m10', date:'2026-11-15', competition:'NFL U13 Division 10', venue:'Away',
+    opponent:'Killingworth F.C. U13 Blues', shortOpponent:'KILLINGWORTH FC U13 BLUES',
+    gf:1, ga:3, htFor:0, htAgainst:1, captain:'Freddie Cowan',
+    potm:'Theo Demosthenous', playersPlayer:'Yusuf Syed Ubaidur Rahman', cleanSheet:false,
+    starters:['Johnny Collinson','Theo Demosthenous','Kane Rogerson','Freddie Cowan','Jake Armstrong','Ollie Anderson','Yusuf Syed Ubaidur Rahman','Oliver Stubbs','Charlie Mulligan'],
+    subs:['Joseph Winwood','Ewan Dodds','Kyran Archbold','Blake Smith'],
+    unavailable:[],
+    goals:[{minute:42,scorer:'Killingworth own goal',assister:null,ownGoal:true}],
+    headline:'The will to win — a difficult afternoon at Killingworth',
+    next:'TBC',nextDate:'',nextTime:'TBC',nextVenue:'TBC',nextHome:false,
+    lineupImage:'',
+    report:[
+      `<h3>MATCH REPORT /// THE WILL TO WIN</h3><b>Killingworth FC U13 Blues 3–1 Westerhope United U13 Silvers</b><br><b>Sunday 15 November 2026 • Away • 11:30am kick-off</b><br><br>Another frustrating afternoon for the Silvers, who suffered their second league defeat of the season against a physically strong Killingworth Blues side. For long spells the teams were well matched, but the home side showed a little more determination to win the loose balls, make the decisive challenges and turn possession into opportunities. Steven and Jeff know this team has the footballing ability to compete; today's lesson was about matching that ability with the will to win every individual battle.`,
+      `<h3>STARTING IX ///</h3><b>GK:</b> Johnny<br><b>DEF:</b> Theo (left), Kane (centre), Freddie © (right)<br><b>MID:</b> Oliver (left), Jake and Ollie (centre), Yusuf (right)<br><b>FWD:</b> Charlie<br><b>SUBSTITUTES USED:</b> Joseph, Ewan, Kyran and Blake.<br><br>All 13 available Silvers played today.`,
+      `<h3>AN EVEN OPENING ///</h3>The first fifteen minutes were tense and closely contested, with two organised defences giving very little away. Killingworth enjoyed slightly more possession and were a touch more purposeful when they had the ball. Their number seven, despite being one of the smallest players on the pitch, stood out for winning headers, loose balls and tackles, then helping launch attacks. It was a reminder that desire and anticipation can make as much difference as size.`,
+      `Jake was getting stuck into the midfield contest more and finding some excellent through balls when a gap appeared, while Ollie was looking to get involved and move the ball out wide. Oliver was full of running down the left, repeatedly closing defenders down and pulling into space to give his teammates an option. Behind them Freddie worked well on the right of the defence, while Kane stayed calm in possession and put his body on the line with important blocks and headers. Theo was eager to support the attack from left-back. Johnny had relatively little shot-stopping to do but commanded his box well and used some excellent kicks to start attacks from deep.`,
+      `<h3>20' — A CHANCE FROM THE CORNER</h3>Good work down the left between Theo and Oliver, with Oliver running into space to deliver, forced a corner. Ollie swung in an excellent delivery and Oliver peeled towards the back post to meet it. The Killingworth keeper made the save and turned the effort away. From the next corner, taken by Oliver a minute later, Joseph — who had come on for Yusuf on the right — found room for a shot but sent it narrowly wide. Joseph worked hard to get involved and give the Silvers another attacking option.`,
+      `<h3>KILLINGWORTH TAKE THE LEAD ///</h3>Charlie and Oliver pressed well to force a throw deep in the Killingworth half, but the home side managed to escape and switch the ball to the right. A loose ball broke beyond Kane, allowing their striker to run through and slide his finish under Johnny. <b>1–0 Killingworth.</b> The setback shook the Silvers into greater urgency, but they could not find an equaliser before the interval.<br><br><b>HALF-TIME: KILLINGWORTH 1–0 WESTERHOPE.</b>`,
+      `<h3>A RESPONSE AFTER THE BREAK ///</h3>There were strong words from Steven and Jeff at half-time: be more direct, release the ball earlier and make the passing sharper. Jake showed what was possible with a superb pass that released Oliver, whose shot drew another good save from the keeper. Ollie kept trying to shift the play towards the wider spaces, and Oliver's relentless running and pressing gave the Silvers an outlet whenever they could get the ball forward.`,
+      `Ewan came on and gave the Silvers greater directness down the left, working to move the ball quickly from back to front. Kyran, making his <b>10th career appearance for the Silvers</b>, got stuck into some important tackles and proved a real nuisance for Killingworth's left winger. Blake also stood up well to one of the home side's more physical players, refusing to shirk the challenge. Those contributions showed exactly the willingness to compete that the coaches have been asking for.`,
+      `<h3>40' — KILLINGWORTH DOUBLE THEIR LEAD</h3>The home side again used their strength to win a midfield battle and play through to the striker. He held off a number of attempted tackles and found the finish to make it <b>2–0</b>. It was a frustrating goal to concede because the challenge needed to be stronger and more decisive.`,
+      `<h3>42' — PRESSURE BRINGS A GOAL</h3>The Silvers refused to give up. Joseph and Theo helped work the ball through the middle with Jake and Ollie, and Yusuf forced an excellent save low to the keeper's right. Yusuf, making his <b>30th career Silvers appearance</b>, was increasingly involved in the attack. Moments later, good pressure from Theo and Yusuf unsettled the Killingworth defence, and a defender diverted the ball into his own net. <b>2–1!</b><br><br><b>SILVERS GOAL — 42' • KILLINGWORTH OWN GOAL.</b><br><br>It was a deserved reward for the pressing and gave the boys fresh belief. As an own goal it counts for the team, but is not credited as an individual Silvers goal or assist.`,
+      `<h3>THE FINAL BLOW ///</h3>For a spell the Silvers moved the ball better and began asking more questions of Killingworth. But with two minutes remaining, the intensity dropped, heads began to go down and the home side took advantage to score a third. <b>3–1 Killingworth.</b> A disappointing finish to a game that had briefly looked as though it might yet turn.`,
+      `<h3>THE LESSON ///</h3>The biggest frustration for the coaches was not being beaten by a technically superior side, but losing too many individual battles and failing to move the ball as quickly or crisply as we know this group can. Some boys showed real improvement in their commitment and physical play, and those positives deserve recognition. But every player needs to keep competing, reacting to setbacks and playing for the team rather than allowing frustration to take over. We have bounced back before and can do so again. Tuesday is another chance to work on the passing, physicality and determination that will get the Silvers moving forward. <b>HARD WORK. ATTITUDE. COMMITMENT. GRAFT.</b>`,
+      `<h3>AWARDS ///</h3>⭐ <b>PLAYER OF THE MATCH — THEO</b><br>Theo worked hard at the back, looked to drive forward and was involved in the pressing that brought the Silvers' goal.<br><br>💙 <b>PLAYERS' PLAYER — YUSUF</b><br>Yusuf caused problems further forward, forced an excellent save and helped pressure Killingworth into the own goal. Congratulations to both.`,
+      `<h3>MILESTONES ///</h3>🏅 <b>KYRAN — 10 CAREER APPEARANCES</b><br>His first 10-appearance landmark, marked with some excellent tackling and determination.<br><br>🏅 <b>YUSUF — 30 CAREER APPEARANCES</b><br>A great milestone, with his work up front helping force the Silvers' goal.<br><br><b>JOHNNY and JAKE</b> are now on <b>49 career appearances each</b>, just one away from 50. These totals include league and cup appearances.`,
+      `<h3>THANK YOU ///</h3>Thanks to <b>Van for running the line</b> and to all the parents and supporters who continue to back the boys, especially during a difficult spell. We need everyone pulling together as we work to get back to winning ways.`,
+      `<h3>FINAL RESULT ///</h3><b>Killingworth FC U13 Blues 3–1 Westerhope United U13 Silvers</b><br><b>HALF-TIME:</b> Killingworth 1–0 Westerhope<br><b>FULL-TIME:</b> Killingworth 3–1 Westerhope<br><b>SILVERS GOAL:</b> 42' — Killingworth own goal (pressure from Theo and Yusuf)<br><b>INDIVIDUAL ASSISTS:</b> None credited<br><b>PLAYER OF THE MATCH:</b> Theo<br><b>PLAYERS' PLAYER:</b> Yusuf<br><b>LEAGUE:</b> P7 W3 D2 L2 • GF15 GA9 • GD+6 • 11 points • 5th.<br><br><b>WE LEARN. WE WORK. WE GO AGAIN. UP THE HOPE ///</b>`
+    ],
+    development:[], gallery:[]
+  };
+  const idx=D.matches.findIndex(m=>m.id==='m10');
+  if(idx>=0) D.matches.splice(idx,1,killingworthMatch); else D.matches.push(killingworthMatch);
+}
+
 D.matches = [...D.matches].sort((a,b)=>String(a.date).localeCompare(String(b.date)));
 
 function calcStats(){
@@ -1127,6 +1176,7 @@ function matchHeroPath(m){
   if(m.id==='m6') return 'assets/matches/jarrow/hero.jpeg';
   if(m.id==='m7') return 'assets/matches/north-shields-away/hero.jpeg';
   if(m.id==='m9') return '/U13-Silvers-2026-27/assets/matches/blakelaw-away/hero.jpeg';
+  if(m.id==='m10') return '/U13-Silvers-2026-27/assets/matches/killingworth-blues/hero.jpeg';
   return '';
 }
 function heroMarkup(m, placement){
@@ -1239,13 +1289,14 @@ function galleryPaths(m){
   if(m && m.id==='m7') return ['hero.jpeg','01.jpeg'];
   if(m && m.id==='m8') return [];
   if(m && m.id==='m9') return ['hero.jpeg'];
+  if(m && m.id==='m10') return ['hero.jpeg'];
   return [];
 }
 function renderGallery(m){
   const files=galleryPaths(m);
   if(!files.length) return `<div class="gallery-empty">📸 <b>Matchday photos coming soon.</b></div>`;
-  const folder=(m && m.id==='m1')?'cramlington':(m && m.id==='m2')?'blakelaw':(m && m.id==='m3')?'north-shields':(m && m.id==='m4')?'red-row':(m && m.id==='m5')?'berwick':(m && m.id==='m6')?'jarrow':(m && m.id==='m7')?'north-shields-away':(m && m.id==='m8')?'ponteland':(m && m.id==='m9')?'blakelaw-away':m.id;
-  const base=m && m.id==='m9' ? '/U13-Silvers-2026-27/assets/matches/blakelaw-away/' : `assets/matches/${folder}/`;
+  const folder=(m && m.id==='m1')?'cramlington':(m && m.id==='m2')?'blakelaw':(m && m.id==='m3')?'north-shields':(m && m.id==='m4')?'red-row':(m && m.id==='m5')?'berwick':(m && m.id==='m6')?'jarrow':(m && m.id==='m7')?'north-shields-away':(m && m.id==='m8')?'ponteland':(m && m.id==='m9')?'blakelaw-away':(m && m.id==='m10')?'killingworth-blues':m.id;
+  const base=m && (m.id==='m9'||m.id==='m10') ? `/U13-Silvers-2026-27/assets/matches/${folder}/` : `assets/matches/${folder}/`;
   return `<div class="match-gallery">${files.map((f,i)=>`<button class="gallery-item ${i===0?'gallery-hero':''}" type="button" onclick="openPhoto('${base}${f}','${m.shortOpponent} • ${i===0?'Match Hero':'Matchday Photo'}')"><img src="${base}${f}?v=79" alt="${m.shortOpponent} ${i===0?'match hero':'matchday photo '+(i)}" loading="lazy" onerror="this.closest('.gallery-item').style.display='none'"></button>`).join('')}</div>`;
 }
 function openPhoto(src,caption){
